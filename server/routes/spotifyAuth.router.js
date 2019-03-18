@@ -6,7 +6,6 @@ const router = express.Router();
 
 const clientID = process.env.SPOTIFY_CLIENT_ID;
 const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
-let access_token = '';
 
 let redirect_uri =
   process.env.REDIRECT_URI ||
@@ -18,7 +17,7 @@ router.get('/login', function (req, res) {
       response_type: 'code',
       client_id: clientID,
       scope: 'user-read-private user-read-email',
-      show_dialog: true,
+      // show_dialog: true,
       redirect_uri
     }))
 })
@@ -43,16 +42,20 @@ router.get('/callback', function (req, res) {
     access_token = body.access_token
     console.log('access token', access_token);
     let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
-    // res.redirect(uri + '?access_token=' + access_token)
-    res.redirect(uri)
-
     const queryText = 'UPDATE "spotify_token" SET "access_token"=$1 WHERE "id"=$2';
     pool.query(queryText, [access_token, 1])
-      .then(() => res.sendStatus(201))
-      .catch(() => res.sendStatus(500));
+    res.redirect(uri + '?access_token=' + access_token)
+    // res.redirect(uri)
+    // postToken(access_token);
   })
 })
 
+// function postToken (access_token) {
+//   const queryText = 'UPDATE "spotify_token" SET "access_token"=$1 WHERE "id"=$2';
+//   pool.query(queryText, [access_token, 1])
+//     // .then(() => res.sendStatus(201))
+//     // .catch(() => res.sendStatus(500));
+// }
 
 // let port = process.env.PORT || 8888
 // console.log(`Listening on port ${port}. Go /login to initiate authentication flow.`)
