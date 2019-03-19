@@ -26,7 +26,7 @@ import './HomePage.css'
 class HomePage extends Component {
     handleClick = () => {
         console.log('create playlist button clicked');
-        this.props.history.push('/image');  
+        window.location.replace('http://localhost:5000/login');  
     }
 
     render() {
@@ -40,8 +40,6 @@ class HomePage extends Component {
                     <button onClick={this.handleClick}>create playlist</button>
                 </div>
             </div>
-
-
         );
     }
 }
