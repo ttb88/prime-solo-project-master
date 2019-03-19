@@ -11,9 +11,7 @@ import LogOutButton from '../LogOutButton/LogOutButton';
 
 class UserPage extends Component {
 
-  componentDidMount = () => {
-    this.props.dispatch({ type: 'FETCH_DATA' })
-  }
+
 
 
   render() {
@@ -21,11 +19,7 @@ class UserPage extends Component {
     return (
 
       <div>
-        <h1 id="welcome">
-          Welcome, {this.props.user.username}!
-    </h1>
-        <p>Your ID is: {this.props.user.id}</p>
-        <LogOutButton className="log-in" />
+       
       </div>
     )
   }

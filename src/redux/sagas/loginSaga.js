@@ -2,7 +2,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 import axios from 'axios';
 
 
-const spotifyLogin = () => window.location.replace('http://localhost:5000/login');
+// const spotifyLogin = () => window.location.replace('http://localhost:5000/login');
 
 // worker Saga: will be fired on "LOGIN" actions
 function* loginUser(action) {
@@ -25,7 +25,6 @@ function* loginUser(action) {
     yield put({type: 'FETCH_USER'});
 
     //automatically initiate Spotify authorization login
-    spotifyLogin();
   } catch (error) {
     console.log('Error with user login:', error);
     if (error.response.status === 401) {
