@@ -3,7 +3,6 @@ import {
   HashRouter as Router,
   Route,
 } from 'react-router-dom';
-
 import HomePage from '../HomePage/HomePage';
 import ImageSelect from '../ImageSelect/ImageSelect';
 import './App.css';

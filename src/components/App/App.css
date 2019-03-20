@@ -4,18 +4,20 @@ body {
 }
 
 .row {
-   margin: 0px auto;
+    margin: 0px auto;
 }
 
 .bckgrnd-container {
     background-image: linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.3)), url(images/photo-1452716726610-30ed68426a6b.jpeg);
-    background-attachment: fixed;
-    background-size: auto;
+    text-align: center;
+    /* height: 100vh; */
+    height: 100%; 
+    width: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    text-align: center;
-    height: 100vh;
+    background-size: cover;
 }
+
 
 h1 {
     font-family: 'Italiana', serif;
