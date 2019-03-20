@@ -33,13 +33,10 @@ class HomePage extends Component {
         // const { classes } = this.props;
 
         return (
-
-            <div className="bckgrnd-container">
                 <div className="center-contents">
                     <h1>stream</h1>
                     <button onClick={this.handleClick}>create playlist</button>
                 </div>
-            </div>
         );
     }
 }

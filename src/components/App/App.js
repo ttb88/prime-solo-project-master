@@ -4,11 +4,8 @@ import {
   Route,
 } from 'react-router-dom';
 
-import {connect} from 'react-redux';
 import HomePage from '../HomePage/HomePage';
 import ImageSelect from '../ImageSelect/ImageSelect';
-
-
 import './App.css';
 
 class App extends Component {
@@ -16,7 +13,7 @@ class App extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <div className="bckgrnd-container">
           <Route exact path="/" component={HomePage} />
           <Route exact path="/image" component={ImageSelect} />
         </div>
@@ -24,4 +21,4 @@ class App extends Component {
   )}
 }
 
-export default connect()(App);
+export default App;

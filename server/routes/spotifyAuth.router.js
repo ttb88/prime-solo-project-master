@@ -43,8 +43,8 @@ router.get('/callback', function (req, res) {
   request.post(authOptions, function (error, response, body) {
     access_token = body.access_token
     console.log('access token', access_token);
-    let uri = process.env.FRONTEND_URI || 'http://localhost:3000'
-    addUserInfo(access_token);
+    let uri = process.env.FRONTEND_URI || 'http://localhost:3000/#/image'
+    userInfo(access_token);
     postToken(access_token);
     res.redirect(uri);
     // const queryText = 'UPDATE "spotify_token" SET "access_token"=$1 WHERE "id"=$2';
@@ -53,7 +53,8 @@ router.get('/callback', function (req, res) {
   })
 })
 
-addUserInfo = access_token => {
+// make get requst for user's Spotify info
+userInfo = access_token => {
   axios({
     method: 'GET',
     url: 'https://api.spotify.com/v1/me',
@@ -61,13 +62,40 @@ addUserInfo = access_token => {
       'Authorization': 'Bearer ' + access_token,
     }
   }).then(res => {
-    console.log('res', res.data);
     let user = res.data
-    const queryText = `INSERT INTO "spotify_user" (display_name, spotify_id, email, href, uri, country) VALUES ($1,$2,$3,$4,$5,$6);`;
-    pool.query(queryText, [user.display_name, user.id, user.email, user.href, user.uri, user.country]) 
+    checkDatabase(user);
   }).catch(error => {
     console.log('there was an error', error);
   })
 }
+
+// check to see if user is in database- if not add to database
+checkDatabase = (user) => {
+  pool.query(`SELECT * FROM "spotify_user" WHERE "spotify_id"=$1;`, [user.id])
+    .then((result) => {
+      // add user if not in database
+      if (result.rows[0].spotify_id !== user.id) {
+        console.log('adding user to database');
+        const queryText = `INSERT INTO "spotify_user" (display_name, spotify_id, email, href, uri, country) VALUES ($1,$2,$3,$4,$5,$6);`;
+        pool.query(queryText, [user.display_name, user.id, user.email, user.href, user.uri, user.country])
+      }
+      else {
+        console.log('user already in database');
+      }
+    }).catch(error => {
+      console.log('there was an error checking user against database', error);
+    })
+}
+
+// post current access token to database
+postToken = access_token => {
+  const queryText = 'UPDATE "spotify_token" SET "access_token"=$1 WHERE "id"=$2';
+  pool.query(queryText, [access_token, 1]).then(() => {
+    console.log('access token added to database');
+  }).catch(error => {
+    console.log('there was an error adding access_token to database', error);
+  })
+}
+
 
 module.exports = router;

@@ -1,49 +1,38 @@
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0px;
+    font-family: 'Italiana', serif;
 }
 
-.alert {
-    background-color: #ff4545;
-    margin: 50px;
+.row {
+   margin: 0px auto;
 }
 
-form {
-    background-color: #dbd5d5;
-    width: 30%;
-    height: 250px;
-    margin: 20px auto;
-    padding: 25px;
-    border-radius: 2px;
+.bckgrnd-container {
+    background-image: linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.3)), url(images/photo-1452716726610-30ed68426a6b.jpeg);
+    background-attachment: fixed;
+    background-size: auto;
+    background-position: center;
+    background-repeat: no-repeat;
+    text-align: center;
+    height: 100vh;
 }
 
-input {
-    margin: 5px;
-    margin-bottom: 10px;
+h1 {
+    font-family: 'Italiana', serif;
+    font-weight: medium;
+    font-size: 12em;
+    margin: 0;
+    opacity: .6;
+    letter-spacing: 16px;
+    color: #f7f6f6;  
 }
 
-.log-in, .log-out, .register {
-  background-color: #00acb0;
-  border-radius: 4px;
-  color: #f8f8f8;
-  min-height: 50px;
-  min-width: 100px;
-  outline:0;
-  cursor: pointer;
-}
-
-.log-in:hover, .log-out:hover, .register:hover {
-  background-color: #008183;
-}
-
-/* This line makes the "Register" and "Login" buttons look like links */
-.link-button {
-    background:none;
-    color:inherit;
-    border:none;
-    padding:0;
-    font: inherit;
-    outline:0;
-    border-bottom:1px solid #444; 
-    cursor: pointer;
+h2 {
+    font-family: 'Italiana', serif;
+    font-weight: medium;
+    font-size: 5em;
+    margin: 0;
+    opacity: .6;
+    letter-spacing: 4px;
+    color: #f7f6f6;  
 }
