@@ -32,9 +32,19 @@ h1 {
 h2 {
     font-family: 'Italiana', serif;
     font-weight: medium;
-    font-size: 5em;
+    font-size: 3.5em;
     margin: 0;
     opacity: .6;
     letter-spacing: 4px;
     color: #f7f6f6;  
+}
+
+.select-page-header {
+    padding-top: 20px; 
+    padding-bottom: 1px;
+}
+
+p {
+    line-height: 5px;
+    font-size: 18px;
 }

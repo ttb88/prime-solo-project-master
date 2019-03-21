@@ -1,14 +1,19 @@
-.image-page-header {
+.select-page-header {
+    padding-top: 20px; 
+    padding-bottom: 1px;
+}
 
-   
+p {
+    line-height: 5px;
+    font-size: 18px;
 }
 
 .images-grid-container {
-    margin: 20px 100px;
+    margin: 20px 120px;
     display: grid;
     grid-template-columns: repeat(13, 1fr);
     grid-template-rows: repeat(2, 20vw);
-    grid-gap: 3px;
+    grid-gap: 6px;
 }
 
 .images-grid-container img {
@@ -57,7 +62,7 @@
 }
 
 .image-grid-item5{
-     grid-column-start: 5;
+    grid-column-start: 5;
     grid-column-end: 10;
     grid-row-start: 2;
     grid-row-end: 2;
@@ -69,5 +74,4 @@
     grid-column-end: 15;
     grid-row-start: 2;
     grid-row-end: 2;
-    
 }

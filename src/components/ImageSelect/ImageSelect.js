@@ -23,7 +23,7 @@ class ImageSelect extends Component {
     render() {
         return (
             <>
-            <div className="image-page-header">
+            <div className="select-page-header">
                 <h2>Select Image</h2>
                 <p>Which image are you most drawn to in the present moment... click!</p>
                 <p>For more options click on shuffle below. Or if feeling inspired, choose upload to select your own image.</p>
