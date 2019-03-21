@@ -1,15 +1,15 @@
 #myProgress {
   width: 600px;
-  background-color: grey;
-  opacity: .5;
+  background-color: #f7f6f6a6;
   margin: 0 auto;
   margin-top: 40px;
   border-radius: 5px;
+  opacity: .7;
 }
 
 #myBar {
   width: 1%;
   height: 30px;
-  background-color: #004e63d0;
+  background-color: #004e63;
   border-radius: 5px;
 }
