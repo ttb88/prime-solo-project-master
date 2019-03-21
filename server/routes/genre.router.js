@@ -5,13 +5,13 @@ const router = express.Router();
 /**
  * GET route template
  */
-// get all images from 'image' table on database
+// get all genres from 'genre' table on database
 router.get('/', (req, res) => {
-    pool.query(`SELECT * FROM "image";`).then((result) => {
-        console.log('image results', result.rows);
+    pool.query(`SELECT * FROM "genre";`).then((result) => {
+        console.log('genre results', result.rows);
         res.send(result.rows);
     }).catch(error => {
-        console.log('there was an error getting images', error);
+        console.log('there was an error getting genres', error);
     })
 });
 

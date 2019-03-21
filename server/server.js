@@ -11,6 +11,7 @@ const passport = require('./strategies/user.strategy');
 // Route includes
 const spotifyAuthRouter = require('./routes/spotifyAuth.router');
 const imageRouter = require('./routes/image.router');
+const genreRouter = require('./routes/genre.router');
 // const userRouter = require('./routes/user.router');
 // const spotifyAPIRouter = require('./routes/spotifyAPI.router');
 
@@ -28,6 +29,7 @@ app.use(passport.session());
 /* Routes */
 app.use('/', spotifyAuthRouter);
 app.use('/api/image', imageRouter);
+app.use('/api/genre', genreRouter);
 // app.use('/api/user', userRouter);
 // app.use('/api/spotify', spotifyAPIRouter);
 

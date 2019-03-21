@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import images from './imageReducer';
+import genres from './genreReducer';
 // import errors from './errorsReducer';
 // import loginMode from './loginModeReducer';
 // import user from './userReducer';
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   // loginMode, // will have a value of 'login' or 'registration' to control which screen is shown
   // user, // will have an id and username if someone is logged in
   images, // will include all image paths to images from 'image' table on database
+  genres, //will include all genre paths to genre from 'genre' table on database
 });
 
 export default rootReducer;
