@@ -32,7 +32,7 @@ h1 {
 h2 {
     font-family: 'Italiana', serif;
     font-weight: medium;
-    font-size: 3.5em;
+    font-size: 3em;
     margin: 0;
     opacity: .6;
     letter-spacing: 4px;
@@ -47,4 +47,31 @@ h2 {
 p {
     line-height: 5px;
     font-size: 18px;
+}
+
+button {
+    font-family: 'Italiana', serif;
+    font-size: 32px;
+    letter-spacing: 3px;
+    border-radius: 3px;
+    color: #c7c7c7;
+    background-color: #004e63af;
+    border: none;
+    padding: 15px 30px;
+    transition: background-color .5s;
+    outline: none;
+}
+
+button:hover {
+    background-color: #004e63d2;
+    cursor: pointer;
+}
+
+.next-button {
+    margin-top: 200px;
+    padding: 10px 50px;
+}
+
+.drop-down-menu {
+    width: 300px;
 }

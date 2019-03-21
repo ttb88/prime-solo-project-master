@@ -2,18 +2,3 @@
     padding: 225px 0;
 }
 
-button {
-    font-family: 'Italiana', serif;
-    font-size: 32px;
-    letter-spacing: 3px;
-    color: #c7c7c7;
-    background-color: #004e63af;
-    border: none;
-    padding: 15px 30px;
-    transition: background-color .5s;
-}
-
-button:hover {
-    background-color: #004e63d2;
-    cursor: pointer;
-}

@@ -23,15 +23,16 @@ import '../ImageSelect/ImageSelect.css'
 
 class ImageItem extends Component {
 
-    handleImageClick = image => () => {
-        let selectedImage= image;
+    handleImageClick = id => () => {
+        this.props.dispatch({ type: 'SET_SELECTED_IMAGE', payload: id})
+        this.props.history.push("/genre");
     }
 
     render() {
   
         return (
             <div className={`image-grid-item${this.props.number}`}>
-                <img src={this.props.image.image_path} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image)} />
+                <img src={this.props.image.image_path} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image.id)} />
             </div>
         );
     }

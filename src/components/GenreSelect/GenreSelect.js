@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './GenreSelect.css';
 import DropDownMenu from '../DropDownMenu/DropDownMenu';
-// import DropDownMenuAlt from '../DropDownMenu/DropDownMenuAlt';
 
 
 class GenreSelect extends Component {
@@ -17,6 +16,7 @@ class GenreSelect extends Component {
                 <div className="drop-down-menu">
                     <DropDownMenu />
                 </div>
+                {/* <button className="next-button" onClick={this.handleClick}>next</button> */}
             </>
         );
     }
