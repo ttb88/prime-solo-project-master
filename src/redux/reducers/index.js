@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import images from './imageReducer';
 import genres from './genreReducer';
+import itemSelections from './selectReducer';
 // import errors from './errorsReducer';
 // import loginMode from './loginModeReducer';
 // import user from './userReducer';
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   // user, // will have an id and username if someone is logged in
   images, // will include all image paths to images from 'image' table on database
   genres, //will include all genre paths to genre from 'genre' table on database
+  itemSelections, //will hold all user selctions
 });
 
 export default rootReducer;

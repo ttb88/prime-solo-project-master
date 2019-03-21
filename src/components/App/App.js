@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import {
   HashRouter as Router,
   Route,
@@ -29,14 +30,15 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: [
       '-apple-system',
-      'Comfortaa',
+      'Raleway',
+      'Italiana',
       '"Segoe UI"',
       'Roboto',
       '"Helvetica Neue"',
       'Arial',
       'sans-serif',
     ].join(','),
-    fontSize: '15',
+    fontSize: '18',
     useNextVariants: true,
   },
 })
@@ -58,4 +60,9 @@ class App extends Component {
   )}
 }
 
-export default App;
+const mapReduxStateToProps = (reduxState) => {
+  return reduxState;
+}
+
+
+export default (connect(mapReduxStateToProps)(App));

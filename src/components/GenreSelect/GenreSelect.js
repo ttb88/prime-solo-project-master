@@ -6,15 +6,19 @@ import DropDownMenu from '../DropDownMenu/DropDownMenu';
 
 class GenreSelect extends Component {
 
+    componentDidMount() {
+        this.props.dispatch({ type: 'FETCH_GENRES' });
+    }
+
 
     render() {
         return (
             <>
-                <div className="genre-text">
+                <div className="header-text">
                     <h2>Select Genre</h2>
                 </div>
                 <div className="drop-down-menu">
-                    <DropDownMenu />
+                    <DropDownMenu history={this.props.history} />
                 </div>
                 {/* <button className="next-button" onClick={this.handleClick}>next</button> */}
             </>

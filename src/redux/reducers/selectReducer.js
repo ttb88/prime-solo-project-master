@@ -9,12 +9,12 @@ const selectReducer = (state = selectedItems, action) => {
     switch (action.type) {
         case 'SET_SELECTED_IMAGE':
             return {
-                ...this.state,
+                ...state,
                 image_id: action.payload
             }
         case 'SET_SELECTED_GENRE':
             return{
-                ...this.state,
+                ...state,
                 genre_id: action.payload
             }
         default:

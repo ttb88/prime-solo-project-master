@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import '../ImageSelect/ImageSelect.css'
 
 // let array = [1, 2, 3, 4, 5, 6]
@@ -38,4 +39,9 @@ class ImageItem extends Component {
     }
 }
 
-export default ImageItem;
+const mapReduxStateToProps = (reduxState) => {
+    return reduxState;
+}
+
+
+export default (connect(mapReduxStateToProps)(ImageItem));

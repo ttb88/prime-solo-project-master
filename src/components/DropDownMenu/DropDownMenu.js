@@ -39,13 +39,7 @@ class DropDownMenu extends Component {
         genre: '',
     };
 
-    componentDidMount() {
-        this.props.dispatch({ type:'FETCH_GENRES'});
-        // this.setState({
-        //     labelWidth: ReactDOM.findDOMNode(this.InputLabelRef).offsetWidth,
-        // });
-    }
-
+  
     handleChange = event => {
         this.setState({ genre: event.target.value });
     };
@@ -55,7 +49,7 @@ class DropDownMenu extends Component {
         this.setState({
             genre: '',
         });
-        this.props.history.push("/generator");
+        this.props.history.push("playlist-gen");
     }
 
 

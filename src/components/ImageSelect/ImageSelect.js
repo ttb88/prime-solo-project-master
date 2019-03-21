@@ -17,7 +17,7 @@ class ImageSelect extends Component {
         const images = this.props.images;
         console.log('image array', images);
         let number = 1
-        return images.slice(10,16).map(image => <ImageItem image={image} number={number++} key={image.id}/>)
+        return images.slice(10, 16).map(image => <ImageItem history={this.props.history} image={image} number={number++} key={image.id}/>)
     }
 
     render() {
