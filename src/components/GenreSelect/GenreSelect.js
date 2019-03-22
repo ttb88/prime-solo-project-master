@@ -14,11 +14,19 @@ class GenreSelect extends Component {
     render() {
         return (
             <>
+                <div className="center-contents">
+                <div className="grid-center-container">
+                    <div className="grid-item-1">
                 <div className="header-text">
                     <h2>Select Genre</h2>
                 </div>
+                </div>
+                    <div className="grid-item-2">
                 <div className="drop-down-menu">
                     <DropDownMenu history={this.props.history} />
+                </div>
+                </div>
+                </div>
                 </div>
                 {/* <button className="next-button" onClick={this.handleClick}>next</button> */}
             </>

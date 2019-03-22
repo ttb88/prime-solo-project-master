@@ -48,7 +48,7 @@ res.sendStatus(204);
 });
 
 let jsonData = {
-    name: 'New Playlist 1',
+    name: 'New Playlist',
     public: false,
     description: 'enjoy...',
 }

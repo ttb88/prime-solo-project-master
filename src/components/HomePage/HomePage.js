@@ -33,10 +33,18 @@ class HomePage extends Component {
         // const { classes } = this.props;
 
         return (
-                <div className="center-contents">
-                    <h1>stream</h1>
-                    <button onClick={this.handleClick}>create playlist</button>
+            <div className="center-contents">
+            <div className="grid-center-container">
+                <div className="grid-item-1">
+                    <h1>stream</h1>   
+            </div >
+                <div className="grid-item-2">
+                <button  onClick={this.handleClick}>create playlist</button>
                 </div>
+
+
+            </div>
+            </div>
         );
     }
 }
