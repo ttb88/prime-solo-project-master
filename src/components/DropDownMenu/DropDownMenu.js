@@ -36,19 +36,20 @@ const styles = theme => ({
 
 class DropDownMenu extends Component {
     state = {
-        genre: '',
+       genre_id: ''
     };
 
-  
     handleChange = event => {
-        this.setState({ genre: event.target.value });
+        console.log(event.target.value);
+        this.setState({ 
+            genre_id: event.target.value
+        });
     };
 
-    handleSubmit = () => {
-        this.props.dispatch({ type: 'SET_SELECTED_GENRE', payload: this.state.genre });
-        
+    handleSubmit = () => {       
+        this.props.dispatch({ type: 'ADD_GENRE', payload: this.state })
         this.setState({
-            genre: '',
+            genre_id: '',
         });
         this.props.history.push("/playlist-gen");
     }
@@ -106,7 +107,7 @@ class DropDownMenu extends Component {
                 fullWidth
                 label="Select a genre"
                 className={classes.textField}
-                value={this.state.genre}
+                value={this.state.genre_id}
                 onChange={this.handleChange}
                 SelectProps={{
                     MenuProps: {

@@ -1,5 +1,9 @@
 import axios from 'axios';
 import { takeEvery, put as dispatch } from 'redux-saga/effects';
+import selectReducer from '../reducers/selectReducer';
+
+console.log('select reducer', selectReducer);
+
 
 function* spotifySaga() {
     yield takeEvery('GENERATE_PLAYLIST', generatePlaylist);
@@ -8,7 +12,7 @@ function* spotifySaga() {
 
 function* generatePlaylist() {
     try {
-        yield axios.post('api/spotify');
+        yield axios.get('api/spotify');
     } catch (error) {
         console.log('this was an error with fetching data');
     }
@@ -16,8 +20,15 @@ function* generatePlaylist() {
 
 function* getTracks() {
     try {
-        const spotifyTracks = yield axios.get('api/spotify/token');
-        console.log('spotify tracks',spotifyTracks.data[0].id);
+        // const spotifyTracks = yield axios.get('api/spotify/token');
+        // console.log('spotify tracks',spotifyTracks.data[0].uri);
+        // let playlistTracks = spotifyTracks.data.map(track => track.uri);
+        // console.log('allTracks', playlistTracks);
+         // yield dispatch({type: 'SET_PLAYLIST_TRACKS', payload: playlistTracks})
+        yield axios.post('api/spotify/playlist');
+        const embedURL = yield axios.get('api/spotify/widgetURL');
+        console.log('embedURL', embedURL.data);
+        
     } catch (error) {
         console.log('this was an error with fetching data');
     }

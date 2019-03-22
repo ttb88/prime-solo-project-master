@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './PlayerPage';
+import './PlayerPage.css';
 import axios from 'axios';
 
 let jsonData = {
@@ -16,7 +16,7 @@ let jsonDataTracks = {
 class PlayerPage extends Component {
 
     componentDidMount() {
-        document.getElementById("new-background").style.backgroundImage = "url(images/photo-1452723312111-3a7d0db0e024.jpeg)";
+        document.getElementById("new-background").style.backgroundImage = "url(images/photo-1441155472722-d17942a2b76a.jpeg)";
         this.props.dispatch({ type: 'FETCH_TRACKS' });
     }
 
@@ -56,11 +56,15 @@ class PlayerPage extends Component {
 
         return (
             <div id="new-background" className="bckgrnd-container">
-            <div className="center-contents">
+            {/* <div className="center-contents">
                 <h1>player page</h1>
-            </div>
-            <button onClick={this.handleClick}>get playlist</button>
-            <button onClick={this.handleAddTrack}>add track</button>
+            </div> */}
+            <div className="playlist-widget">
+                    <iframe src="https://open.spotify.com/embed/user/tbraasch/playlist/18penI6CU3lzOH1uHr20sw" 
+                    width="800" height="380" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                </div>
+            {/* <button onClick={this.handleClick}>get playlist</button>
+            <button onClick={this.handleAddTrack}>add track</button> */}
             </div>
         );
     }

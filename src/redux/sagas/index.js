@@ -5,6 +5,7 @@ import userSaga from './userSaga';
 import spotifySaga from './spotifySaga';
 import imageSaga from './imageSaga';
 import genreSaga from './genreSaga';
+import selectionSaga from './selectionSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -21,5 +22,6 @@ export default function* rootSaga() {
     spotifySaga(),
     imageSaga(),
     genreSaga(),
+    selectionSaga(),
   ]);
 }
