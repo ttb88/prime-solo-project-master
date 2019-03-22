@@ -46,6 +46,7 @@ class DropDownMenu extends Component {
 
     handleSubmit = () => {
         this.props.dispatch({ type: 'SET_SELECTED_GENRE', payload: this.state.genre });
+        
         this.setState({
             genre: '',
         });

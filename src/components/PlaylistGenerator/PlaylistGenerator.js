@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import './PlaylistGenerator.css'
 
 
@@ -6,6 +7,7 @@ import './PlaylistGenerator.css'
 class PlaylistGenerator extends Component {
 
     componentDidMount() {
+        this.props.dispatch({ type: 'GENERATE_PLAYLIST' });
         this.move(); 
     }
 
@@ -48,4 +50,9 @@ handleClick = () => {
     }
 }
 
-export default PlaylistGenerator;
+const mapReduxStateToProps = (reduxState) => {
+    return reduxState;
+}
+
+
+export default (connect(mapReduxStateToProps)(PlaylistGenerator));

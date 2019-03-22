@@ -13,7 +13,7 @@ const spotifyAuthRouter = require('./routes/spotifyAuth.router');
 const imageRouter = require('./routes/image.router');
 const genreRouter = require('./routes/genre.router');
 // const userRouter = require('./routes/user.router');
-// const spotifyAPIRouter = require('./routes/spotifyAPI.router');
+const spotifyAPIRouter = require('./routes/spotifyAPI.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -31,7 +31,7 @@ app.use('/', spotifyAuthRouter);
 app.use('/api/image', imageRouter);
 app.use('/api/genre', genreRouter);
 // app.use('/api/user', userRouter);
-// app.use('/api/spotify', spotifyAPIRouter);
+app.use('/api/spotify', spotifyAPIRouter);
 
 
 // Serve static files

@@ -1,16 +1,23 @@
 import axios from 'axios';
 import { takeEvery, put as dispatch } from 'redux-saga/effects';
 
-
 function* spotifySaga() {
-    yield takeEvery('FETCH_DATA', fetchData);
+    yield takeEvery('GENERATE_PLAYLIST', generatePlaylist);
+    yield takeEvery('FETCH_TRACKS', getTracks)
 }
 
-function* fetchData() {
+function* generatePlaylist() {
     try {
-        const tokenResponse = yield axios.get('/api/spotify');
-        console.log('tokenResponse', tokenResponse.data);
-        yield dispatch({ type: 'SET_DATA', payload: tokenResponse.data});
+        yield axios.post('api/spotify');
+    } catch (error) {
+        console.log('this was an error with fetching data');
+    }
+}
+
+function* getTracks() {
+    try {
+        const spotifyTracks = yield axios.get('api/spotify/token');
+        console.log('spotify tracks',spotifyTracks.data[0].id);
     } catch (error) {
         console.log('this was an error with fetching data');
     }
