@@ -77,20 +77,7 @@ const router = express.Router();
 
 
 
-addTracks = () => {
-    axios({
-        method: 'POST',
-        url: newPlaylistURL,
-        data: playlistTracks,
-        dataType: 'json',
-        headers: {
-            'Authorization': 'Bearer ' + access_token,
-            'Content-Type': 'application/json'
-        }
-    }).then(res => {
-        console.log('res after tracks created', res.data);
-    })
-}
+
 
 
 
@@ -189,7 +176,6 @@ router.put('/playlist', async (req, res) => {
     try {
         let selections = req.body;
         console.log('selections', selections);
-        
         let selectionID = await getSelectionID(selections);
         let access_token = await getToken();
         let spotifyUserInfo = await getUserInfo(access_token);
@@ -198,13 +184,15 @@ router.put('/playlist', async (req, res) => {
         console.log('genre-name', genreName);
         let playlistTracks = await getPlaylistTracks(access_token, genreName, selections, spotifyUserInfo);
         console.log('playlistTracks', playlistTracks);
-        let playlistURL = await createPlaylist(access_token, spotifyUserInfo, selections);
-        console.log('playlistURL', playlistURL);
+        let playlistURLS = await createPlaylist(access_token, spotifyUserInfo, selections);
+        console.log('playlistURL', playlistURLS);
+        let tracksAddedResponse = await addTracksToPlaylist(access_token, playlistURLS.newPlaylistURL, playlistTracks);
+        console.log('tracksAddedResponse', tracksAddedResponse);
+        res.send(playlistURLS.embedURL)
     }
-    catch {
-
+    catch (error) {
+        console.log('error completing Spotify playlist creation', error);
     }
-    // let newPlaylist = createPlaylist(token);
 })
 
 // get Spotify account info for logged in user
@@ -238,7 +226,7 @@ getSelectionID = async (selections) => {
     try {
         const client = await pool.connect();
         console.log('in get Selection ID', selections);
-        
+
         let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, playlist_title, playlist_description) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
             [selections.image_id, selections.genre_id, selections.spotify_id, selections.playlist_title, selections.playlist_description]);
         let selectionID = results.rows[0].id;
@@ -299,9 +287,29 @@ createPlaylist = async (access_token, spotifyUserInfo, selections) => {
             }
         })
         const newPlaylistURL = response.data.tracks.href;
-        return newPlaylistURL
+        const embedURL = response.data.id
+        return { newPlaylistURL, embedURL }
     } catch (error) {
-        console.log('error creating playlist on Spotify API and returning playlist URL', error);
+        console.log('error creating playlist on Spotify API and returning playlist URLs', error);
+    }
+}
+
+addTracksToPlaylist = async (access_token, newPlaylistURL, playlistTracks) => {
+    try {
+        const response = await axios({
+            method: 'POST',
+            url: newPlaylistURL,
+            data: playlistTracks,
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + access_token,
+                'Content-Type': 'application/json'
+            }
+        })
+        const tracksAddedResponse = response;
+        return tracksAddedResponse
+    } catch (error) {
+        console.log('error adding tracks to playlist on Spotify API', error);
     }
 }
 
