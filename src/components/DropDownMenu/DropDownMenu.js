@@ -36,7 +36,6 @@ const styles = theme => ({
 
 class DropDownMenu extends Component {
     state = {
-        
        genre_id: ''
     };
 
@@ -47,12 +46,12 @@ class DropDownMenu extends Component {
         });
     };
 
-    handleSubmit = () => {       
-        this.props.dispatch({ type: 'SET_GENRE', payload: this.state.genre_id })
-        this.setState({
+    handleSubmit = async() => {       
+        await this.props.dispatch({ type: 'SET_GENRE', payload: this.state.genre_id })
+        await this.setState({
             genre_id: '',
         });
-        this.props.dispatch({type: 'POST_SELECTIONS', payload: this.props.itemSelections})
+        await this.props.dispatch({type: 'POST_SELECTIONS', payload: this.props.itemSelections})
 
         this.props.history.push("/playlist-gen");
     }

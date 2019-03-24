@@ -33,7 +33,7 @@ class ImageItem extends Component {
   
         return (
             <div className={`image-grid-item${this.props.number}`}>
-                <img src={this.props.image.image_path} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image)} />
+                <img src={this.props.image.image_path} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image.id)} />
             </div>
         );
     }

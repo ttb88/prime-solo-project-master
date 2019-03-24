@@ -5,7 +5,7 @@ import itemSelections from './selectReducer';
 import playlistTracks from './playlistTracksReducer';
 // import errors from './errorsReducer';
 // import loginMode from './loginModeReducer';
-import user from './userReducer';
+// import user from './userReducer';
 
 
 // rootReducer is the primary reducer for our entire project
@@ -17,7 +17,7 @@ import user from './userReducer';
 const rootReducer = combineReducers({
   // errors, // contains registrationMessage and loginMessage
   // loginMode, // will have a value of 'login' or 'registration' to control which screen is shown
-  user, // will include spotifyID of current user
+  // user, // will include spotifyID of current user
   images, // will include all image paths to images from 'image' table on database
   genres, //will include all genre paths to genre from 'genre' table on database
   itemSelections, //will hold all user selctions

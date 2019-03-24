@@ -1,11 +1,11 @@
 import { all } from 'redux-saga/effects';
-import loginSaga from './loginSaga';
-import registrationSaga from './registrationSaga';
+// import loginSaga from './loginSaga';
+// import registrationSaga from './registrationSaga';
 import userSaga from './userSaga';
 import spotifySaga from './spotifySaga';
 import imageSaga from './imageSaga';
 import genreSaga from './genreSaga';
-import selectionSaga from './selectionSaga';
+// import selectionSaga from './selectionSaga';
 
 // rootSaga is the primary saga.
 // It bundles up all of the other sagas so our project can use them.
@@ -16,12 +16,12 @@ import selectionSaga from './selectionSaga';
 // and login triggers setting the user
 export default function* rootSaga() {
   yield all([
-    loginSaga(),
-    registrationSaga(),
+    // loginSaga(),
+    // registrationSaga(),
     userSaga(),
     spotifySaga(),
     imageSaga(),
     genreSaga(),
-    selectionSaga(),
+    // selectionSaga(),
   ]);
 }

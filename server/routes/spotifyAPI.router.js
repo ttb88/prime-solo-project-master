@@ -132,9 +132,9 @@ router.get('/token', (req, res) => {
 
 
 // new server code
-
 let selections = [];
 
+// match spotify account id to id on 'spotify user' database table and return to client side
 router.get('/user', async (req, res) => {
     try {
         let token = await getToken();
@@ -185,14 +185,13 @@ router.get('/playlist', (req, res) => {
     let newPlaylist = createPlaylist(token);
 })
 
+// get Spotify account info for logged in user
 getUserInfo = async (access_token) => {
     try {
         const response = await axios({
             method: 'GET',
             url: 'https://api.spotify.com/v1/me',
-            headers: {
-                'Authorization': 'Bearer ' + access_token,
-            }
+            headers: {'Authorization': 'Bearer ' + access_token,}
         })
         const spotifyUserInfo = response.data
         return spotifyUserInfo
@@ -201,7 +200,7 @@ getUserInfo = async (access_token) => {
     }
 }
 
-
+// get current access_token
 getToken = async () => {
     try {
         const client = await pool.connect();

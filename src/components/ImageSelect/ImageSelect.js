@@ -9,8 +9,8 @@ import './ImageSelect.css';
 class ImageSelect extends Component {
 
     componentDidMount(){
-        this.props.dispatch({type: 'FETCH_IMAGES'})
-        this.props.dispatch({type: 'FETCH_USER'})
+        this.props.dispatch({type: 'FETCH_IMAGES'});
+        this.props.dispatch({type: 'FETCH_USER'});
     }
 
     displayImages = () => {
