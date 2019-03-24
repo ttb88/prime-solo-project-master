@@ -136,29 +136,43 @@ router.get('/token', (req, res) => {
 let selections = [];
 
 router.get('/user', async (req, res) => {
-    const client = await pool.connect();
     try {
-        const result = await client.query(`SELECT "access_token" FROM "spotify_token"`)
-        const access_token = result.rows[0].access_token; 
-        
-        const response = await axios({
-            method: 'GET',
-            url: 'https://api.spotify.com/v1/me',
-            headers: {
-                'Authorization': 'Bearer ' + access_token,
-            }
-        })
-            const spotifyUserID = response.data.id
-            console.log('response data', spotifyUserID);
-            res.send(spotifyUserID);
-            
+        let token = await getToken();
+        let spotifyUserInfo = await getUserInfo(token);
+        console.log('spotifyID', spotifyUserInfo);
+        const client = await pool.connect();
+        const result = await client.query(`SELECT "id" AS "spotify_id" FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyUserInfo.id])    
+        let spotifyUserID = result.rows[0];
+        res.send(spotifyUserID);
     } catch (error) {
-        console.log('error', error);   
+        console.log('error getting user info in get request from Saga', error);
     }
 });
-   
-   
-router.post('/selections', (req,res) => {
+
+
+// const client = await pool.connect();
+// try {
+//     const result = await client.query(`SELECT "access_token" FROM "spotify_token"`)
+//     const access_token = result.rows[0].access_token; 
+
+//     const response = await axios({
+//         method: 'GET',
+//         url: 'https://api.spotify.com/v1/me',
+//         headers: {
+//             'Authorization': 'Bearer ' + access_token,
+//         }
+//     })
+//         const spotifyUserID = response.data.id
+//         console.log('response data', spotifyUserID);
+//         res.send(spotifyUserID);
+
+// } catch (error) {
+//     console.log('error', error);   
+// }
+// });
+
+
+router.post('/selections', (req, res) => {
     selections.push[req.body]
     res.sendStatus(201);
 })
@@ -166,34 +180,39 @@ router.post('/selections', (req,res) => {
 
 router.get('/playlist', (req, res) => {
     // let userInfo = getUserInfo();
-    let token = getToken();
+    // let token = getToken();
     let playlistTracks = getPlaylist(token, selections);
     let newPlaylist = createPlaylist(token);
 })
 
-getUserInfo = (access_token) => {
-    axios({
-        method: 'GET',
-        url: 'https://api.spotify.com/v1/me',
-        headers: {
-            'Authorization': 'Bearer ' + access_token,
-        }
-    }).then(res => {
-        let user = res.data
-        return user
-    }).catch(error => {
-        console.log('there was an error', error);
-    })
+getUserInfo = async (access_token) => {
+    try {
+        const response = await axios({
+            method: 'GET',
+            url: 'https://api.spotify.com/v1/me',
+            headers: {
+                'Authorization': 'Bearer ' + access_token,
+            }
+        })
+        const spotifyUserInfo = response.data
+        return spotifyUserInfo
+    } catch (error) {
+        console.log('error getting Spotify user info from API', error);
+    }
 }
 
-getToken = () => {
-    console.log('running getToken function');
-    pool.query(`SELECT "access_token" FROM "spotify_token"`)
-        .then((result) => {
-            access_token = result.rows[0].access_token;  
-            return access_token; 
-        }); 
+
+getToken = async () => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query(`SELECT "access_token" FROM "spotify_token"`)
+        const access_token = result.rows[0].access_token;
+        return access_token;
+    } catch (error) {
+        console.log('error getting current access token from database', error);
     }
+}
+
 
 getPlaylist = (access_token, selections) => {
     axios({
