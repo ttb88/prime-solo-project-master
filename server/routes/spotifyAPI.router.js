@@ -141,7 +141,7 @@ router.get('/user', async (req, res) => {
         let spotifyUserInfo = await getUserInfo(token);
         console.log('spotifyID', spotifyUserInfo);
         const client = await pool.connect();
-        const result = await client.query(`SELECT "id" AS "spotify_id" FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyUserInfo.id])    
+        const result = await client.query(`SELECT "id" AS "spotify_id" FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyUserInfo.id])
         let spotifyUserID = result.rows[0];
         res.send(spotifyUserID);
     } catch (error) {
@@ -174,36 +174,31 @@ router.get('/user', async (req, res) => {
 
 // router.post('/selections', async (req, res) => {
 //     console.log('in selection', req.body);
-    
+
 //     const client = await pool.connect();
 //     let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, title, description) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
 //     [req.body.image_id, req.body.genre_id, req.body.spotify_id, req.body.playlist_title, req.body.playlist_description]);
 //     let currentPlaylistID = results.rows[0].id;
 //     console.log('current client id', currentPlaylistID);
-    
+
 //     res.send(currentPlaylistID); 
 // })
 
 
 router.put('/playlist', async (req, res) => {
     try {
-        let selectionID = await getSelectionID(req.body);
-        console.log('selectionID', selectionID);
-         
-
-        // let token = await getToken();
-        // let spotifyUserInfo = await getUserInfo(token);
-        // let genreName = await getGenreName(selections.genre_id);
-        // console.log('genre-name', genreName);
-        // let playlistTracks = await getPlaylist(token, selections, spotifyUserInfo);
-
+        let selections = req.body;
+        let selectionID = await getSelectionID(selections);
+        let access_token = await getToken();
+        let spotifyUserInfo = await getUserInfo(access_token);
+        let genreName = await getGenreName(selections.genre_id);
+        console.log('genre-name', genreName);
+        let playlistTracks = await getPlaylist(access_token, genreName, selections, spotifyUserInfo);
+        console.log('playlistTracks', playlistTracks);
     }
     catch {
 
     }
-    // let userInfo = getUserInfo();
-    // let token = getToken();
-    // let playlistTracks = getPlaylist(token, selections);
     // let newPlaylist = createPlaylist(token);
 })
 
@@ -213,7 +208,7 @@ getUserInfo = async (access_token) => {
         const response = await axios({
             method: 'GET',
             url: 'https://api.spotify.com/v1/me',
-            headers: {'Authorization': 'Bearer ' + access_token,}
+            headers: { 'Authorization': 'Bearer ' + access_token, }
         })
         const spotifyUserInfo = response.data
         return spotifyUserInfo
@@ -249,11 +244,11 @@ getSelectionID = async (selections) => {
 getGenreName = async (genreID) => {
     try {
         console.log('in getGenreName', genreID);
-        
+
         const client = await pool.connect();
         const result = await client.query(`SELECT "genre_name" FROM "genre" WHERE "id"=$1;`, [genreID])
         console.log('genre result', result.rows);
-        
+
         const genreName = result.rows[0].genre_name;
         return genreName;
     } catch (error) {
@@ -262,22 +257,20 @@ getGenreName = async (genreID) => {
 }
 
 
-getPlaylist = (access_token, selections) => {
-    axios({
-        method: 'GET',
-        url: `https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_genres=${genre}&max_energy=.6&target_energy=.3&max_valence=.6&target_valence=.4`,
-        headers: {
-            'Authorization': 'Bearer ' + access_token,
-        }
-    }).then(res => {
-        console.log('res', res.data);
-        playlistTracks = res.data.tracks.map(track => track.uri);
+getPlaylist = async (access_token, genreName, selections, spotifyUserInfo) => {
+    try {
+        const response = await axios({
+            method: 'GET',
+            url: `https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_genres=${genreName}&max_energy=.6&target_energy=.3&max_valence=.6&target_valence=.4`,
+            headers: {
+                'Authorization': 'Bearer ' + access_token,
+            }
+        })
+        const playlistTracks = response.data.tracks.map(track => track.uri);
         return playlistTracks;
-    }).catch((error) => {
-        console.log('error getting playlist', error);
-        res.sendStatus(500);
-    })
-
+    } catch (error) {
+        console.log('error getting playlist tracks from Spotify API', error);
+    }
 }
 
 createPlaylist = (access_token) => {
