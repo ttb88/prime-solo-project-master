@@ -12,6 +12,7 @@ class GenreSelect extends Component {
 
 
     render() {
+       
         return (
             <>
                 <div className="center-contents">

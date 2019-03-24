@@ -2,27 +2,26 @@ import axios from 'axios';
 import { takeEvery, put as dispatch } from 'redux-saga/effects';
 
 function* selectionSaga() {
-    yield takeEvery('ADD_IMAGE', addImage);
-    yield takeEvery('ADD_GENRE', addGenre);
+    yield takeEvery('POST_SELECTIONS', postSelections);
 }
 
-function* addImage(action) {
+function* postSelections(action) {
     try {
-        console.log('add image', action.payload);
-        yield axios.post('api/spotify/image', action.payload);
+        console.log('post selections', action.payload);
+        yield axios.post('api/spotify/selections', action.payload);
     } catch (error) {
-        console.log('this was an error with posting data');
+        console.log('this was an error with setting selection');
     }
 }
 
-function* addGenre(action) {
-    try {
-        console.log('add image', action.payload);
-        yield axios.post('api/spotify/genre', action.payload);
-    } catch (error) {
-        console.log('this was an error with posting data');
-    }
-}
+// function* addGenre(action) {
+//     try {
+//         console.log('add image', action.payload);
+//         yield axios.post('api/spotify/genre', action.payload);
+//     } catch (error) {
+//         console.log('this was an error with posting data');
+//     }
+// }
 
 // function* getTracks() {
 //     try {

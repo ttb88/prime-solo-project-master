@@ -25,7 +25,7 @@ import '../ImageSelect/ImageSelect.css'
 class ImageItem extends Component {
 
     handleImageClick = id => () => {
-        this.props.dispatch({ type: 'ADD_IMAGE', payload: id})
+        this.props.dispatch({ type: 'SET_IMAGE', payload: id})
         this.props.history.push("/genre");
     }
 

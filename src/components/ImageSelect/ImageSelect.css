@@ -9,7 +9,7 @@ p {
 }
 
 .images-grid-container {
-    margin: 20px 120px;
+    margin: 20px 220px;
     display: grid;
     grid-template-columns: repeat(13, 1fr);
     grid-template-rows: repeat(2, 20vw);

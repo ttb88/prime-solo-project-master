@@ -36,6 +36,7 @@ const styles = theme => ({
 
 class DropDownMenu extends Component {
     state = {
+        
        genre_id: ''
     };
 
@@ -47,54 +48,20 @@ class DropDownMenu extends Component {
     };
 
     handleSubmit = () => {       
-        this.props.dispatch({ type: 'ADD_GENRE', payload: this.state })
+        this.props.dispatch({ type: 'SET_GENRE', payload: this.state.genre_id })
         this.setState({
             genre_id: '',
         });
+        this.props.dispatch({type: 'POST_SELECTIONS', payload: this.props.itemSelections})
+
         this.props.history.push("/playlist-gen");
     }
 
 
     render() {
-        
         const { classes } = this.props;
 
         return (
-            
-
-
-        //     <FormControl variant="outlined" className={classes.formControl}>
-        //         <InputLabel 
-        //             ref={ref => {
-        //                 this.InputLabelRef = ref;
-        //             }}
-        //             htmlFor="outlined-genre-simple"
-        //         >
-        //             Genre
-        //   </InputLabel>
-        //         <Select
-        //             value={this.state.genre}
-        //             onChange={this.handleChange}
-        //             input={
-        //                 <OutlinedInput
-        //                     labelWidth={this.state.labelWidth}
-        //                     name="genre"
-        //                     id="outlined-age-simple"
-        //                 />
-        //             }
-        //         >
-        //             <MenuItem value="">
-        //                 <em>select...</em>
-        //             </MenuItem>
-        //             {this.displayGenreItems()}
-
-        //             {/* <MenuItem value={10}>Ten</MenuItem>
-        //             <MenuItem value={20}>Twenty</MenuItem>
-        //             <MenuItem value={30}>Thirty</MenuItem> */}
-        //         </Select>
-
-
-        //     </FormControl>
             <ValidatorForm
                 ref="form"
                 onSubmit={this.handleSubmit}

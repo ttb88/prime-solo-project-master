@@ -55,7 +55,8 @@ class PlayerPage extends Component {
     render() {
 
         return (
-            <div id="new-background" className="bckgrnd-container">
+       
+            <div id="new-background" className="bckgrnd-container"> 
             {/* <div className="center-contents">
                 <h1>player page</h1>
             </div> */}

@@ -54,7 +54,7 @@ router.get('/callback', function (req, res) {
 })
 
 // make get requst for user's Spotify info
-userInfo = access_token => {
+userInfo = (access_token) => {
   axios({
     method: 'GET',
     url: 'https://api.spotify.com/v1/me',
