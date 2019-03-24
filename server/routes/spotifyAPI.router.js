@@ -5,13 +5,13 @@ const router = express.Router();
 // const SpotifyWebApi = require('spotify-web-api-node');
 // const spotifyApi = new SpotifyWebApi();
 
-let playlistTracks = [];
-// let selections = {
-//     image_id: '',
-//     genre_id: '',
-// };
-let newPlaylist;
-let embed = '';
+// let playlistTracks = [];
+// // let selections = {
+// //     image_id: '',
+// //     genre_id: '',
+// // };
+// let newPlaylist;
+// let embed = '';
 
 
 // let selectedGenre = ''
@@ -24,36 +24,36 @@ let embed = '';
 
 // let access_token = '';
 
-router.get('/', (req, res) => {
-    console.log('inside spotify get');
-    pool.query(`SELECT "access_token" FROM "spotify_token"`)
-        .then((result) => {
-            access_token = result.rows[0].access_token;
-            // res.send(token)
-            axios({
-                method: 'GET',
-                url: `https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_genres=ambient&max_energy=.6&target_energy=.3&max_valence=.6&target_valence=.4`,
-                headers: {
-                    'Authorization': 'Bearer ' + access_token,
-                }
-            }).then(res => {
-                console.log('res', res.data);
-                playlistTracks = res.data.tracks.map(track => track.uri);
-            }).catch((error) => {
-                console.log('error', error);
-                res.sendStatus(500);
-            })
-        })
-    res.sendStatus(204);
-});
+// router.get('/', (req, res) => {
+//     console.log('inside spotify get');
+//     pool.query(`SELECT "access_token" FROM "spotify_token"`)
+//         .then((result) => {
+//             access_token = result.rows[0].access_token;
+//             // res.send(token)
+//             axios({
+//                 method: 'GET',
+//                 url: `https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_genres=ambient&max_energy=.6&target_energy=.3&max_valence=.6&target_valence=.4`,
+//                 headers: {
+//                     'Authorization': 'Bearer ' + access_token,
+//                 }
+//             }).then(res => {
+//                 console.log('res', res.data);
+//                 playlistTracks = res.data.tracks.map(track => track.uri);
+//             }).catch((error) => {
+//                 console.log('error', error);
+//                 res.sendStatus(500);
+//             })
+//         })
+//     res.sendStatus(204);
+// });
 
-let jsonData = {
-    name: 'New Playlist',
-    public: false,
-    description: 'enjoy...',
-}
+// let jsonData = {
+//     name: 'New Playlist',
+//     public: false,
+//     description: 'enjoy...',
+// }
 
-let newPlaylistURL = '';
+// let newPlaylistURL = '';
 
 
 // router.post('/playlist', (req, res) => {
@@ -94,10 +94,10 @@ addTracks = () => {
 
 
 
-router.get('/widgetURL', (req, res) => {
-    console.log('embedurl', embed);
-    res.send(embed)
-})
+// router.get('/widgetURL', (req, res) => {
+//     console.log('embedurl', embed);
+//     res.send(embed)
+// })
 
 
 
@@ -113,21 +113,21 @@ router.get('/widgetURL', (req, res) => {
 // }
 
 
-router.post('/image', (req, res) => {
-    console.log('selection', req.body);
-    selections.image_id = req.body.id;
-})
+// router.post('/image', (req, res) => {
+//     console.log('selection', req.body);
+//     selections.image_id = req.body.id;
+// })
 
-router.post('/genre', (req, res) => {
-    console.log('selection', req.body);
-    selections.genre_id = req.body.genre_id;
-    console.log('selections', selections)
-})
+// router.post('/genre', (req, res) => {
+//     console.log('selection', req.body);
+//     selections.genre_id = req.body.genre_id;
+//     console.log('selections', selections)
+// })
 
 
-router.get('/token', (req, res) => {
-    res.send(request)
-})
+// router.get('/token', (req, res) => {
+//     res.send(request)
+// })
 
 
 
@@ -188,13 +188,18 @@ router.get('/user', async (req, res) => {
 router.put('/playlist', async (req, res) => {
     try {
         let selections = req.body;
+        console.log('selections', selections);
+        
         let selectionID = await getSelectionID(selections);
         let access_token = await getToken();
         let spotifyUserInfo = await getUserInfo(access_token);
+        console.log('spotifyUserInfo', spotifyUserInfo.id);
         let genreName = await getGenreName(selections.genre_id);
         console.log('genre-name', genreName);
-        let playlistTracks = await getPlaylist(access_token, genreName, selections, spotifyUserInfo);
+        let playlistTracks = await getPlaylistTracks(access_token, genreName, selections, spotifyUserInfo);
         console.log('playlistTracks', playlistTracks);
+        let playlistURL = await createPlaylist(access_token, spotifyUserInfo, selections);
+        console.log('playlistURL', playlistURL);
     }
     catch {
 
@@ -232,7 +237,9 @@ getToken = async () => {
 getSelectionID = async (selections) => {
     try {
         const client = await pool.connect();
-        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, title, description) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
+        console.log('in get Selection ID', selections);
+        
+        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, playlist_title, playlist_description) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
             [selections.image_id, selections.genre_id, selections.spotify_id, selections.playlist_title, selections.playlist_description]);
         let selectionID = results.rows[0].id;
         return selectionID
@@ -257,7 +264,7 @@ getGenreName = async (genreID) => {
 }
 
 
-getPlaylist = async (access_token, genreName, selections, spotifyUserInfo) => {
+getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo) => {
     try {
         const response = await axios({
             method: 'GET',
@@ -273,23 +280,29 @@ getPlaylist = async (access_token, genreName, selections, spotifyUserInfo) => {
     }
 }
 
-createPlaylist = (access_token) => {
-    axios({
-        method: 'POST',
-        url: `https://api.spotify.com/v1/users/tbraasch/playlists`,
-        data: jsonData,
-        dataType: 'json',
-        headers: {
-            'Authorization': 'Bearer ' + access_token,
-            'Content-Type': 'application/json'
+createPlaylist = async (access_token, spotifyUserInfo, selections) => {
+    try {
+        console.log('in create playlist,spotifyUserInfo ', spotifyUserInfo);
+        let jsonData = {
+            name: selections.playlist_title,
+            description: selections.playlist_description,
+            public: false,
         }
-    }).then(res => {
-        console.log('res after creating playlist', res.data.id);
-        newPlaylistURL = res.data.tracks.href;
-        embed = res.data.id
-        addTracks();
-    })
-
+        const response = await axios({
+            method: 'POST',
+            url: `https://api.spotify.com/v1/users/${spotifyUserInfo.id}/playlists`,
+            data: jsonData,
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + access_token,
+                'Content-Type': 'application/json'
+            }
+        })
+        const newPlaylistURL = response.data.tracks.href;
+        return newPlaylistURL
+    } catch (error) {
+        console.log('error creating playlist on Spotify API and returning playlist URL', error);
+    }
 }
 
 
