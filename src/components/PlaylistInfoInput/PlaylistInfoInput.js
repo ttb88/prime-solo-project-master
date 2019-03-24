@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './GenreSelect.css';
-import DropDownMenu from '../DropDownMenu/DropDownMenu';
+import InputForm from '../PlaylistInfoInput/InputForm';
 
 
-class GenreSelect extends Component {
+class PlaylistInfoInput extends Component {
 
-    componentDidMount() {
-        this.props.dispatch({ type: 'FETCH_GENRES' });
-    }
+    // componentDidMount() {
+    //     this.props.dispatch({ type: 'FETCH_GENRES' });
+    // }
 
 
     render() {
@@ -19,12 +18,12 @@ class GenreSelect extends Component {
                     <div className="grid-center-container">
                         <div className="grid-item-1">
                             <div className="header-text">
-                                <h2>Select Genre</h2>
+                                <h2>Name Playlist</h2>
                             </div>
                         </div>
                         <div className="grid-item-2">
-                            <div className="drop-down-menu">
-                                <DropDownMenu history={this.props.history} />
+                            <div className="input-fields">
+                                <InputForm history={this.props.history} />
                             </div>
                         </div>
                     </div>
@@ -39,4 +38,4 @@ const mapReduxStateToProps = (reduxState) => {
 }
 
 
-export default (connect(mapReduxStateToProps)(GenreSelect));
+export default (connect(mapReduxStateToProps)(PlaylistInfoInput));

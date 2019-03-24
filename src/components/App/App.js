@@ -10,6 +10,7 @@ import HomePage from '../HomePage/HomePage';
 import ImageSelect from '../ImageSelect/ImageSelect';
 import GenreSelect from '../GenreSelect/GenreSelect';
 import PlayerPage from '../PlayerPage/PlayerPage';
+import PlaylistInfoInput from '../PlaylistInfoInput/PlaylistInfoInput';
 import './App.css';
 import PlaylistGenerator from '../PlaylistGenerator/PlaylistGenerator';
 
@@ -54,6 +55,7 @@ class App extends Component {
           <Route exact path="/" component={HomePage} />
           <Route exact path="/image" component={ImageSelect} />
           <Route exact path="/genre" component={GenreSelect} />
+            <Route exact path="/playlist-name" component={PlaylistInfoInput} />
           <Route exact path="/playlist-gen" component={PlaylistGenerator} />
           <Route exact path="/player" component={PlayerPage} />
         </div>

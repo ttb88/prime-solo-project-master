@@ -51,9 +51,7 @@ class DropDownMenu extends Component {
         await this.setState({
             genre_id: '',
         });
-        await this.props.dispatch({type: 'POST_SELECTIONS', payload: this.props.itemSelections})
-
-        this.props.history.push("/playlist-gen");
+        this.props.history.push("/playlist-name");
     }
 
 

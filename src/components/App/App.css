@@ -76,6 +76,10 @@ button:hover {
     width: 300px;
 }
 
+.input-fields {
+    width: 500px;
+}
+
 .header-text {
     font-size: 23px;
 
