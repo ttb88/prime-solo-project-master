@@ -9,6 +9,8 @@ function* postSelections(action) {
     try {
         console.log('post selections', action.payload);
         yield axios.post('api/spotify/selections', action.payload);
+        // console.log('postSelctions saga', response.data);
+        
     } catch (error) {
         console.log('this was an error with setting selection');
     }

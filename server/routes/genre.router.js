@@ -8,7 +8,6 @@ const router = express.Router();
 // get all genres from 'genre' table on database
 router.get('/', (req, res) => {
     pool.query(`SELECT * FROM "genre";`).then((result) => {
-        // console.log('genre results', result.rows);
         res.send(result.rows);
     }).catch(error => {
         console.log('there was an error getting genres', error);

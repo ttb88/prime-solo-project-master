@@ -55,8 +55,7 @@ class InputForm extends Component {
             title: '',
             description: '',
         });
-        await this.props.dispatch({ type: 'POST_SELECTIONS', payload: this.props.itemSelections })
-
+        // await this.props.dispatch({ type: 'POST_SELECTIONS', payload: this.props.itemSelections })
         this.props.history.push("/playlist-gen");
     }
 

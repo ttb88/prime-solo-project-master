@@ -7,7 +7,7 @@ import './PlaylistGenerator.css'
 class PlaylistGenerator extends Component {
 
     componentDidMount() {
-        // this.props.dispatch({ type: 'GENERATE_PLAYLIST' });
+        this.props.dispatch({ type: 'GENERATE_PLAYLIST', payload: this.props.itemSelections });
         // this.move(); 
     }
 

@@ -7,14 +7,14 @@ console.log('select reducer', selectReducer);
 
 function* spotifySaga() {
     yield takeEvery('GENERATE_PLAYLIST', generatePlaylist);
-    yield takeEvery('FETCH_TRACKS', getTracks)
+    // yield takeEvery('FETCH_TRACKS', getTracks)
 }
 
-function* generatePlaylist() {
+function* generatePlaylist(action) {
     try {
-        yield axios.get('api/spotify');
+        yield axios.put('api/spotify/playlist', action.payload);
     } catch (error) {
-        console.log('this was an error with fetching data');
+        console.log('this was an error with generating playlist');
     }
 }
 

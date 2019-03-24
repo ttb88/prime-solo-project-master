@@ -9,7 +9,6 @@ function* genreSaga() {
 function* fetchGenres() {
     try {
         const genres = yield axios.get('api/genre');
-        console.log('genre reponse', genres.data);
         yield dispatch({ type: 'SET_GENRES', payload: genres.data });
     } catch (error) {
         console.log('this was an error with fetching data');

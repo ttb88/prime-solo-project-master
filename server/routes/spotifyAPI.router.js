@@ -56,24 +56,24 @@ let jsonData = {
 let newPlaylistURL = '';
 
 
-router.post('/playlist', (req, res) => {
-    axios({
-        method: 'POST',
-        url: `https://api.spotify.com/v1/users/tbraasch/playlists`,
-        data: jsonData,
-        dataType: 'json',
-        headers: {
-            'Authorization': 'Bearer ' + access_token,
-            'Content-Type': 'application/json'
-        }
-    }).then(res => {
-        console.log('res after creating playlist', res.data.id);
-        newPlaylistURL = res.data.tracks.href;
-        embed = res.data.id
-        addTracks();
-    })
-    res.sendStatus(201);
-})
+// router.post('/playlist', (req, res) => {
+//     axios({
+//         method: 'POST',
+//         url: `https://api.spotify.com/v1/users/tbraasch/playlists`,
+//         data: jsonData,
+//         dataType: 'json',
+//         headers: {
+//             'Authorization': 'Bearer ' + access_token,
+//             'Content-Type': 'application/json'
+//         }
+//     }).then(res => {
+//         console.log('res after creating playlist', res.data.id);
+//         newPlaylistURL = res.data.tracks.href;
+//         embed = res.data.id
+//         addTracks();
+//     })
+//     res.sendStatus(201);
+// })
 
 
 
@@ -132,7 +132,7 @@ router.get('/token', (req, res) => {
 
 
 // new server code
-let selections = [];
+// let selections = {};
 
 // match spotify account id to id on 'spotify user' database table and return to client side
 router.get('/user', async (req, res) => {
@@ -172,17 +172,39 @@ router.get('/user', async (req, res) => {
 // });
 
 
-router.post('/selections', (req, res) => {
-    selections.push[req.body]
-    res.sendStatus(201);
-})
+// router.post('/selections', async (req, res) => {
+//     console.log('in selection', req.body);
+    
+//     const client = await pool.connect();
+//     let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, title, description) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
+//     [req.body.image_id, req.body.genre_id, req.body.spotify_id, req.body.playlist_title, req.body.playlist_description]);
+//     let currentPlaylistID = results.rows[0].id;
+//     console.log('current client id', currentPlaylistID);
+    
+//     res.send(currentPlaylistID); 
+// })
 
 
-router.get('/playlist', (req, res) => {
+router.put('/playlist', async (req, res) => {
+    try {
+        let selectionID = await getSelectionID(req.body);
+        console.log('selectionID', selectionID);
+         
+
+        // let token = await getToken();
+        // let spotifyUserInfo = await getUserInfo(token);
+        // let genreName = await getGenreName(selections.genre_id);
+        // console.log('genre-name', genreName);
+        // let playlistTracks = await getPlaylist(token, selections, spotifyUserInfo);
+
+    }
+    catch {
+
+    }
     // let userInfo = getUserInfo();
     // let token = getToken();
-    let playlistTracks = getPlaylist(token, selections);
-    let newPlaylist = createPlaylist(token);
+    // let playlistTracks = getPlaylist(token, selections);
+    // let newPlaylist = createPlaylist(token);
 })
 
 // get Spotify account info for logged in user
@@ -209,6 +231,33 @@ getToken = async () => {
         return access_token;
     } catch (error) {
         console.log('error getting current access token from database', error);
+    }
+}
+
+getSelectionID = async (selections) => {
+    try {
+        const client = await pool.connect();
+        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, title, description) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
+            [selections.image_id, selections.genre_id, selections.spotify_id, selections.playlist_title, selections.playlist_description]);
+        let selectionID = results.rows[0].id;
+        return selectionID
+    } catch (error) {
+        console.log('error getting posting selections to database and returning selection id', error);
+    }
+}
+
+getGenreName = async (genreID) => {
+    try {
+        console.log('in getGenreName', genreID);
+        
+        const client = await pool.connect();
+        const result = await client.query(`SELECT "genre_name" FROM "genre" WHERE "id"=$1;`, [genreID])
+        console.log('genre result', result.rows);
+        
+        const genreName = result.rows[0].genre_name;
+        return genreName;
+    } catch (error) {
+        console.log('error getting genre name from database', error);
     }
 }
 
