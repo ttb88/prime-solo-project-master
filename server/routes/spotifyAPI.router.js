@@ -49,12 +49,13 @@ router.get('/playlist', async (req, res) => {
         console.log('inside player page get playlist');
         
         let access_token = await getToken();
+        console.log('got token', access_token);
         const response = await axios({
             method: 'GET',
             url: 'https://api.spotify.com/v1/me',
             headers: { 'Authorization': 'Bearer ' + access_token, }
         })
-        const spotifyUserInfo = response.data
+        const spotifyUserInfo = await response.data
         console.log('spotifyuserinfo');
 
         const client = await pool.connect();
@@ -68,10 +69,12 @@ router.get('/playlist', async (req, res) => {
             "spotify_user"."spotify_id", 
             "display_name",
             "genre_name",
+            "image_path",
             "date_created"
             FROM "playlist"
             JOIN "selection" ON "selection_id"="selection"."id"
             JOIN "genre" ON "genre_id" = "genre"."id"
+            JOIN "image" ON "selection"."image_id"="image"."id"
             JOIN "spotify_user" ON "playlist"."spotify_id"="spotify_user"."id"
             WHERE "spotify_user"."spotify_id"=$1
             ORDER BY "date_created" DESC;
@@ -105,7 +108,7 @@ getToken = async () => {
     try {
         const client = await pool.connect();
         const result = await client.query(`SELECT "access_token" FROM "spotify_token"`)
-        const access_token = result.rows[0].access_token;
+        const access_token = await result.rows[0].access_token;
         return access_token;
     } catch (error) {
         console.log('error getting current access token from database', error);

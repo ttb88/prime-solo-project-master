@@ -6,10 +6,17 @@ import './PlayerPage.css';
 
 class PlayerPage extends Component {
 
-    componentDidMount() {
-        this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
-        document.getElementById("new-background").style.backgroundImage = "url(images/photo-1441155472722-d17942a2b76a.jpeg)";
-        
+    componentDidMount = async () => {
+        await this.fetchPlaylist();
+        await this.updateBackground();
+    }
+
+    fetchPlaylist = async () => {
+        return this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
+    }
+
+    updateBackground = async () => {
+        return document.getElementById("new-background").style.backgroundImage = await `url(${this.props.currentPlaylistInfo.image_path})`;   
     }
 
     // handleClick = () => {
@@ -44,18 +51,18 @@ class PlayerPage extends Component {
 
     // }
 
- 
-
+  
 
     render() {
 
-        console.log('currentPlaylistInfo', this.props.currentPlaylistInfo);
+        console.log('currentPlaylistInfo', this.props.currentPlaylistInfo.image_path);
         
 
 
         return (
-      
+           
             <div id="new-background" className="bckgrnd-container"> 
+ 
 
            <div className="playlist-widget">
                     <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylistInfo.spotify_id}/playlist/${this.props.currentPlaylistInfo.playlist_id}`}
