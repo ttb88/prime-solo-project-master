@@ -10,9 +10,6 @@ class GenreSelect extends Component {
         this.props.dispatch({ type: 'FETCH_GENRES' });
     }
 
-    // handleClick = () => {
-    //     this.props.history.go(-1)
-    // }
 
 
     render() {
@@ -36,7 +33,7 @@ class GenreSelect extends Component {
 
 
                 </div>
-                <BackButton history={this.props.history} />
+                <button onClick={() => this.props.history.push('/image')} className="back-button button">back</button>
             </>
         );
     }

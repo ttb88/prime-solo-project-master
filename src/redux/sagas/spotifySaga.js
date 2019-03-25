@@ -19,7 +19,7 @@ function* generatePlaylist(action) {
 
 function* fetchPlaylists() {
     try {
-        let response = yield axios.get('api/playlist');
+        let response = yield axios.get('api/spotify/playlist');
         console.log(`user's playlists`, response.data);
         yield dispatch({ type: 'SET_USER_PLAYLISTS', payload: response.data[0] })
     } catch (error) {

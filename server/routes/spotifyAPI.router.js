@@ -36,12 +36,53 @@ router.put('/playlist', async (req, res) => {
         console.log('playlistURL', playlistInfo);
         let tracksAddedResponse = await addTracksToPlaylist(access_token, playlistInfo.tracks.href, playlistTracks);
         // console.log('tracksAddedResponse', tracksAddedResponse);
-        res.send(playlistInfo)
+        await res.send(playlistInfo)
     }
     catch (error) {
         console.log('error completing Spotify playlist creation', error);
     }
 })
+
+// get all genres from 'genre' table on database
+router.get('/playlist', async (req, res) => {
+    try {
+        console.log('inside player page get playlist');
+        
+        let access_token = await getToken();
+        const response = await axios({
+            method: 'GET',
+            url: 'https://api.spotify.com/v1/me',
+            headers: { 'Authorization': 'Bearer ' + access_token, }
+        })
+        const spotifyUserInfo = response.data
+        console.log('spotifyuserinfo');
+
+        const client = await pool.connect();
+        const result = await client.query(`SELECT  
+            "playlist"."id", 
+            "title", 
+            "description", 
+            "playlist_id",
+            "snapshot_id", 
+            "playlist"."href", 
+            "spotify_user"."spotify_id", 
+            "display_name",
+            "genre_name",
+            "date_created"
+            FROM "playlist"
+            JOIN "selection" ON "selection_id"="selection"."id"
+            JOIN "genre" ON "genre_id" = "genre"."id"
+            JOIN "spotify_user" ON "playlist"."spotify_id"="spotify_user"."id"
+            WHERE "spotify_user"."spotify_id"=$1
+            ORDER BY "date_created" DESC;
+            `, [spotifyUserInfo.id]);
+        const userPlaylists = await result.rows;
+        console.log('userPlaylists have been created on server');
+        await res.send(userPlaylists);
+    } catch (error) {
+        console.log('error getting playlist of current user');
+    }
+});
 
 
 // get Spotify account info for logged in user

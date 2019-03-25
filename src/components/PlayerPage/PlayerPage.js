@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import './PlayerPage.css';
 
 
+
 class PlayerPage extends Component {
 
     componentDidMount() {
@@ -48,7 +49,7 @@ class PlayerPage extends Component {
 
     render() {
 
-        console.log('currentPlaylistInfo', this.props.currentPlaylistInfo.id);
+        console.log('currentPlaylistInfo', this.props.currentPlaylistInfo);
         
 
 
