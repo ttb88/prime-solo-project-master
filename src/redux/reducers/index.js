@@ -2,7 +2,8 @@ import { combineReducers } from 'redux';
 import images from './imageReducer';
 import genres from './genreReducer';
 import itemSelections from './selectReducer';
-import playlistTracks from './playlistTracksReducer';
+import currentPlaylistInfo from './spotifyReducer';
+// import playlistTracks from './playlistTracksReducer';
 // import errors from './errorsReducer';
 // import loginMode from './loginModeReducer';
 // import user from './userReducer';
@@ -21,7 +22,7 @@ const rootReducer = combineReducers({
   images, // will include all image paths to images from 'image' table on database
   genres, //will include all genre paths to genre from 'genre' table on database
   itemSelections, //will hold all user selctions
-  playlistTracks,
+  currentPlaylistInfo,
 });
 
 export default rootReducer;
