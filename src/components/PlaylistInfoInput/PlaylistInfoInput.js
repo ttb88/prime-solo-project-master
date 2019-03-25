@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import InputForm from '../PlaylistInfoInput/InputForm';
-import BackButton from '../BackButton/BackButton';
 
 class PlaylistInfoInput extends Component {
 

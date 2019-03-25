@@ -6,18 +6,15 @@ import './PlayerPage.css';
 
 class PlayerPage extends Component {
 
-    componentDidMount = async () => {
-        await this.fetchPlaylist();
-        await this.updateBackground();
+    componentDidMount () {
+        this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
     }
 
-    fetchPlaylist = async () => {
-        return this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
-    }
 
-    updateBackground = async () => {
-        return document.getElementById("new-background").style.backgroundImage = await `url(${this.props.currentPlaylistInfo.image_path})`;   
-    }
+
+    // updateBackground = () => {
+    //     return document.getElementById("new-background").style.backgroundImage = `url(${this.props.currentPlaylistInfo.image_path})`;   
+    // }
 
     // handleClick = () => {
     //     axios({
@@ -60,8 +57,7 @@ class PlayerPage extends Component {
 
 
         return (
-           
-            <div id="new-background" className="bckgrnd-container"> 
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.3)), url(${this.props.currentPlaylistInfo.image_path})` }} id="new-background" className="bckgrnd-container"> 
  
 
            <div className="playlist-widget">

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DropDownMenu from '../DropDownMenu/DropDownMenu';
-import BackButton from '../BackButton/BackButton';
 
 
 class GenreSelect extends Component {
