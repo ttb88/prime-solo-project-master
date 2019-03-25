@@ -48,6 +48,7 @@ class InputForm extends Component {
             title: '',
             description: '',
         });
+        
         this.props.history.push("/playlist-gen");
     }
 

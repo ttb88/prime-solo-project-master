@@ -9,7 +9,7 @@ body {
 }
 
 .bckgrnd-container {
-    background-image: linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.3)), url(images/photo-1452716726610-30ed68426a6b.jpeg);
+    /* background-image: linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.3)), url(images/photo-1452716726610-30ed68426a6b.jpeg); */
     text-align: center;
     height: 1000px; 
     width: 100%;
@@ -88,3 +88,18 @@ button:hover {
 .drop-down-menu {
     margin: 0 auto;
 }
+
+.back-button {
+  position: relative;
+  color: #004e63;
+  left: -30%;
+  bottom: 200px;
+  padding: 8px 50px;
+  font-size: 28px;
+  background-color: #c7c7c77e; 
+}
+
+.back-button:hover {
+    background-color: #c7c7c7b9;
+}
+

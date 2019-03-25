@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import './GenreSelect.css';
 import DropDownMenu from '../DropDownMenu/DropDownMenu';
 
 
@@ -27,8 +26,15 @@ class GenreSelect extends Component {
                                 <DropDownMenu history={this.props.history} />
                             </div>
                         </div>
+                       
                     </div>
+                    
+
                 </div>
+                <div>
+                        <button className="back-button button">back</button>
+                    </div>
+                    
             </>
         );
     }

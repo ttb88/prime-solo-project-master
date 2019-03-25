@@ -44,7 +44,7 @@ router.get('/', async (req, res) => {
         console.log('userPlaylists', userPlaylists);
         res.send(userPlaylists);
     } catch (error) {
-        console.log('error getting playlist of current user', error);
+        console.log('error getting playlist of current user');
     }
 });
 

@@ -18,7 +18,7 @@ router.get('/login', function (req, res) {
     querystring.stringify({
       response_type: 'code',
       client_id: clientID,
-      scope: 'user-library-read user-top-read playlist-modify-public playlist-modify-private playlist-read-private user-read-private user-read-email user-follow-read',
+      scope: 'user-top-read playlist-modify-public playlist-modify-private playlist-read-private user-read-private user-read-email user-follow-read',
       show_dialog: true,
       redirect_uri,
     }))
