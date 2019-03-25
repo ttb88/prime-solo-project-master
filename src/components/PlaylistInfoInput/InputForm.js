@@ -1,14 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
 import classNames from 'classnames';
-import { withStyles, withTheme } from '@material-ui/core/styles';
-// import OutlinedInput from '@material-ui/core/OutlinedInput';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import FormControl from '@material-ui/core/FormControl';
-// import Select from '@material-ui/core/Select';
+import { withStyles} from '@material-ui/core/styles';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import Grid from '@material-ui/core/Grid';
 
 
 
@@ -42,7 +36,6 @@ class InputForm extends Component {
     };
 
     handleChange = (property) => event => {
-        console.log(event.target.value);
         this.setState({
             ...this.state,
             [property]: event.target.value
@@ -55,7 +48,6 @@ class InputForm extends Component {
             title: '',
             description: '',
         });
-        // await this.props.dispatch({ type: 'POST_SELECTIONS', payload: this.props.itemSelections })
         this.props.history.push("/playlist-gen");
     }
 

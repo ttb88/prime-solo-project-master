@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './PlayerPage.css';
-import axios from 'axios';
 
 
 class PlayerPage extends Component {
@@ -58,7 +57,7 @@ class PlayerPage extends Component {
             <div id="new-background" className="bckgrnd-container"> 
 
            <div className="playlist-widget">
-                    <iframe src={`https://open.spotify.com/embed/user/${this.props.currentPlaylistInfo.spotify_id}/playlist/${this.props.currentPlaylistInfo.playlist_id}`}
+                    <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylistInfo.spotify_id}/playlist/${this.props.currentPlaylistInfo.playlist_id}`}
                     width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div> 
 

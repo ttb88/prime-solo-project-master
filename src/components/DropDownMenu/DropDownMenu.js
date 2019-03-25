@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ReactDOM from 'react-dom';
-import { withStyles, withTheme } from '@material-ui/core/styles';
+import { withStyles} from '@material-ui/core/styles';
 // import OutlinedInput from '@material-ui/core/OutlinedInput';
 // import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -70,7 +69,7 @@ class DropDownMenu extends Component {
                 select
                 fullWidth
                 label="Select a genre"
-                className={classes.textField}
+                // className={classes.textField}
                 value={this.state.genre_id}
                 onChange={this.handleChange}
                 SelectProps={{
