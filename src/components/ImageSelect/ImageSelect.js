@@ -13,15 +13,21 @@ class ImageSelect extends Component {
         this.props.dispatch({type: 'FETCH_USER'});
     }
 
+ 
     displayImages = () => {
         console.log(this.props.images);
         const images = this.props.images;
-        console.log('image array', images);
+        const shuffled = images.sort(() => 0.5 - Math.random());
+        let selected = shuffled.slice(0, 6);
         let number = 1
-        return images.slice(14, 20).map(image => <ImageItem history={this.props.history} image={image} number={number++} key={image.id}/>)
+        return selected.map(image => <ImageItem history={this.props.history} image={image} number={number++} key={image.id}/>)
     }
 
     render() {
+
+        
+        
+        
         return (
             <>
             <div className="select-page-header">
