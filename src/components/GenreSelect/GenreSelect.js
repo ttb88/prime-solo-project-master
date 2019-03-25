@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DropDownMenu from '../DropDownMenu/DropDownMenu';
+import BackButton from '../BackButton/BackButton';
 
 
 class GenreSelect extends Component {
@@ -8,6 +9,10 @@ class GenreSelect extends Component {
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_GENRES' });
     }
+
+    // handleClick = () => {
+    //     this.props.history.go(-1)
+    // }
 
 
     render() {
@@ -26,15 +31,12 @@ class GenreSelect extends Component {
                                 <DropDownMenu history={this.props.history} />
                             </div>
                         </div>
-                       
+
                     </div>
-                    
+
 
                 </div>
-                <div>
-                        <button className="back-button button">back</button>
-                    </div>
-                    
+                <BackButton history={this.props.history} />
             </>
         );
     }
