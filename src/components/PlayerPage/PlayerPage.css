@@ -1,11 +1,17 @@
-/* #new-background {
-    text-align: center;
-    height: 100%; 
-    width: 100%;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-} */
+#new-background {
+    animation-name: 'fadeIn';
+    animation-duration: 2s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: .98;
+  }
+}
 
 .playlist-widget {
     padding-top: 250px;

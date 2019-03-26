@@ -6,11 +6,12 @@ const router = express.Router();
 
 // match spotify account id to id on 'spotify user' database table and return to client side
 router.get('/user', async (req, res) => {
+    const client = await pool.connect();
     try {
         // let token = await getToken();
         // let spotifyUserInfo = await getUserInfo(token);
         // console.log('spotifyID', spotifyUserInfo);
-        const client = await pool.connect();
+        
         const result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
         let spotifyID = result.rows[0].spotify_id;
         const resultsTwo = await client.query(`SELECT "id" AS "spotify_id" FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyID])
@@ -18,6 +19,8 @@ router.get('/user', async (req, res) => {
         res.send(spotifyUserID);
     } catch (error) {
         console.log('error getting user info in get request from Saga', error);
+    } finally {
+        client.release()
     }
 });
 
@@ -48,12 +51,14 @@ router.put('/playlist', async (req, res) => {
 
 // get all genres from 'genre' table on database
 router.get('/current-playlist', async (req, res) => {
+    let client = await pool.connect();
     try {
         console.log('inside player page get playlist');
         let spotifyUserInfo = await getUserInfo();
         console.log('got user info');
-        const client = await pool.connect();
-        const result = await client.query(`SELECT  
+        
+        // await client.query('BEGIN')
+        let result = await client.query(`SELECT  
             "playlist"."id", 
             "title", 
             "description", 
@@ -73,11 +78,14 @@ router.get('/current-playlist', async (req, res) => {
             WHERE "spotify_user"."spotify_id"=$1
             ORDER BY "date_created" DESC;
             `, [spotifyUserInfo.spotify_id]);
-        const userPlaylists = await result.rows;
+        let userPlaylists = await result.rows;
         console.log('userPlaylists have been created on server');
+        // await client.query('COMMIT')
         await res.send(userPlaylists);
     } catch (error) {
         console.log('error getting playlist of current user');
+    } finally {
+        client.release()
     }
 });
 
@@ -99,34 +107,45 @@ oldgetUserInfo = async (access_token) => {
 
 // get Spotify account info for logged in user
 getUserInfo = async () => {
+    let client = await pool.connect();
     try {
-        const client = await pool.connect();
-        const result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
+        console.log('inside get user info');
+        
+        
+        console.log('pool client', client);
+        // await client.query('BEGIN')
+        let result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
+        // not getting to this point in testing
         let spotifyID = result.rows[0].spotify_id;
-        const resultsTwo = await client.query(`SELECT * FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyID])
+        let resultsTwo = await client.query(`SELECT * FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyID])
         let spotifyUserInfo = await resultsTwo.rows[0];
         console.log('spotifyUserInfo', spotifyUserInfo);
+        // await client.query('COMMIT')
         return spotifyUserInfo
     } catch (error) {
         console.log('error getting Spotify user info from API', error);
+    } finally {
+        client.release()
     }
 }
 
 // get current access_token
 getToken = async () => {
+    const client = await pool.connect();
     try {
-        const client = await pool.connect();
         const result = await client.query(`SELECT "access_token" FROM "spotify_token"`)
         const access_token = await result.rows[0].access_token;
         return access_token;
     } catch (error) {
         console.log('error getting current access token from database', error);
+    } finally {
+        client.release()
     }
 }
 
 getSelectionID = async (selections) => {
+    const client = await pool.connect();
     try {
-        const client = await pool.connect();
         console.log('in get Selection ID', selections);
 
         let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id) VALUES ($1,$2,$3) RETURNING "id";`,
@@ -135,14 +154,15 @@ getSelectionID = async (selections) => {
         return selectionID
     } catch (error) {
         console.log('error getting posting selections to database and returning selection id', error);
+    } finally {
+        client.release()
     }
 }
 
 getGenreName = async (genreID) => {
+    const client = await pool.connect();
     try {
         console.log('in getGenreName', genreID);
-
-        const client = await pool.connect();
         const result = await client.query(`SELECT "genre_name" FROM "genre" WHERE "id"=$1;`, [genreID])
         console.log('genre result', result.rows);
 
@@ -150,6 +170,8 @@ getGenreName = async (genreID) => {
         return genreName;
     } catch (error) {
         console.log('error getting genre name from database', error);
+    } finally {
+        client.release()
     }
 }
 
@@ -171,6 +193,7 @@ getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo)
 }
 
 createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) => {
+    const client = await pool.connect();
     try {
         console.log('in create playlist,spotifyUserInfo ', spotifyUserInfo);
         let jsonData = {
@@ -189,13 +212,14 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
             }
         })
         const playlistInfo = await response.data;
-        const client = await pool.connect();
+        
         client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`,
             [playlistInfo.name, playlistInfo.description, playlistInfo.id, playlistInfo.snapshot_id, playlistInfo.tracks.href, selectionID, spotifyUserInfo.id, Date.now()]);
-
         return playlistInfo
     } catch (error) {
         console.log('error creating playlist on Spotify API and returning playlist URLs', error);
+    } finally {
+        client.release()
     }
 }
 
@@ -217,9 +241,6 @@ addTracksToPlaylist = async (access_token, newPlaylistURL, playlistTracks) => {
         console.log('error adding tracks to playlist on Spotify API', error);
     }
 }
-
-
-
 
 
 module.exports = router;

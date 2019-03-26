@@ -43,7 +43,7 @@ class ImageItem extends Component {
         return (
             <div className={`image-reveal image-grid-item${this.props.number}`} style={{ animationDelay: `${this.randomNumberTwo()}s`,
                 animationName: this.props.animation, animationDuration: `${this.randomNumber()}s`}}>
-                <img src={this.props.image.image_path} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image.id)} />
+                <img src={`images/small/${this.props.image.image_path}`} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image.id)} />
             </div>
         );
     }

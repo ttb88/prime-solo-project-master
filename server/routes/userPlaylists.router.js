@@ -9,6 +9,7 @@ const access_token = require('../modules/access-token');
  */
 // get all genres from 'genre' table on database
 router.get('/', async (req, res) => {
+    const client = await pool.connect();
     try {
         let token = await access_token;
         console.log('token is', token);
@@ -21,7 +22,7 @@ router.get('/', async (req, res) => {
         const spotifyUserInfo = response.data
         console.log('spotifyuserinfo', spotifyUserInfo);
         
-        const client = await pool.connect();
+        
         const result = await client.query(`SELECT  
             "playlist"."id", 
             "title", 
@@ -45,6 +46,8 @@ router.get('/', async (req, res) => {
         res.send(userPlaylists);
     } catch (error) {
         console.log('error getting playlist of current user');
+    } finally {
+        client.release()
     }
 });
 
