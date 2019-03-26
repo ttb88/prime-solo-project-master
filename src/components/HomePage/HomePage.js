@@ -26,7 +26,7 @@ import './HomePage.css'
 class HomePage extends Component {
     handleClick = () => {
         console.log('create playlist button clicked');
-        window.location.replace('http://localhost:5000/login');
+        window.location.replace('http://localhost:5000/spotify-auth/login');
     }
 
     render() {

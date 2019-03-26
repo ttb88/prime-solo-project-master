@@ -24,8 +24,8 @@ br {
 .images-grid-container img {
     width: 100%;
     height: 100%;
-    /* opacity: .98; */
-    filter: grayscale(30%);
+    opacity: .98;
+    filter: grayscale(45%);
     object-fit: cover;
     transition: all .7s;
 }
@@ -97,7 +97,7 @@ br {
   }
 
   100% {
-    opacity: 1;
+    opacity: .98;
   }
 }
 
@@ -107,6 +107,6 @@ br {
   }
 
   100% {
-    opacity: 1;
+    opacity: .98;
   }
 }

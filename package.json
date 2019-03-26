@@ -28,7 +28,7 @@
     "spotify-web-api-js": "^1.2.0"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "react-scripts build && node server/server.js",
     "client": "react-scripts start",
     "server": "nodemon --watch server server/server.js",
     "build": "react-scripts build",

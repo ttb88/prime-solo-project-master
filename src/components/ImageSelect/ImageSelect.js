@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ImageItem from '../ImageItem/ImageItem';
 import './ImageSelect.css';
-import { number } from 'prop-types';
 
 
 class ImageSelect extends Component {
@@ -14,7 +13,7 @@ class ImageSelect extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_IMAGES' });
-        // this.props.dispatch({type: 'FETCH_USER'});
+        this.props.dispatch({type: 'FETCH_USER'});
     }
 
 

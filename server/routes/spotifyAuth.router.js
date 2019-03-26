@@ -11,7 +11,7 @@ const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
 let redirect_uri =
   process.env.REDIRECT_URI ||
-  'http://localhost:5000/callback'
+  'http://localhost:5000/spotify-auth/callback'
 
 router.get('/login', function (req, res) {
   res.redirect('https://accounts.spotify.com/authorize?' +
@@ -64,6 +64,7 @@ userInfo = (access_token) => {
   }).then(res => {
     let user = res.data
     checkDatabase(user);
+    addToCurrentUser(user);
   }).catch(error => {
     console.log('there was an error', error);
   })
@@ -95,6 +96,16 @@ postToken = access_token => {
   }).catch(error => {
     console.log('there was an error adding access_token to database', error);
   })
+}
+
+addToCurrentUser = (user) => {
+  const queryText = 'UPDATE "spotify_token" SET "current_user"=$1 WHERE "id"=$2';
+  pool.query(queryText, [user.id, 1]).then(() => {
+    console.log('current user added to database');
+  }).catch(error => {
+    console.log('there was an error adding access_token to database', error);
+  })
+
 }
 
 

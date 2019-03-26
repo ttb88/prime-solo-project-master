@@ -7,12 +7,14 @@ const router = express.Router();
 // match spotify account id to id on 'spotify user' database table and return to client side
 router.get('/user', async (req, res) => {
     try {
-        let token = await getToken();
-        let spotifyUserInfo = await getUserInfo(token);
-        console.log('spotifyID', spotifyUserInfo);
+        // let token = await getToken();
+        // let spotifyUserInfo = await getUserInfo(token);
+        // console.log('spotifyID', spotifyUserInfo);
         const client = await pool.connect();
-        const result = await client.query(`SELECT "id" AS "spotify_id" FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyUserInfo.id])
-        let spotifyUserID = result.rows[0];
+        const result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
+        let spotifyID = result.rows[0].spotify_id;
+        const resultsTwo = await client.query(`SELECT "id" AS "spotify_id" FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyID])
+        let spotifyUserID = resultsTwo.rows[0];
         res.send(spotifyUserID);
     } catch (error) {
         console.log('error getting user info in get request from Saga', error);
@@ -26,15 +28,16 @@ router.put('/playlist', async (req, res) => {
         console.log('selections', selections);
         let selectionID = await getSelectionID(selections);
         let access_token = await getToken();
-        let spotifyUserInfo = await getUserInfo(access_token);
-        console.log('spotifyUserInfo', spotifyUserInfo.id);
+        // let spotifyUserInfo = await getUserInfo(access_token);
+        let spotifyUserInfo = await getUserInfo();
+        console.log('spotifyUserInfo', spotifyUserInfo.spotify_id);
         let genreName = await getGenreName(selections.genre_id);
         console.log('genre-name', genreName);
         let playlistTracks = await getPlaylistTracks(access_token, genreName, selections, spotifyUserInfo);
         console.log('playlistTracks', playlistTracks);
         let playlistInfo = await createPlaylist(access_token, spotifyUserInfo, selections, selectionID);
         console.log('playlistURL', playlistInfo);
-        let tracksAddedResponse = await addTracksToPlaylist(access_token, playlistInfo.tracks.href, playlistTracks);
+        await addTracksToPlaylist(access_token, playlistInfo.tracks.href, playlistTracks);
         // console.log('tracksAddedResponse', tracksAddedResponse);
         await res.send(playlistInfo)
     }
@@ -44,20 +47,11 @@ router.put('/playlist', async (req, res) => {
 })
 
 // get all genres from 'genre' table on database
-router.get('/playlist', async (req, res) => {
+router.get('/current-playlist', async (req, res) => {
     try {
         console.log('inside player page get playlist');
-        
-        let access_token = await getToken();
-        console.log('got token', access_token);
-        const response = await axios({
-            method: 'GET',
-            url: 'https://api.spotify.com/v1/me',
-            headers: { 'Authorization': 'Bearer ' + access_token, }
-        })
-        const spotifyUserInfo = await response.data
-        console.log('spotifyuserinfo');
-
+        let spotifyUserInfo = await getUserInfo();
+        console.log('got user info');
         const client = await pool.connect();
         const result = await client.query(`SELECT  
             "playlist"."id", 
@@ -78,7 +72,7 @@ router.get('/playlist', async (req, res) => {
             JOIN "spotify_user" ON "playlist"."spotify_id"="spotify_user"."id"
             WHERE "spotify_user"."spotify_id"=$1
             ORDER BY "date_created" DESC;
-            `, [spotifyUserInfo.id]);
+            `, [spotifyUserInfo.spotify_id]);
         const userPlaylists = await result.rows;
         console.log('userPlaylists have been created on server');
         await res.send(userPlaylists);
@@ -89,7 +83,7 @@ router.get('/playlist', async (req, res) => {
 
 
 // get Spotify account info for logged in user
-getUserInfo = async (access_token) => {
+oldgetUserInfo = async (access_token) => {
     try {
         const response = await axios({
             method: 'GET',
@@ -97,6 +91,21 @@ getUserInfo = async (access_token) => {
             headers: { 'Authorization': 'Bearer ' + access_token, }
         })
         const spotifyUserInfo = response.data
+        return spotifyUserInfo
+    } catch (error) {
+        console.log('error getting Spotify user info from API', error);
+    }
+}
+
+// get Spotify account info for logged in user
+getUserInfo = async () => {
+    try {
+        const client = await pool.connect();
+        const result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
+        let spotifyID = result.rows[0].spotify_id;
+        const resultsTwo = await client.query(`SELECT * FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyID])
+        let spotifyUserInfo = await resultsTwo.rows[0];
+        console.log('spotifyUserInfo', spotifyUserInfo);
         return spotifyUserInfo
     } catch (error) {
         console.log('error getting Spotify user info from API', error);
@@ -171,7 +180,7 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
         }
         const response = await axios({
             method: 'POST',
-            url: `https://api.spotify.com/v1/users/${spotifyUserInfo.id}/playlists`,
+            url: `https://api.spotify.com/v1/users/${spotifyUserInfo.spotify_id}/playlists`,
             data: jsonData,
             dataType: 'json',
             headers: {
@@ -181,8 +190,8 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
         })
         const playlistInfo = await response.data;
         const client = await pool.connect();
-        await client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`,
-            [playlistInfo.name, playlistInfo.description, playlistInfo.id, playlistInfo.snapshot_id, playlistInfo.tracks.href, selectionID, selections.spotify_id, Date.now()]);
+        client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`,
+            [playlistInfo.name, playlistInfo.description, playlistInfo.id, playlistInfo.snapshot_id, playlistInfo.tracks.href, selectionID, spotifyUserInfo.id, Date.now()]);
 
         return playlistInfo
     } catch (error) {

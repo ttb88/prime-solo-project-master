@@ -10,12 +10,6 @@ class PlayerPage extends Component {
         this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
     }
 
-
-
-    // updateBackground = () => {
-    //     return document.getElementById("new-background").style.backgroundImage = `url(${this.props.currentPlaylistInfo.image_path})`;   
-    // }
-
     // handleClick = () => {
     //     axios({
     //         method: 'POST',
@@ -33,18 +27,7 @@ class PlayerPage extends Component {
     // }
 
     // handleAddTrack = () => {
-    //     axios({
-    //         method: 'POST',
-    //         url: `https://api.spotify.com/v1/playlists/4lQeEBtHtsWVNVjFFTkFRn/tracks`,
-    //         data: jsonDataTracks,
-    //         dataType: 'json',
-    //         headers: {
-    //             'Authorization': 'Bearer ' + 'BQBRUQPM0bhv_WUVgiQUPwrcu2FBVMD10n4OXjHqewQHVOGyZK5ni6Djjy6s7outcrKD5E4W09ps-1uFe5r3lKd3RuLDdMcx6IRtWoznJUsb3g40iLEvJIUoFZmNxpXEBhV3izc2lIMzx8L03rGqAVdyYMGjJ2bn1Z3ID7jRMOJHJamudhuJwhBJOxIWHiptVSb8JOSa5HEoZWz05qNTQFyDNeufvnXslOcpR7fCB1hvJ2pIW0aBfoVkCg',
-    //             'Content-Type': 'application/json'
-    //         }
-    //     }).then(res => {
-    //         console.log('res', res.data);
-    //     })
+    //     
 
     // }
 
@@ -57,7 +40,7 @@ class PlayerPage extends Component {
 
 
         return (
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.3)), url(${this.props.currentPlaylistInfo.image_path})` }} id="new-background" className="bckgrnd-container"> 
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(${this.props.currentPlaylistInfo.image_path})` }} id="new-background" className="bckgrnd-container"> 
  
 
            <div className="playlist-widget">

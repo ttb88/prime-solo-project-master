@@ -28,7 +28,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* Routes */
-app.use('/', spotifyAuthRouter);
+app.use('/spotify-auth', spotifyAuthRouter);
 app.use('/api/image', imageRouter);
 app.use('/api/genre', genreRouter);
 // app.use('/api/user', userRouter);
