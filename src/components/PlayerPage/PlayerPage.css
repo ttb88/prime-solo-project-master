@@ -1,6 +1,8 @@
+
 #new-background {
-    animation-name: 'fadeIn';
-    animation-duration: 2s;
+  animation-name: 'fadeIn';
+  animation-duration: 2s;
+
 }
 
 @keyframes fadeIn {
@@ -12,10 +14,12 @@
     opacity: .98;
   }
 }
+  
 
 .playlist-widget {
     padding-top: 250px;
     opacity: .8;
+    animation: zoomout 10s ease-in infinite;
 }
 
 iframe {

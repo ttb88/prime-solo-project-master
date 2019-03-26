@@ -6,6 +6,8 @@ import './ImageSelect.css';
 
 class ImageSelect extends Component {
 
+    prevImages = [];
+
     state = {
         toggle: true,
         animation: 'fadeIn',
@@ -19,9 +21,19 @@ class ImageSelect extends Component {
 
     displayImages = () => {
         console.log('shuffle clicked');
-        const images = this.props.images;
-        const shuffled = images.sort(() => 0.5 - Math.random());
+        let images = this.props.images;
+        let lastImages = this.prevImages.map(image => image.id);
+        console.log('last 6 images', lastImages );
+        // console.log('this.prevImages are filter', this.prevImages);
+        images = images.filter(image => !lastImages.includes(image.id));
+        console.log('new 24 images', images);
+        let shuffled = images.sort(() => 0.5 - Math.random());
+        // console.log('shuffled', shuffled );
         let selected = shuffled.slice(0, 6);
+        this.prevImages = selected;
+        console.log('selected 6 images', selected);
+        console.log('selected 6 images this.prev', this.prevImages);
+        
         let number = 1
         return selected.map(image => <ImageItem history={this.props.history} animation={this.state.animation} image={image} number={number++} key={image.id} />)
     }

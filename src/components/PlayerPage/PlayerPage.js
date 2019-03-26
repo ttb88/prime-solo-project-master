@@ -33,13 +33,11 @@ class PlayerPage extends Component {
   
 
     render() {
-
         console.log('currentPlaylistInfo', this.props.currentPlaylistInfo.image_path);
         
-
-
         return (
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylistInfo.image_path})` }} id="new-background" className="bckgrnd-container"> 
+            <div className="header-wrapper">
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylistInfo.image_path})`}} id="new-background" className="bckgrnd-container"> 
  
 
            <div className="playlist-widget">
@@ -52,6 +50,7 @@ class PlayerPage extends Component {
             {/* <button onClick={this.handleClick}>get playlist</button> */}
             {/* <button onClick={this.handleAddTrack}>new playlist</button> */}
                 </div>
+            </div>
        
         );
     }
