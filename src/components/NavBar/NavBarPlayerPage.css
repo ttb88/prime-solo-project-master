@@ -61,3 +61,18 @@ nav > ul > li:first-child { border-left: none; }
 .sub-menu-player {
   background: #757575c7;
 }
+
+.text-logo {
+text-align: left;
+}
+
+.text-logo h2 {
+text-align: left;
+margin-left: 30px;
+color: #c9c9c9d8;
+opacity: 0;
+animation-name: 'fadeIn';
+animation-delay: 1.2s;
+  animation-duration: 2s;
+  animation-fill-mode: forwards;
+}

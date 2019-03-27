@@ -39,5 +39,6 @@ border-radius: 30px; */
 -webkit-box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.541);
 box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.411);
 margin-top: 250px;
-opacity: .8
+opacity: .8;
+margin-left: -75px;
 } 

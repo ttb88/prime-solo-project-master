@@ -20,6 +20,7 @@ class NavBar extends Component {
                             <li><a href="#">Sub Item 2</a></li>
                         </ul></li>
                 </ul>
+                <div className="text-logo"><h2>stream</h2></div>
             </nav>
 
             // <ul>
