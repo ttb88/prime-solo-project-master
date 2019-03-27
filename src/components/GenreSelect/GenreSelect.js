@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import DropDownMenu from '../DropDownMenu/DropDownMenu';
+import NavBar from '../NavBar/NavBar';
 
 
 class GenreSelect extends Component {
@@ -15,6 +16,7 @@ class GenreSelect extends Component {
 
         return (
             <>
+            <NavBar />
                 <div className="center-contents">
                     <div className="grid-center-container">
                         <div className="grid-item-1">

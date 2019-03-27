@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import InputForm from '../PlaylistInfoInput/InputForm';
+import NavBar from '../NavBar/NavBar';
 
 class PlaylistInfoInput extends Component {
 
@@ -12,7 +13,7 @@ class PlaylistInfoInput extends Component {
     render() {
 
         return (
-            <>
+            <> <NavBar />
                 <div className="center-contents">
                     <div className="grid-center-container">
                         <div className="grid-item-1">

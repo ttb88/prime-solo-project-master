@@ -14,13 +14,20 @@
     opacity: .98;
   }
 }
-  
 
-.playlist-widget {
-    padding-top: 250px;
-    opacity: .8;
-    animation: zoomout 10s ease-in infinite;
+
+/* li.sub-menu-parent .material-icons {
+    color: #afafaf;
 }
+
+li.sub-menu-parent:hover .material-icons {
+    color: #dddddd;
+}
+
+.sub-menu {
+  background: #757575c7;
+} */
+  
 
 iframe {
 /* margin-top: 20px;
@@ -31,4 +38,6 @@ border-radius: 30px; */
 -moz-box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.39);
 -webkit-box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.541);
 box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.411);
+margin-top: 250px;
+opacity: .8
 } 

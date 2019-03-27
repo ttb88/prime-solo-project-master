@@ -33,11 +33,13 @@ h2 {
     font-family: 'Italiana', serif;
     font-weight: medium;
     font-size: 3em;
+    display: inline-block;
     margin: 0;
     opacity: .6;
     letter-spacing: 4px;
     color: #f7f6f6;  
 }
+
 
 .select-page-header {
     padding-top: 20px; 
@@ -70,6 +72,19 @@ button:hover {
 .next-button {
     margin-top: 100px;
     padding: 10px 50px;
+    animation-name: 'fadeInButton';
+  animation-duration: 2s;
+}
+
+
+@keyframes fadeInButton {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
 
 .drop-down-menu {
@@ -90,18 +105,27 @@ button:hover {
 }
 
 .back-button {
+float: left;
+margin-left: 40px;
   position: relative;
   color: #004e63;
-  left: -30%;
-  bottom: 100px;
+  /* left: -40%; */
+  bottom: 200px;
   padding: 7px 50px;
   font-size: 25px;
-  background-color: #d8d8d87e; 
+  background-color: #d8d8d86e; 
+  animation-name: 'fade-left';
+  animation-duration: 2s;
 }
 
 .back-button:hover {
     background-color: #c7c7c7b9;
 }
 
+
+@keyframes fade-left {
+  0%   {left:-40px;}
+  100% {left:0px;}
+}
 
 

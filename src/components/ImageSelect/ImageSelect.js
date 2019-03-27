@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ImageItem from '../ImageItem/ImageItem';
 import './ImageSelect.css';
+import NavBar from '../NavBar/NavBar';
 
 
 class ImageSelect extends Component {
@@ -58,6 +59,7 @@ class ImageSelect extends Component {
 
         return (
             <>
+                <NavBar />
                 <div className="select-page-header">
                     <h2>Select Image</h2>
                     <p>Which image are you most drawn to in the present moment... click!

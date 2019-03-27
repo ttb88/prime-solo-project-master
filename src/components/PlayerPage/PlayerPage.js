@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './PlayerPage.css';
+import NavBarPlayerPage from '../NavBar/NavBarPlayerPage';
 
 
 
 class PlayerPage extends Component {
 
-    componentDidMount () {
+    componentDidMount() {
         this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
     }
 
@@ -30,26 +31,33 @@ class PlayerPage extends Component {
         this.props.history.push('/image');
     }
 
-  
+
 
     render() {
         console.log('currentPlaylistInfo', this.props.currentPlaylistInfo.image_path);
-        
+
         return (
-            <div className="header-wrapper">
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylistInfo.image_path})`}} id="new-background" className="bckgrnd-container"> 
- 
+          
 
-           <div className="playlist-widget">
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylistInfo.image_path})` }} id="new-background" className="bckgrnd-container">
+
+                <NavBarPlayerPage />
+
+
+                <div className="playlist-widget">
                     <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylistInfo.spotify_id}/playlist/${this.props.currentPlaylistInfo.playlist_id}`}
-                    width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-                </div> 
-
+                        width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                </div>
+           
+          
+             
                
                  
-            {/* <button onClick={this.handleClick}>get playlist</button> */}
-            {/* <button onClick={this.handleAddTrack}>new playlist</button> */}
-                </div>
+            {/* <button onClick={this.handleClick}>get playlist</button> */ }
+        {/* <button onClick={this.handleAddTrack}>new playlist</button> */ }
+              
+
+            
             </div>
        
         );

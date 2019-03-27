@@ -185,7 +185,7 @@ getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo)
                 'Authorization': 'Bearer ' + access_token,
             }
         })
-        // const playlistTracks = response.data.tracks.map(track => track.uri);
+        const playlistTracks = response.data.tracks.map(track => track.uri);
         // const shuffled = images.sort(() => 0.5 - Math.random());
         // let selected = shuffled.slice(0, 6);
         return playlistTracks;
