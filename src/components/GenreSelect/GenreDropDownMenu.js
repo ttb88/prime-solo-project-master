@@ -50,7 +50,7 @@ class DropDownMenu extends Component {
         await this.setState({
             genre_id: '',
         });
-        this.props.history.push("/playlist-name");
+        this.props.history.push("/energy");
     }
 
 

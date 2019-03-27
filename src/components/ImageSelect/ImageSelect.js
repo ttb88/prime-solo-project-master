@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import ImageItem from '../ImageItem/ImageItem';
+import ImageItem from './ImageItem';
 import './ImageSelect.css';
 import NavBar from '../NavBar/NavBar';
 

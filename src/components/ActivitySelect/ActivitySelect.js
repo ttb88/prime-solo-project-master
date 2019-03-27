@@ -34,7 +34,7 @@ class ActivitySelect extends Component {
 
 
                 </div>
-                <button onClick={() => this.props.history.push('/image')} className="back-button button">back</button>
+                <button onClick={() => this.props.history.push('/energy')} className="back-button button">back</button>
             </>
         );
     }

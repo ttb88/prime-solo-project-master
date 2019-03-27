@@ -200,7 +200,7 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
         console.log('in create playlist,spotifyUserInfo ', spotifyUserInfo);
         let jsonData = {
             name: selections.playlist_title,
-            description: selections.playlist_description,
+            description: `Created on Stream ${selections.playlist_description}`,
             public: false,
         }
         const response = await axios({

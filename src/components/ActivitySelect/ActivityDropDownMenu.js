@@ -35,20 +35,20 @@ const styles = theme => ({
 
 class ActivityDropDownMenu extends Component {
     state = {
-       genre_id: ''
+       activity_id: ''
     };
 
     handleChange = event => {
         console.log(event.target.value);
         this.setState({ 
-            genre_id: event.target.value
+            activity_id: event.target.value
         });
     };
 
     handleSubmit = async() => {       
-        await this.props.dispatch({ type: 'SET_GENRE', payload: this.state.genre_id })
+        await this.props.dispatch({ type: 'SET_ACTIVITY', payload: this.state.genre_id })
         await this.setState({
-            genre_id: '',
+            activity_id: '',
         });
         this.props.history.push("/playlist-name");
     }
@@ -70,15 +70,15 @@ class ActivityDropDownMenu extends Component {
                 fullWidth
                 label="Select an activity"
                 // className={classes.textField}
-                value={this.state.genre_id}
+                value={this.state.activity_id}
                 onChange={this.handleChange}
                 SelectProps={{
                     MenuProps: {
                         className: classes.menu,
                     },
                 }}
-                validators={['required']}
-                errorMessages={['this field is required']}
+                // validators={['required']}
+                // errorMessages={['this field is required']}
                 margin="normal"
                 variant="outlined"
             >
