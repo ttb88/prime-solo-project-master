@@ -1,6 +1,7 @@
 .slidecontainer {
   width: 700px;
   margin-top: 50px;
+  
 }
 
 .slider {
@@ -13,6 +14,8 @@
   -webkit-transition: .2s;
   transition: opacity .2s;
   border-radius: 5px;
+  box-shadow: 0 3px 3px #8f8f8fa8;
+
 }
 
 .slider:hover {
@@ -43,4 +46,5 @@
     font-size: 35px;
     padding: 0 10px;
 }
+
 

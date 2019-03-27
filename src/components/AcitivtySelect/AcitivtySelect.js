@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DropDownMenu from './GenreDropDownMenu';
+import ActivityDropDownMenu from '../ActivitySelect/ActivityDropDownMenu';
 import NavBar from '../NavBar/NavBar';
 
 
-class GenreSelect extends Component {
+class ActivitySelect extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_GENRES' });
@@ -16,17 +16,17 @@ class GenreSelect extends Component {
 
         return (
             <>
-            <NavBar />
+                <NavBar />
                 <div className="center-contents">
                     <div className="grid-center-container">
                         <div className="grid-item-1">
                             <div className="header-text">
-                                <h2>Select Genre</h2>
+                                <h2>Select Activity</h2>
                             </div>
                         </div>
                         <div className="grid-item-2">
                             <div className="drop-down-menu">
-                                <DropDownMenu history={this.props.history} />
+                                <ActivityDropDownMenu history={this.props.history} />
                             </div>
                         </div>
 
@@ -45,4 +45,4 @@ const mapReduxStateToProps = (reduxState) => {
 }
 
 
-export default (connect(mapReduxStateToProps)(GenreSelect));
+export default (connect(mapReduxStateToProps)(ActivitySelect));
