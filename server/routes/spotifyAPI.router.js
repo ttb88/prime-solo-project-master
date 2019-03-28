@@ -164,7 +164,7 @@ getGenreName = async (genreID) => {
 
 getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo) => {
     try {
-        let range = .4;
+        let range = .5;
         let maxEnergy = selections.energy_value + range > 1 ? 1 : selections.energy_value + range;
         let minEnergy = selections.energy_value - range < 0 ? 0 : selections.energy_value - range;
         let maxValence = selections.mood_value + range > 1 ? 1 : selections.mood_value + range;

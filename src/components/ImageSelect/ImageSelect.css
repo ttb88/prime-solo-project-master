@@ -80,7 +80,7 @@ br {
 
 .shuffle-button {
     margin-top: 10px;
-    padding: 10px 50px;
+    padding: 5px 45px;
     animation-name: 'fadeInButton';
   animation-duration: 2s;
 

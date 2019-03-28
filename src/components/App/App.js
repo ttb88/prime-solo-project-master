@@ -15,6 +15,7 @@ import './App.css';
 import PlaylistGenerator from '../PlaylistGenerator/PlaylistGenerator';
 import EnergySelect from '../EnergySelect/EnergySelect';
 import MoodSelect from '../MoodSelect/MoodSelect';
+import SavedPlaylists from '../SavedPlaylists/SavedPlaylists';
 
 const theme = createMuiTheme({
   palette: {
@@ -62,6 +63,7 @@ class App extends Component {
           <Route exact path="/playlist-name" component={PlaylistInfoInput} />
           <Route exact path="/playlist-gen" component={PlaylistGenerator} />
           <Route exact path="/player" component={PlayerPage} />
+          <Route exact path="/saved-playlists" component={SavedPlaylists} />
         </div>
       </Router>
       </MuiThemeProvider>

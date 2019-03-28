@@ -1,0 +1,97 @@
+.select-page-header {
+    padding-top: 20px; 
+    padding-bottom: 1px;
+}
+
+p {
+    font-size: 18px;
+    color: #000000ee;
+    font-family: 'Raleway';
+}
+
+br {
+    line-height: 20px;
+}
+
+.playlist-grid-container {
+  position: relative;
+    margin: 8px 200px;
+    display: grid;
+    grid-template-columns: repeat(6, 4fr);
+    grid-template-rows: repeat(2, 18vw);
+    grid-gap: 3px;
+}
+
+.playlist-grid-container img {
+
+    width: 100%;
+    height: 100%;
+    opacity: .5;
+    /* filter: grayscale(45%); */
+    object-fit: cover;
+    transition: all .7s;
+    /* filter: blur(.9px); */
+}
+
+.playlist-grid-container img:hover {
+    opacity: 1;
+    filter: grayscale(0%);
+    cursor: pointer;
+}
+
+.playlist-grid-item {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(49, 49, 49);
+}
+
+.playlist-grid-item .playlist-go-button {
+  /* transform: translate(0%, -100%); */
+  width: 100%;
+  /* height: 15%; */
+  font-size: 12px;
+  font-family: 'Raleway';
+  padding: 12px 0;
+}
+
+.playlist-grid-item .playlist-go-button .material-icons {
+  font-size: 120%;
+  margin-right: 5px;
+
+}
+
+
+.shuffle-button {
+    margin-top: 10px;
+    padding: 5px 45px;
+    animation-name: 'fadeInButton';
+  animation-duration: 2s;
+
+}
+
+.playlist-reveal {
+    opacity: 0;
+    animation-fill-mode: both;
+}
+
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: .98;
+  }
+}
+
+@keyframes fadeInTwo {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: .98;
+  }
+}

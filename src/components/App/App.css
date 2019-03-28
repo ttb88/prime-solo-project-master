@@ -71,7 +71,7 @@ button:hover {
 
 .next-button {
     margin-top: 100px;
-    padding: 10px 50px;
+    padding: 5px 50px;
     animation-name: 'fadeInButton';
   animation-duration: 2s;
 }
