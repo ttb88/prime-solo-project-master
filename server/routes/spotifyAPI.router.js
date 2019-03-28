@@ -164,24 +164,26 @@ getGenreName = async (genreID) => {
 
 getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo) => {
     try {
-        let range = .2;
-        let maxEnergy = selections.energy_value + range > 1 ? 1 : selections.energy_value;
-        let minEnergy = selections.energy_value - range < 0 ? 0 : selections.energy_value;
-        let maxValence = selections.mood_value + range > 1 ? 1 : selections.mood_value;
-        let minValence = selections.mood_value - range < 0 ? 0 : selections.mood_value;
-        console.log('inside get playlist tracks', selections);
+        let range = .4;
+        let maxEnergy = selections.energy_value + range > 1 ? 1 : selections.energy_value + range;
+        let minEnergy = selections.energy_value - range < 0 ? 0 : selections.energy_value - range;
+        let maxValence = selections.mood_value + range > 1 ? 1 : selections.mood_value + range;
+        let minValence = selections.mood_value - range < 0 ? 0 : selections.mood_value - range;
+        console.log('inside get playlist tracks- energy + valence', maxEnergy, minEnergy, maxValence, minValence);
         
         const response = await axios({
             method: 'GET',
-            url: `https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}`,
+            url: `https://api.spotify.com/v1/recommendations?limit=50&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}`,
             headers: {
                 'Authorization': 'Bearer ' + access_token,
             }
         })
-        const playlistTracks = response.data.tracks.map(track => track.uri);
-        // const shuffled = images.sort(() => 0.5 - Math.random());
-        // let selected = shuffled.slice(0, 6);
-        return playlistTracks;
+        let playlistTracks = response.data.tracks.map(track => track.uri);
+        console.log('playlist tracks-before shuffle', playlistTracks);
+        
+        let shuffled = playlistTracks.sort(() => 0.5 - Math.random());
+        let selected = shuffled.slice(0, 12);
+        return selected;
     } catch (error) {
         console.log('error getting playlist tracks from Spotify API', error);
     }
