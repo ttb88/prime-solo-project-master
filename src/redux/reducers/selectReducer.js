@@ -2,6 +2,8 @@ const selectedItems = {
     spotify_id: '',
     image_id: '',
     genre_id: '',
+    energy_value: '',
+    mood_value: '',
     playlist_title: '',
     playlist_description: '',  
 }
@@ -23,6 +25,16 @@ const selectReducer = (state = selectedItems, action) => {
             return {
                 ...state,
                 genre_id: action.payload,
+            }
+        case 'SET_ENERGY':
+            return {
+                ...state,
+                energy: action.payload,
+            }
+        case 'SET_MOOD':
+            return {
+                ...state,
+                mood: action.payload,
             }
         case 'SET_PLAYLIST_INFO':
             return {

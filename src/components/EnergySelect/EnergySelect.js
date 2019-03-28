@@ -22,7 +22,7 @@ class EnergySelect extends Component {
     }
 
     handleChange = async () => {
-        await this.props.dispatch({ type: 'SET_ENERGY', payload: this.state.slider })
+        await this.props.dispatch({ type: 'SET_ENERGY', payload: this.state.slider/100 })
         await this.setState({
             slider: 50,
         });

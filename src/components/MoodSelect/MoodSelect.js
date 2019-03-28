@@ -22,7 +22,7 @@ class MoodSelect extends Component {
     }
 
     handleChange = async () => {
-        await this.props.dispatch({ type: 'SET_ENERGY', payload: this.state.slider })
+        await this.props.dispatch({ type: 'SET_MOOD', payload: this.state.slider/100 })
         await this.setState({
             slider: 50,
         });
@@ -51,7 +51,7 @@ class MoodSelect extends Component {
                         <div className="grid-item-1">
                             <div className="header-text">
                                 <h2>Set the Mood</h2>
-                                <p>Feeling melancholy reflect or just in a happy upbeat mood?
+                                <p>Feeling melancholy to reflective or craving a more hopeful state of mind?
                         <br />Select within the range what best suits your desired mood.</p>
                             </div>
                         </div>
