@@ -45,7 +45,11 @@ class PlaylistItem extends Component {
                 animationDelay: `${this.randomNumberTwo()}s`,
                 animationName: this.props.animation, animationDuration: `${this.randomNumber()}s`
             }}>
-         
+           
+                <div className="centered-text">Chill for the Summer</div>
+        
+           
+           
                 <img src={`images/small/${this.props.image.image_path}`} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image.id)}  />
                 <button className="playlist-go-button"><i class="material-icons">graphic_eq</i>REPLAY</button>
             </div>

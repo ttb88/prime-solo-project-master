@@ -62,7 +62,7 @@ class SavedPlaylists extends Component {
                 <NavBar />
                 <div className="select-page-header">
                     <h2>Playlist Board</h2>
-                    <p>Available are all your previous playlists.  Click to enjoy again!
+                    <p>Available below are all your previous playlists.  Click 'replay' to enjoy again!
                         {/* <br />For more options click on shuffle below. */}
                         </p>
                 </div>
