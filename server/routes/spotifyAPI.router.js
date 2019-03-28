@@ -30,6 +30,7 @@ router.put('/playlist', async (req, res) => {
         let selections = req.body;
         console.log('selections', selections);
         let selectionID = await getSelectionID(selections);
+        console.log('selectionID', selectionID);
         let access_token = await getToken();
         // let spotifyUserInfo = await getUserInfo(access_token);
         let spotifyUserInfo = await getUserInfo();
@@ -91,21 +92,6 @@ router.get('/current-playlist', async (req, res) => {
 
 
 // get Spotify account info for logged in user
-oldgetUserInfo = async (access_token) => {
-    try {
-        const response = await axios({
-            method: 'GET',
-            url: 'https://api.spotify.com/v1/me',
-            headers: { 'Authorization': 'Bearer ' + access_token, }
-        })
-        const spotifyUserInfo = response.data
-        return spotifyUserInfo
-    } catch (error) {
-        console.log('error getting Spotify user info from API', error);
-    }
-}
-
-// get Spotify account info for logged in user
 getUserInfo = async () => {
     let client = await pool.connect();
     try {
@@ -148,8 +134,8 @@ getSelectionID = async (selections) => {
     try {
         console.log('in get Selection ID', selections);
 
-        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id) VALUES ($1,$2,$3) RETURNING "id";`,
-            [selections.image_id, selections.genre_id, selections.spotify_id]);
+        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, energy_value, mood_value) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
+            [selections.image_id, selections.genre_id, selections.spotify_id, selections.energy_value, selections.mood_value]);
         let selectionID = results.rows[0].id;
         return selectionID
     } catch (error) {
@@ -178,9 +164,16 @@ getGenreName = async (genreID) => {
 
 getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo) => {
     try {
+        let range = .2;
+        let maxEnergy = selections.energy_value + range > 1 ? 1 : selections.energy_value;
+        let minEnergy = selections.energy_value - range < 0 ? 0 : selections.energy_value;
+        let maxValence = selections.mood_value + range > 1 ? 1 : selections.mood_value;
+        let minValence = selections.mood_value - range < 0 ? 0 : selections.mood_value;
+        console.log('inside get playlist tracks', selections);
+        
         const response = await axios({
             method: 'GET',
-            url: `https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_genres=${genreName}&max_energy=.6&target_energy=.3&max_valence=.6&target_valence=.4`,
+            url: `https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}`,
             headers: {
                 'Authorization': 'Bearer ' + access_token,
             }

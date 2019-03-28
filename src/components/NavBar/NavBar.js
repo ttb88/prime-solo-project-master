@@ -14,10 +14,10 @@ class NavBar extends Component {
             <nav>
                 <ul>
                     <li class="sub-menu-parent" tab-index="0">
-                        <a href="#"><i class="material-icons">graphic_eq</i></a>
+                        <a><i class="material-icons">graphic_eq</i></a>
                         <ul class="sub-menu">
-                            <li><a href="#">Sub Item 1</a></li>
-                            <li><a href="#">Sub Item 2</a></li>
+                            <li><a href="#/image">Create New</a></li>
+                            <li><a href="#">Saved Playlists</a></li>
                         </ul></li>
                 </ul>
             </nav>

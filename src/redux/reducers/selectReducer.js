@@ -29,12 +29,12 @@ const selectReducer = (state = selectedItems, action) => {
         case 'SET_ENERGY':
             return {
                 ...state,
-                energy: action.payload,
+                energy_value: action.payload,
             }
         case 'SET_MOOD':
             return {
                 ...state,
-                mood: action.payload,
+                mood_value: action.payload,
             }
         case 'SET_PLAYLIST_INFO':
             return {

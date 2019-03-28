@@ -52,7 +52,7 @@ nav { font: 18px/1.4 'Raleway'; }
 nav a { color: #cac8c8; display: block; padding: 0.5em 1em; text-decoration: none; }
 nav a:hover { color: #cac8c8b9;; }
 nav ul,
-nav ul li { list-style-type: none; padding: 0; margin: 0; width: 200px;}
+nav ul li { list-style-type: none; padding: 0; margin: 0; width: 250px;}
 
 nav > ul { background: #004e63a6; text-align: center; }
 nav > ul > li { display: inline-block; border-left: solid 1px #aaa; }
@@ -60,4 +60,6 @@ nav > ul > li:first-child { border-left: none; }
 
 .sub-menu {
   background: #004e6391;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }

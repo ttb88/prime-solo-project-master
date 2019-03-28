@@ -35,7 +35,7 @@ class HomePage extends Component {
 
         return (
             <>
-            <NavBar />
+            {/* <NavBar /> */}
             <div className="center-contents">
             <div className="grid-center-container">
                 <div className="grid-item-1">
