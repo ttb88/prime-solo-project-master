@@ -16,6 +16,7 @@ import PlaylistGenerator from '../PlaylistGenerator/PlaylistGenerator';
 import EnergySelect from '../EnergySelect/EnergySelect';
 import MoodSelect from '../MoodSelect/MoodSelect';
 import SavedPlaylists from '../SavedPlaylists/SavedPlaylists';
+import BlankOpen from '../BlankOpen/BlankOpen';
 
 const theme = createMuiTheme({
   palette: {
@@ -55,7 +56,8 @@ class App extends Component {
       <MuiThemeProvider theme={theme}>
       <Router>
         <div className="bckgrnd-container">
-          <Route exact path="/" component={HomePage} />
+          <Route exact path="/" component={BlankOpen} />
+          <Route exact path="/home" component={HomePage} />
           <Route exact path="/genre" component={GenreSelect} />
           <Route exact path="/energy" component={EnergySelect} />
           <Route exact path="/mood" component={MoodSelect} />

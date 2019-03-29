@@ -42,9 +42,10 @@
 
 .icon{
     display: inline-block;
-    color: #004e63af;
+    color: #004e63;
     font-size: 35px;
     padding: 0 10px;
+    text-shadow: 1px 0.5px rgb(223, 223, 223);
 }
 
 

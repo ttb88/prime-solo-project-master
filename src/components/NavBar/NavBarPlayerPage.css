@@ -18,14 +18,14 @@ li {
 
 li.sub-menu-parent-player .material-icons {
     font-size: 60px;
-    color: #d6d6d6;
+    color: #000;
     opacity: .8;
     transition: all .4s ease-in-out;
 }
 
 li.sub-menu-parent-player:hover .material-icons {
-    color: #e6e6e6;
-    transform: scale(1.03);
+    color: #000;
+    transform: scale(1.08);
 }
 
 li.sub-menu-parent-player {
@@ -50,8 +50,8 @@ ul.sub-menu-player {
 /* presentational */
 nav { font: 18px/1.4 'Raleway'; }
 
-nav a { color: #cac8c8; display: block; padding: 0.5em 1em; text-decoration: none; }
-nav a:hover { color: #cac8c8b9;; }
+nav a { color: #000; display: block; padding: 0.5em 1em; text-decoration: none; }
+nav a:hover { color: rgba(0, 0, 0, 0.664); }
 nav ul,
 nav ul li { list-style-type: none; padding: 0; margin: 0; width: 250px;}
 
@@ -60,7 +60,7 @@ nav > ul > li { display: inline-block; border-left: solid 1px #aaa; }
 nav > ul > li:first-child { border-left: none; }
 
 .sub-menu-player {
-  background: #8a8a8ad3;
+  /* background: rgba(0, 0, 0, 0.712); */
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
@@ -72,7 +72,7 @@ text-align: left;
 .text-logo h2 {
 text-align: left;
 margin-left: 11px;
-color: #c9c9c9d8;
+color: #000;
 opacity: 0;
 animation-name: 'fadeIn';
 animation-delay: 1.2s;

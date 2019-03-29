@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withStyles} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import '../NavBar/NavBar.css';
 
 
 

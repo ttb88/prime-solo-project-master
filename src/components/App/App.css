@@ -36,7 +36,7 @@ h2 {
     font-size: 3em;
     display: inline-block;
     margin: 0;
-    opacity: .6;
+    opacity: .8;
     letter-spacing: 4px;
     color: #f7f6f6;  
     margin-bottom: -10px;
@@ -98,9 +98,20 @@ button:hover {
 }
 
 .header-text {
-    font-size: 23px;
+    font-size: 25px;
 
 }
+
+.header-text p {
+    font-size: 20px;
+    line-height: 12px;
+
+} 
+
+.header-text p br {
+    line-height: 25px;
+
+} 
 
 .drop-down-menu {
     margin: 0 auto;
@@ -115,19 +126,24 @@ margin-left: 40px;
   bottom: 200px;
   padding: 7px 50px;
   font-size: 25px;
-  background-color: #d8d8d86e; 
+  background-color: #ffffffad; 
   animation-name: 'fade-left';
   animation-duration: 2s;
 }
 
 .back-button:hover {
-    background-color: #c7c7c7b9;
+    background-color: #ffffffcb;
 }
 
 
 @keyframes fade-left {
   0%   {left:-40px;}
   100% {left:0px;}
+}
+
+.blank-open {
+    height: 100%;
+    width: 100%;
 }
 
 

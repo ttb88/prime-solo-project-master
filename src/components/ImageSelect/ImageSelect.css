@@ -1,16 +1,22 @@
 .select-page-header {
     padding-top: 20px; 
-    padding-bottom: 1px;
+    /* padding-bottom: 1px; */
+    font-size: 22px;
 }
 
-p {
-    font-size: 18px;
+.select-page-header p {
+    margin-top: 8px;
+    font-size: 20px;
+}
+
+/* p {
+    font-size: 20px;
     color: #000000ee;
     font-family: 'Raleway';
-}
+} */
 
-br {
-    line-height: 20px;
+p br {
+    line-height: 23px;
 }
 
 .images-grid-container {

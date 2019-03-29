@@ -43,7 +43,7 @@ router.get('/callback', function (req, res) {
   request.post(authOptions, function (error, response, body) {
     access_token = body.access_token
     console.log('access token', access_token);
-    let uri = process.env.FRONTEND_URI || 'http://localhost:3000/#/energy'
+    let uri = process.env.FRONTEND_URI || 'http://localhost:3000/#/genre'
     userInfo(access_token);
     postToken(access_token);
     res.redirect(uri);

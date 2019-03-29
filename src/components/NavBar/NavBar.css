@@ -18,13 +18,13 @@ li {
 
 li.sub-menu-parent .material-icons {
     font-size: 62px;
-    color: #004e63;
+    color: #00617c;
     transition: all .4s ease-in-out;
 }
 
 li.sub-menu-parent:hover .material-icons {
     color: #afafaf;
-    transform: scale(1.03);
+    transform: scale(1.05);
 }
 
 li.sub-menu-parent {
@@ -59,7 +59,7 @@ nav > ul > li { display: inline-block; border-left: solid 1px #aaa; }
 nav > ul > li:first-child { border-left: none; }
 
 .sub-menu {
-  background: #004e6391;
+  /* background: #004e6391; */
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
