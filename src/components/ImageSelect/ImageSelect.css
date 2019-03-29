@@ -80,6 +80,7 @@ br {
 
 .shuffle-button {
     margin-top: 10px;
+    /* margin-right: 180px; */
     padding: 5px 45px;
     animation-name: 'fadeInButton';
   animation-duration: 2s;
@@ -89,6 +90,10 @@ br {
 .image-reveal {
     opacity: 0;
     animation-fill-mode: both;
+}
+
+.image-back-button {
+  margin-top: 234px;
 }
 
 

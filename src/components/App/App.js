@@ -56,10 +56,10 @@ class App extends Component {
       <Router>
         <div className="bckgrnd-container">
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/image" component={ImageSelect} />
           <Route exact path="/genre" component={GenreSelect} />
           <Route exact path="/energy" component={EnergySelect} />
           <Route exact path="/mood" component={MoodSelect} />
+          <Route exact path="/image" component={ImageSelect} />
           <Route exact path="/playlist-name" component={PlaylistInfoInput} />
           <Route exact path="/playlist-gen" component={PlaylistGenerator} />
           <Route exact path="/player" component={PlayerPage} />

@@ -68,8 +68,11 @@ class ImageSelect extends Component {
                 <div className="images-grid-container">
                     {this.displayImages()}
                 </div>
-                {/* <button onClick={() => this.props.dispatch({ type: 'FETCH_IMAGES' })} className="shuffle-button button">shuffle</button> */}
                 <button onClick={this.handleClick} className="shuffle-button button">shuffle</button>
+                <div>
+                <button onClick={() => this.props.history.push('/mood')} className="back-button button image-back-button">back</button>
+                </div>
+              
             </>
         );
     }

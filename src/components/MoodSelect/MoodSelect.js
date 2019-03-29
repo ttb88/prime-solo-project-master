@@ -26,7 +26,7 @@ class MoodSelect extends Component {
         await this.setState({
             slider: 50,
         });
-        this.props.history.push("/playlist-name");
+        this.props.history.push("/image");
     }
 
     walkOpacity = () => {

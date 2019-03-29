@@ -216,8 +216,8 @@ getGenreName = async (genreID) => {
 
 getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo) => {
     try {
-        let range = .5;
-        let maxEnergy = selections.energy_value + range > 1 ? 1 : selections.energy_value + range;
+        let range = .4;
+        let maxEnergy = selections.energy_value + range > .5 ? .5 : selections.energy_value + range;
         let minEnergy = selections.energy_value - range < 0 ? 0 : selections.energy_value - range;
         let maxValence = selections.mood_value + range > 1 ? 1 : selections.mood_value + range;
         let minValence = selections.mood_value - range < 0 ? 0 : selections.mood_value - range;
@@ -225,7 +225,7 @@ getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo)
         
         const response = await axios({
             method: 'GET',
-            url: `https://api.spotify.com/v1/recommendations?limit=50&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}`,
+            url: `https://api.spotify.com/v1/recommendations?limit=50&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}&min_popularity=30&max_speechiness=.2&max_loudness=-10`,
             headers: {
                 'Authorization': 'Bearer ' + access_token,
             }

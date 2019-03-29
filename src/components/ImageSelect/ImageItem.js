@@ -26,7 +26,7 @@ class ImageItem extends Component {
 
     handleImageClick = id => () => {
         this.props.dispatch({ type: 'SET_IMAGE', payload: id})
-        this.props.history.push("/genre");
+        this.props.history.push("/playlist-name");
     }
 
     randomNumber = () => {
