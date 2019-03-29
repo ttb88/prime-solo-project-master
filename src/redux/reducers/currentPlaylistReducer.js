@@ -1,5 +1,5 @@
-const currentPlaylistInfo = (state = [], action) => {
-    // console.log (action.payload)
+const currentPlaylist = (state = [], action) => {
+    console.log(action.payload)
     switch (action.type) {
         case 'SET_CURRENT_PLAYLIST':
             return action.payload;
@@ -8,4 +8,4 @@ const currentPlaylistInfo = (state = [], action) => {
     }
 };
 
-export default currentPlaylistInfo;
+export default currentPlaylist;

@@ -60,7 +60,7 @@ nav > ul > li { display: inline-block; border-left: solid 1px #aaa; }
 nav > ul > li:first-child { border-left: none; }
 
 .sub-menu-player {
-  background: #c7c7c786;
+  background: #8a8a8ad3;
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
@@ -71,7 +71,7 @@ text-align: left;
 
 .text-logo h2 {
 text-align: left;
-margin-left: 30px;
+margin-left: 11px;
 color: #c9c9c9d8;
 opacity: 0;
 animation-name: 'fadeIn';

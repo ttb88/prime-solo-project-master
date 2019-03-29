@@ -24,9 +24,10 @@ import './SavedPlaylists.css';
 
 class PlaylistItem extends Component {
 
-    handleImageClick = id => () => {
-        // this.props.dispatch({ type: 'SET_IMAGE', payload: id })
-        // this.props.history.push("/genre");
+    handleImageClick = playlist => () => {
+        console.log('saved playlist', playlist);
+        this.props.dispatch({ type: 'UPDATE_CURRENT_PLAYLIST', payload: playlist})
+        this.props.history.push("/player");
     }
 
     randomNumber = () => {
@@ -46,12 +47,12 @@ class PlaylistItem extends Component {
                 animationName: this.props.animation, animationDuration: `${this.randomNumber()}s`
             }}>
            
-                <div className="centered-text">Chill for the Summer</div>
+                <div className="centered-text">{this.props.playlist.title.toUpperCase()}</div>
         
            
            
-                <img src={`images/small/${this.props.image.image_path}`} alt={this.props.image.id} onClick={this.handleImageClick(this.props.image.id)}  />
-                <button className="playlist-go-button"><i class="material-icons">graphic_eq</i>REPLAY</button>
+                <img src={`images/small/${this.props.playlist.image_path}`} alt={this.props.playlist.id} onClick={this.handleImageClick(this.props.playlist)}  />
+                <button className="playlist-go-button" onClick={this.handleImageClick(this.props.playlist)}><i class="material-icons">graphic_eq</i>REPLAY</button>
             </div>
           
         );

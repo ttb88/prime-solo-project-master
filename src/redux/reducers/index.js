@@ -3,6 +3,8 @@ import images from './imageReducer';
 import genres from './genreReducer';
 import itemSelections from './selectReducer';
 import currentPlaylistInfo from './spotifyReducer';
+import allPlaylists from './allPlaylistReducer';
+import currentPlaylist from './currentPlaylistReducer';
 // import playlistTracks from './playlistTracksReducer';
 // import errors from './errorsReducer';
 // import loginMode from './loginModeReducer';
@@ -23,6 +25,8 @@ const rootReducer = combineReducers({
   genres, //will include all genre paths to genre from 'genre' table on database
   itemSelections, //will hold all user selctions
   currentPlaylistInfo,
+  allPlaylists,
+  currentPlaylist,
 });
 
 export default rootReducer;

@@ -50,11 +50,10 @@ router.put('/playlist', async (req, res) => {
     }
 })
 
-// get all genres from 'genre' table on database
-router.get('/current-playlist', async (req, res) => {
+// get all playlists from 'playlist' table on database
+router.get('/all-playlists', async (req, res) => {
     let client = await pool.connect();
     try {
-        console.log('inside player page get playlist');
         let spotifyUserInfo = await getUserInfo();
         console.log('got user info');
         
@@ -85,6 +84,59 @@ router.get('/current-playlist', async (req, res) => {
         await res.send(userPlaylists);
     } catch (error) {
         console.log('error getting playlist of current user');
+    } finally {
+        client.release()
+    }
+});
+
+
+router.get('/current-playlist', async (req, res) => {
+    let client = await pool.connect();
+    try {
+        console.log('inside current page get playlist');
+        // let spotifyUserInfo = await getUserInfo();
+        // console.log('got user info');
+
+        let result = await client.query(`SELECT  
+            "playlist"."id", 
+            "title", 
+            "description", 
+            "playlist_id",
+            "snapshot_id", 
+            "playlist"."href", 
+            "spotify_user"."spotify_id", 
+            "display_name",
+            "genre_name",
+            "image_path",
+            "date_created"
+            FROM "playlist"
+            JOIN "selection" ON "selection_id"="selection"."id"
+            JOIN "genre" ON "genre_id" = "genre"."id"
+            JOIN "image" ON "selection"."image_id"="image"."id"
+            JOIN "spotify_user" ON "playlist"."spotify_id"="spotify_user"."id"
+            JOIN "spotify_token" ON "current_playlist_id"="playlist"."id";`)
+        let currentPlaylist = await result.rows;
+        console.log('userPlaylists have been created on server');
+        await res.send(currentPlaylist);
+    } catch (error) {
+        console.log('error getting current playlist');
+    } finally {
+        client.release()
+    }
+});
+
+router.put('/update-current-playlist', async (req, res) => {
+    let client = await pool.connect();
+    try {
+        let currentPlaylistID = req.body.id;
+        console.log('inside update current playlist');
+        // let spotifyUserInfo = await getUserInfo();
+        // console.log('got user info');
+        client.query(`UPDATE "spotify_token" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [currentPlaylistID, 1]); 
+        console.log('current playlist has been created on server');
+        res.sendStatus(201);
+    } catch (error) {
+        console.log('error updating current playlist');
     } finally {
         client.release()
     }
@@ -208,10 +260,14 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
                 'Content-Type': 'application/json'
             }
         })
-        const playlistInfo = await response.data;
         
-        client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8);`,
+        
+        const playlistInfo = await response.data;
+        let playlistID = await client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id";;`,
             [playlistInfo.name, playlistInfo.description, playlistInfo.id, playlistInfo.snapshot_id, playlistInfo.tracks.href, selectionID, spotifyUserInfo.id, Date.now()]);
+
+        client.query(`UPDATE "spotify_token" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [playlistID.rows[0].id, 1]);    
+        
         return playlistInfo
     } catch (error) {
         console.log('error creating playlist on Spotify API and returning playlist URLs', error);

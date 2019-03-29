@@ -27,25 +27,25 @@ class PlayerPage extends Component {
 
     // }
 
-    handleAddTrack = () => {
-        this.props.history.push('/image');
-    }
+    // handleAddTrack = () => {
+    //     this.props.history.push('/image');
+    // }
 
 
 
     render() {
-        console.log('currentPlaylistInfo', this.props.currentPlaylistInfo.image_path);
+        console.log('currentPlaylistInfo', this.props.currentPlaylist);
 
         return (
           
 
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylistInfo.image_path})` }} id="new-background" className="bckgrnd-container">
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})` }} id="new-background" className="bckgrnd-container">
 
                 <NavBarPlayerPage />
 
 
                 <div className="playlist-widget">
-                    <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylistInfo.spotify_id}/playlist/${this.props.currentPlaylistInfo.playlist_id}`}
+                    <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylist.spotify_id}/playlist/${this.props.currentPlaylist.playlist_id}`}
                         width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
                 </div>
            
