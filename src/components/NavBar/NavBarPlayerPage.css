@@ -26,6 +26,7 @@ li.sub-menu-parent-player .material-icons {
 li.sub-menu-parent-player:hover .material-icons {
     color: #000;
     transform: scale(1.08);
+    transform: rotate(90deg);
 }
 
 li.sub-menu-parent-player {
@@ -48,7 +49,9 @@ ul.sub-menu-player {
 }
 
 /* presentational */
-nav { font: 18px/1.4 'Raleway'; }
+nav { font: 18px/1.4 'Raleway';
+      font-weight: 600;   
+}
 
 nav a { color: #000; display: block; padding: 0.5em 1em; text-decoration: none; }
 nav a:hover { color: rgba(0, 0, 0, 0.664); }

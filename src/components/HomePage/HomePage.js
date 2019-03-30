@@ -35,19 +35,19 @@ class HomePage extends Component {
 
         return (
             <>
-            {/* <NavBar /> */}
-            <div className="center-contents">
-            <div className="grid-center-container">
-                <div className="grid-item-1">
-                    <h1>stream</h1>   
-            </div >
-                <div className="grid-item-2">
-                <button className="complete-button" onClick={this.handleClick}>create playlist</button>
+                {/* <NavBar /> */}
+                <div className="center-contents">
+                    <div className="grid-center-container">
+                        <div className="grid-item-1">
+                            <h1><i class="material-icons stream-icon">graphic_eq</i>stream</h1>
+                        </div >
+                        <div className="grid-item-2">
+                            <button className="complete-button" onClick={this.handleClick}><i class="material-icons">graphic_eq</i>create playlist</button>
+                        </div>
+
+
+                    </div>
                 </div>
-
-
-            </div>
-            </div>
             </>
         );
     }

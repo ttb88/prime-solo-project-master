@@ -7,6 +7,10 @@ import NavBarPlayerPage from '../NavBar/NavBarPlayerPage';
 
 class PlayerPage extends Component {
 
+    state = {
+        display: 'display',
+    }
+
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
     }
@@ -27,26 +31,44 @@ class PlayerPage extends Component {
 
     // }
 
-    // handleAddTrack = () => {
-    //     this.props.history.push('/image');
-    // }
+    handleRefreshTracks = () => {
+        this.props.dispatch({ type: 'REFRESH_CURRENT_PLAYLIST', payload: this.props.currentPlaylist});
+        this.setState({
+            display: 'display-update',
+        })
+        
+
+    }
+
+    playlistUpdate = () => {
+        if (this.state.display === 'display') {
+            return <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylist.spotify_id}/playlist/${this.props.currentPlaylist.playlist_id}`}
+                    width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        }
+        else if (this.state.display === 'display-update')
+            return <iframe title="Spotify Playlist Widget 2" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylist.spotify_id}/playlist/${this.props.currentPlaylist.playlist_id}`}
+                    width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+
+    }
 
 
 
     render() {
         console.log('currentPlaylistInfo', this.props.currentPlaylist);
+        console.log('state', this.state.display);
+        
 
         return (
-          
-
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.1), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})` }} id="new-background" className="bckgrnd-container">
+            
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.3), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})` }} id="new-background" className="bckgrnd-container">
 
                 <NavBarPlayerPage />
 
 
                 <div className="playlist-widget">
-                    <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylist.spotify_id}/playlist/${this.props.currentPlaylist.playlist_id}`}
-                        width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                {this.playlistUpdate()}
+                    {/* <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylist.spotify_id}/playlist/${this.playlistIDUpdate()}`}
+                        width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe> */}
                 </div>
            
           
@@ -54,7 +76,7 @@ class PlayerPage extends Component {
                
                  
             {/* <button onClick={this.handleClick}>get playlist</button> */ }
-        {/* <button onClick={this.handleAddTrack}>new playlist</button> */ }
+                <button onClick={this.handleRefreshTracks}>refresh playlist</button>
               
 
             

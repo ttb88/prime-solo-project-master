@@ -7,6 +7,8 @@ function* spotifySaga() {
     yield takeEvery('FETCH_ALL_PLAYLISTS', fetchAllPlaylists);
     yield takeEvery('FETCH_CURRENT_PLAYLIST', fetchCurrentPlaylist);
     yield takeEvery('UPDATE_CURRENT_PLAYLIST', updateCurrentPlaylist);
+    yield takeEvery('REFRESH_CURRENT_PLAYLIST', refreshCurrentPlaylist);
+    yield takeEvery('FETCH_CURRENT_REFRESHED_PLAYLIST', fetchCurrentRefreshedPlaylist);
 }
 
 function* generatePlaylist(action) {
@@ -47,6 +49,27 @@ function* updateCurrentPlaylist(action) {
         console.log('updatecurrentplaylist payload', action.payload);
     } catch (error) {
         console.log('this was an error updating current playlist');
+    }
+}
+
+function* refreshCurrentPlaylist(action) {
+    try {
+        console.log('refresh currentplaylist payload', action.payload);
+        yield axios.put('api/spotify/refresh-current-playlist', action.payload);
+       
+    } catch (error) {
+        console.log('this was an error refreshing current playlist');
+    }
+}
+
+function* fetchCurrentRefreshedPlaylist() {
+    try {
+        let response = yield axios.get('api/spotify/current-playlist');
+        console.log(`user's playlists`, response.data);
+        // yield dispatch({ type: 'SET_CURRENT_PLAYLIST', payload: response.data[0] })
+        yield dispatch({ type: 'SET_CURRENT_PLAYLIST', payload: response.data[0] })
+    } catch (error) {
+        console.log('this was an error fetching current refreshed playlist');
     }
 }
 

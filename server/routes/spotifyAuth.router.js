@@ -63,6 +63,8 @@ userInfo = (access_token) => {
     }
   }).then(res => {
     let user = res.data
+    console.log('current user', user);
+    
     checkDatabase(user);
     addToCurrentUser(user);
   }).catch(error => {
@@ -75,7 +77,9 @@ checkDatabase = (user) => {
   pool.query(`SELECT * FROM "spotify_user" WHERE "spotify_id"=$1;`, [user.id])
     .then((result) => {
       // add user if not in database
-      if (result.rows[0].spotify_id !== user.id) {
+      console.log('inside checkdatabase', result.rows);
+      
+      if (!result.rows[0]) {
         console.log('adding user to database');
         const queryText = `INSERT INTO "spotify_user" (display_name, spotify_id, email, href, uri, country) VALUES ($1,$2,$3,$4,$5,$6);`;
         pool.query(queryText, [user.display_name, user.id, user.email, user.href, user.uri, user.country])

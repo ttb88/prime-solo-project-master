@@ -20,7 +20,7 @@ br {
     grid-template-columns: repeat(4, 4fr);
     grid-template-rows: repeat(2, 18vw);
     grid-column-gap: 3px;
-    grid-row-gap: 103px;
+    grid-row-gap: 108px;
 }
 
 .playlist-grid-container img {

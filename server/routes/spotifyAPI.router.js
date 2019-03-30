@@ -32,7 +32,6 @@ router.put('/playlist', async (req, res) => {
         let selectionID = await getSelectionID(selections);
         console.log('selectionID', selectionID);
         let access_token = await getToken();
-        // let spotifyUserInfo = await getUserInfo(access_token);
         let spotifyUserInfo = await getUserInfo();
         console.log('spotifyUserInfo', spotifyUserInfo.spotify_id);
         let genreName = await getGenreName(selections.genre_id);
@@ -69,6 +68,7 @@ router.get('/all-playlists', async (req, res) => {
             "display_name",
             "genre_name",
             "image_path",
+            "selection_id",
             "date_created"
             FROM "playlist"
             JOIN "selection" ON "selection_id"="selection"."id"
@@ -108,6 +108,7 @@ router.get('/current-playlist', async (req, res) => {
             "display_name",
             "genre_name",
             "image_path",
+            "selection_id",
             "date_created"
             FROM "playlist"
             JOIN "selection" ON "selection_id"="selection"."id"
@@ -130,8 +131,6 @@ router.put('/update-current-playlist', async (req, res) => {
     try {
         let currentPlaylistID = req.body.id;
         console.log('inside update current playlist');
-        // let spotifyUserInfo = await getUserInfo();
-        // console.log('got user info');
         client.query(`UPDATE "spotify_token" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [currentPlaylistID, 1]); 
         console.log('current playlist has been created on server');
         res.sendStatus(201);
@@ -140,6 +139,26 @@ router.put('/update-current-playlist', async (req, res) => {
     } finally {
         client.release()
     }
+});
+
+router.put('/refresh-current-playlist', async (req, res) => {
+    try {
+        console.log('inside refresh current playlist', req.body);
+        let selectionID = req.body.selection_id;
+        let genreName = req.body.genre_name;
+        let playlistURL = req.body.href;
+        console.log('playlistURL', playlistURL);
+        let spotifyID = req.body.spotify_id;
+        let selections = await getSelection(selectionID);
+        console.log('refresh playlist selections:', selections);
+        let access_token = await getToken();
+        let playlistTracks = await getPlaylistTracks(access_token, genreName, selections);
+        console.log('refreshed playlistTracks', playlistTracks);
+        let tracksUpdateResponse = await refreshPlaylist(spotifyID, access_token, playlistURL, playlistTracks);    
+        res.sendStatus(tracksUpdateResponse);
+    } catch (error) {
+        console.log('error refreshing current playlist');
+    } 
 });
 
 
@@ -225,7 +244,7 @@ getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo)
         
         const response = await axios({
             method: 'GET',
-            url: `https://api.spotify.com/v1/recommendations?limit=50&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}&min_popularity=30&max_speechiness=.2&max_loudness=-10`,
+            url: `https://api.spotify.com/v1/recommendations?limit=50&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}&min_popularity=30&max_speechiness=.2&max_loudness=-5`,
             headers: {
                 'Authorization': 'Bearer ' + access_token,
             }
@@ -295,5 +314,42 @@ addTracksToPlaylist = async (access_token, newPlaylistURL, playlistTracks) => {
     }
 }
 
+getSelection =  async (playlistSelectionID) => {
+    const client = await pool.connect();
+    try {
+        console.log('in getSelections', playlistSelectionID);
+        const result = await client.query(`SELECT * FROM "selection" WHERE "id"=$1;`, [playlistSelectionID])
+        console.log('selections', result.rows);
+
+        const selections = result.rows[0];
+        return selections;
+    } catch (error) {
+        console.log('error getting selections from database', error);
+    } finally {
+        client.release()
+    }
+}
+
+refreshPlaylist = async (spotifyID, access_token, playlistURL, playlistTracks) => {
+    console.log('inside refresh playlist- spotifyID, access_token, playlistID, playlistTracks', spotifyID, access_token, playlistURL, playlistTracks )
+    try {
+        let response = await axios({
+            method: 'PUT',
+            url: playlistURL,
+            data: { "uris": playlistTracks},
+            dataType: 'json',
+            headers: {
+                'Authorization': 'Bearer ' + access_token,
+                'Content-Type': 'application/json'
+            }
+        })
+        const tracksUpdatedResponse = response;
+        console.log('refresh successfull, tracksUpdatedResponse', tracksUpdatedResponse);
+        return tracksUpdatedResponse.status;
+    } catch (error) {
+        console.log('error updaing tracks to playlist on Spotify API', error);
+    }
+
+}
 
 module.exports = router;
