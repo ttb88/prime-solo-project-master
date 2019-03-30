@@ -155,7 +155,7 @@ router.put('/refresh-current-playlist', async (req, res) => {
         let playlistTracks = await getPlaylistTracks(access_token, genreName, selections);
         console.log('refreshed playlistTracks', playlistTracks);
         let tracksUpdateResponse = await refreshPlaylist(spotifyID, access_token, playlistURL, playlistTracks);    
-        res.sendStatus(tracksUpdateResponse);
+        res.sendStatus(201);
     } catch (error) {
         console.log('error refreshing current playlist');
     } 
@@ -244,7 +244,7 @@ getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo)
         
         const response = await axios({
             method: 'GET',
-            url: `https://api.spotify.com/v1/recommendations?limit=50&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}&min_popularity=30&max_speechiness=.2&max_loudness=-5`,
+            url: `https://api.spotify.com/v1/recommendations?limit=90&market=US&seed_genres=${genreName}&min_energy=${minEnergy}&max_energy=${maxEnergy}&target_energy=${selections.energy_value}&min_valence=${minValence}&max_valence=${maxValence}&target_valence=${selections.mood_value}&min_popularity=30&max_speechiness=.2&max_loudness=-5`,
             headers: {
                 'Authorization': 'Bearer ' + access_token,
             }
@@ -345,7 +345,7 @@ refreshPlaylist = async (spotifyID, access_token, playlistURL, playlistTracks) =
         })
         const tracksUpdatedResponse = response;
         console.log('refresh successfull, tracksUpdatedResponse', tracksUpdatedResponse);
-        return tracksUpdatedResponse.status;
+        // return tracksUpdatedResponse.status;
     } catch (error) {
         console.log('error updaing tracks to playlist on Spotify API', error);
     }

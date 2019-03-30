@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './HomePage.css'
-import NavBar from '../NavBar/NavBar';
+// import NavBar from '../NavBar/NavBar';
 // import Typography from '@material-ui/core/Typography';
 // import { withStyles } from '@material-ui/core/styles';
 // import NavBar from '../NavBar/NavBar';

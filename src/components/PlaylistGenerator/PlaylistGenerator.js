@@ -15,9 +15,9 @@ class PlaylistGenerator extends Component {
 
  
     move = () => {
-    var elem = document.getElementById("myBar");
-    var width = 1;
-    var id = setInterval(frame, 60);
+    let elem = document.getElementById("myBar");
+    let width = 1;
+    let id = setInterval(frame, 60);
     console.log('id', id)
     let history = this.props.history;
    
@@ -45,7 +45,7 @@ handleClick = () => {
             <> <div className="center-contents">
                 <div className="grid-center-container">
                 <div className="header-text">
-                    <h2>Playlist Generating</h2>
+                    <h2>Generating Your Playlist</h2>
                 </div>
                 <div id="myProgress">
                     <div id="myBar"></div>
