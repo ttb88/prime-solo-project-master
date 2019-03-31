@@ -70,7 +70,6 @@ br {
 .playlist-grid-item .playlist-go-button .material-icons {
   font-size: 120%;
   margin-right: 5px;
-
 }
 
 
@@ -86,6 +85,8 @@ br {
     opacity: 0;
     animation-fill-mode: both;
 }
+
+
 
 @keyframes fadeIn {
   0% {

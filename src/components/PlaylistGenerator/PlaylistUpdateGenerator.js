@@ -16,7 +16,7 @@ class PlaylistGenerator extends Component {
     move = () => {
         let elem = document.getElementById("myBar");
         let width = 1;
-        let id = setInterval(frame, 60);
+        let id = setInterval(frame, 30);
         console.log('id', id)
         let history = this.props.history;
 

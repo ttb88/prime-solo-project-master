@@ -2,43 +2,89 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './PlayerPage.css';
 import NavBarPlayerPage from '../NavBar/NavBarPlayerPage';
-// import SpotifyPlayerWidget from '../SpotifyPlayerWidget/SpotifyPlayerWidget';
-// import SpotifyPlayerWidget2 from '../SpotifyPlayerWidget/SpotifyPlayerWidget2';
 
 
 
 class PlayerPage extends Component {
 
+    state = {
+        fade: true,
+        drawer: false,
+        input: false,
+    }
 
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_CURRENT_PLAYLIST' });
+        this.setState({ 
+            fade: true,
+            drawer: false,
+            input: false,
+        })
     }
-
 
     handleRefreshTracks = () => {
-        
-        this.props.dispatch({ type: 'REFRESH_CURRENT_PLAYLIST', payload: this.props.currentPlaylist});
-        window.location.reload(); 
-        // this.props.history.push("/playlist-gen-update");
+        this.props.dispatch({ type: 'REFRESH_CURRENT_PLAYLIST', payload: this.props.currentPlaylist });
+        this.setState({ fade: false })
+        this.props.history.push("/playlist-gen-update");
     }
 
+
+    fadeInToggle = () => {
+        if (this.state.fade) {
+            return 'new-background'
+        }
+        else { return '' }
+    }
+
+    displayDrawer = () => {
+        if (!this.state.drawer) {
+            return ''
+        }
+        if (this.state.drawer && !this.state.input) {
+            return <div id="open-drawer">
+                        <button className="more-options-button" onClick={this.handleRefreshTracks}>refresh playlist</button>
+                        <button onClick={this.handleRenamePlaylist} className="more-options-button" >rename playlist</button>
+                    </div>
+        }
+        else {
+            return <div id="open-drawer" onClick={()=> this.setState({input: !this.state.input})}>
+                <input className="rename-input" placeholder='rename playlist'></input>
+            </div>
+        }
+    }
+
+    handleMoreOptionsClick = () => {
+        this.setState({ drawer: !(this.state.drawer) });
+        let element = document.getElementById("options-icon");
+        element.classList.toggle("icon-rotate");
+    }
+
+    handleRenamePlaylist = () => {
+        this.setState({ input: !(this.state.input) });
+    }
 
     render() {
         console.log('currentPlaylistInfo', this.props.currentPlaylist);
-    
+
         return (
-           
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.3), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})` }} id="new-background" className="bckgrnd-container">
+
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.3), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})` }} id={this.state.fade} className="bckgrnd-container">
 
                 <NavBarPlayerPage />
+
                 <div className="playlist-widget">
                     <iframe title="Spotify Playlist Widget" src={`https://open.spotify.com/embed/user/${this.props.currentPlaylist.spotify_id}/playlist/${this.props.currentPlaylist.playlist_id}`}
-                        width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                        width="800" height="380" frameBorder="0" allowtransparency="true" allow="encrypted-media" ></iframe>
+                    <div className="below-widget-div" >
+                        <button className="more-options-button" onClick={this.handleMoreOptionsClick}><i className="material-icons" id="options-icon">graphic_eq</i>more options</button>
+                        {this.displayDrawer()}
+                    </div>
                 </div>
-            {/* <button onClick={this.handleClick}>get playlist</button> */ }
-                <button onClick={this.handleRefreshTracks}>refresh playlist</button>
+
+
+
             </div>
-       
+
         );
     }
 }

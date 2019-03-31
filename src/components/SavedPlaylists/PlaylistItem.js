@@ -52,7 +52,7 @@ class PlaylistItem extends Component {
            
            
                 <img src={`images/small/${this.props.playlist.image_path}`} alt={this.props.playlist.id} onClick={this.handleImageClick(this.props.playlist)}  />
-                <button className="playlist-go-button" onClick={this.handleImageClick(this.props.playlist)}><i class="material-icons">graphic_eq</i>REPLAY</button>
+                <button className="playlist-go-button" onClick={this.handleImageClick(this.props.playlist)}><i className="material-icons">graphic_eq</i>REPLAY</button>
             </div>
           
         );

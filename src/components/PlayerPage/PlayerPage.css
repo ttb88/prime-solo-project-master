@@ -40,5 +40,118 @@ border-radius: 30px; */
 box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.411);
 margin-top: 200px;
 opacity: .8;
-margin-left: -75px;
+margin-left: -80px;
 } 
+
+.below-widget-div {
+  width: 800px;
+  margin: 0 auto;
+  background: #3b3b3ba1;
+  margin-top: -7px;
+  box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.411);
+}
+
+.more-options-button .material-icons {
+  font-size: 120%;
+  margin-right: 5px;
+  transition: transform 1s;
+}
+
+.icon-rotate{
+  transform: rotate(90deg)
+}
+
+.more-options-button {
+  color: #c0c0c0;
+  /* color: #000000; */
+  background-color: transparent;
+  font-size: 20px;
+  transition: color .3s;
+}
+
+.more-options-button:hover {
+  color: #e4e4e4cc;
+  background-color: transparent;
+}
+
+#open-drawer button {
+  font-family: Raleway;
+  font-size: 16px;
+  color: #c7c7c7c5;
+  padding: 0 20px;
+  margin-top: 15px;
+  transition: all .3s;
+  border-radius: 0;
+}
+
+#open-drawer button:first-of-type {
+  border-right: solid 1px #c7c7c794;
+}
+
+#open-drawer button:hover {
+  color: #000000;
+}
+
+#open-drawer {
+  border-top: solid .5px #c7c7c760;
+  animation-name: 'openDrawer';
+   animation-duration: 1s;
+   animation-fill-mode: both;
+}
+
+.rename-input {
+  animation-name: 'slideIn';
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+  margin-top: 12px;
+  text-align: left;
+  outline: none;
+  background-color: #9190904f;
+  border: none;
+  color: #c0c0c0;
+  font-family: 'Raleway';
+  padding-left: 3px;
+}
+
+@keyframes openDrawer {
+  0% {
+    height: 0px;
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    height: 60px;
+    opacity: 1;
+  }
+}
+
+@keyframes iconRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(90deg);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  100% {
+     opacity: 100%;
+     width: 400px;
+     height: 30px;
+  }
+}
+
+
+

@@ -79,7 +79,7 @@ router.get('/all-playlists', async (req, res) => {
             ORDER BY "date_created" DESC;
             `, [spotifyUserInfo.spotify_id]);
         let userPlaylists = await result.rows;
-        console.log('userPlaylists have been created on server');
+        console.log('userPlaylists have been retrieved from server');
         // await client.query('COMMIT')
         await res.send(userPlaylists);
     } catch (error) {
