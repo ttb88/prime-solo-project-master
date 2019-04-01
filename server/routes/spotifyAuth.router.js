@@ -11,7 +11,7 @@ const clientSecret = process.env.SPOTIFY_CLIENT_SECRET;
 
 let redirect_uri =
   process.env.REDIRECT_URI ||
-  'http://localhost:5000/spotify-auth/callback'
+  'https://prime-solo-project-stream.herokuapp.com/spotify-auth/callback'
 
 router.get('/login', function (req, res) {
   res.redirect('https://accounts.spotify.com/authorize?' +
