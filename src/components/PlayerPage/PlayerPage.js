@@ -101,7 +101,7 @@ class PlayerPage extends Component {
 
         return (
 
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.3), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})`}} id={this.state.fade} className="bckgrnd-container">
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.2), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})`}} id={this.state.fade} className="bckgrnd-container">
 
                 <NavBarPlayerPage />
 

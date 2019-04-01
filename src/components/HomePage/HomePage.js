@@ -27,7 +27,7 @@ import './HomePage.css'
 class HomePage extends Component {
     handleClick = () => {
         console.log('create playlist button clicked');
-        window.location.replace('http://localhost:5000/spotify-auth/login');
+        window.location.replace('https://prime-solo-project-stream.herokuapp.com/spotify-auth/login');
     }
 
     render() {
