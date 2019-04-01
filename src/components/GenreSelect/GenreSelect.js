@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DropDownMenu from './GenreDropDownMenu.1';
+import DropDownMenu from './GenreDropDownMenu';
 import NavBar from '../NavBar/NavBar';
 
 
@@ -22,6 +22,8 @@ class GenreSelect extends Component {
                         <div className="grid-item-1">
                             <div className="header-text">
                                 <h2>Select Genre</h2>
+                                {/* <p>Mix and match up to 5 genres in your search.
+                        <br />The more you select the more music to discover.</p> */}
                             </div>
                         </div>
                         <div className="grid-item-2">

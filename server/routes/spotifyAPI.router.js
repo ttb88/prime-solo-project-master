@@ -28,7 +28,7 @@ router.get('/user', async (req, res) => {
 router.put('/playlist', async (req, res) => {
     try {
         let selections = req.body;
-        console.log('selections', selections);
+        console.log('inside playlist generate- selections', selections);
         let selectionID = await getSelectionID(selections);
         console.log('selectionID', selectionID);
         let access_token = await getToken();
@@ -97,6 +97,8 @@ router.get('/current-playlist', async (req, res) => {
         // let spotifyUserInfo = await getUserInfo();
         // console.log('got user info');
 
+        // await getPlaylistInfo();
+
         let result = await client.query(`SELECT  
             "playlist"."id", 
             "title", 
@@ -145,11 +147,17 @@ router.put('/refresh-current-playlist', async (req, res) => {
     try {
         console.log('inside refresh current playlist', req.body);
         let selectionID = req.body.selection_id;
+        console.log('refresh selection ID', selectionID);
+        
         let genreName = req.body.genre_name;
         let playlistURL = req.body.href;
         console.log('playlistURL', playlistURL);
         let spotifyID = req.body.spotify_id;
         let selections = await getSelection(selectionID);
+        // let one = selections.genres.replace('{', '');
+        // let two = one.replace('}', '');
+        // let genreArray = two.split(',');
+        // console.log('object to array conversion', genres);
         console.log('refresh playlist selections:', selections);
         let access_token = await getToken();
         let playlistTracks = await getPlaylistTracks(access_token, genreName, selections);
@@ -160,6 +168,21 @@ router.put('/refresh-current-playlist', async (req, res) => {
         console.log('error refreshing current playlist');
     } 
 });
+
+router.put('/set-dates', async (req, res) => {
+    console.log('inside set dates', req.body);
+    
+        const client = await pool.connect();
+    try {
+         client.query(`UPDATE "selection" SET "date_min"=$1, "date_max"=$2 WHERE "id"=$3;`, [req.body.dateMin, req.body.dateMax, req.body.selectionID]);
+        res.sendStatus(201);
+    } catch (error) {
+        console.log('error updating date range');
+    } finally {
+        client.release()
+    }
+});
+
 
 
 // get Spotify account info for logged in user
@@ -205,8 +228,8 @@ getSelectionID = async (selections) => {
     try {
         console.log('in get Selection ID', selections);
 
-        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, energy_value, mood_value) VALUES ($1,$2,$3,$4,$5) RETURNING "id";`,
-            [selections.image_id, selections.genre_id, selections.spotify_id, selections.energy_value, selections.mood_value]);
+        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, energy_value, mood_value, genres, date_min, date_max) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id";`,
+            [selections.image_id, selections.genre_id, selections.spotify_id, selections.energy_value, selections.mood_value, selections.genres, selections.date_min, selections.date_max]);
         let selectionID = results.rows[0].id;
         return selectionID
     } catch (error) {
@@ -233,14 +256,18 @@ getGenreName = async (genreID) => {
 }
 
 
-getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo) => {
+getPlaylistTracks = async (access_token, genreName, selections) => {
     try {
+        console.log('inside get playlist tracks', selections);
+        
         let range = .4;
         let maxEnergy = selections.energy_value + range > .5 ? .5 : selections.energy_value + range;
         let minEnergy = selections.energy_value - range < 0 ? 0 : selections.energy_value - range;
         let maxValence = selections.mood_value + range > 1 ? 1 : selections.mood_value + range;
         let minValence = selections.mood_value - range < 0 ? 0 : selections.mood_value - range;
         console.log('inside get playlist tracks- energy + valence', maxEnergy, minEnergy, maxValence, minValence);
+
+        // let genres = selections.genres;
         
         const response = await axios({
             method: 'GET',
@@ -251,9 +278,14 @@ getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo)
         })
 
         //filter out tracks by release date
-        let filteredTracks = response.data.tracks.filter(track => new Date(track.album.release_date).getFullYear() >= selections.minYear && new Date(track.album.release_date).getFullYear() <= selections.maxYear );
+        // let filteredTracks = response.data.tracks.filter(track => new Date(track.album.release_date).getFullYear() > 2010);
+    
+        let filteredTracks = await response.data.tracks.filter(track => new Date(track.album.release_date).getFullYear() >= selections.date_min && new Date(track.album.release_date).getFullYear() <= selections.date_max);
+         console.log('release dates', filteredTracks);
+        //  let filteredTracks = response.data.tracks.map(track => new Date(track.album.release_date).getFullYear());
+        // console.log('filtered tracks by year', filteredTracks)
         // let playlistTracks = response.data.tracks.map(track => track.uri);
-        // let playlistTracks = filteredTracks.map(track => track.uri);
+        let playlistTracks = await filteredTracks.map(track => track.uri);
         console.log('playlist tracks-before shuffle', playlistTracks);
         
         let shuffled = playlistTracks.sort(() => 0.5 - Math.random());
@@ -286,7 +318,7 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
         
         
         const playlistInfo = await response.data;
-        let playlistID = await client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id";;`,
+        let playlistID = await client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id";`,
             [playlistInfo.name, playlistInfo.description, playlistInfo.id, playlistInfo.snapshot_id, playlistInfo.tracks.href, selectionID, spotifyUserInfo.id, Date.now()]);
 
         client.query(`UPDATE "spotify_token" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [playlistID.rows[0].id, 1]);    
@@ -298,6 +330,37 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
         client.release()
     }
 }
+
+// getCurrentPlaylistInfo = async () => {
+//     const client = await pool.connect();
+//     try {
+//         console.log('in getCurrentPlaylistInfo');
+//         const result = await client.query(`SELECT "*" FROM "playlist"`)
+//         console.log('playlist result', result.rows);
+
+//         const playlistID = await result.rows[0].playlist_id;
+
+//         const response = await axios({
+//             method: 'GET',
+//             url: `https://api.spotify.com/v1/playlists/${playlistID}`,
+//             headers: {
+//                 'Authorization': 'Bearer ' + access_token,
+//                 'Content-Type': 'application/json'
+//             }
+//         })
+//         const playlistInfo = response;
+//         console.log('spotify playlistInof', playlistInfo)
+        
+//         client.query(`UPDATE "playlist" SET "title"=$1, "description"=$2 WHERE "id"=$3;`, [playlistInfo.name, playlistInfo.description, playlistID]);
+//         console.log('current playlist has been updated on server');
+//         res.sendStatus(201);
+
+//     } catch (error) {
+//         console.log('error getting current playlist info on Spotify API', error);
+//     } finally {
+//         client.release()
+//     }
+// }
 
 addTracksToPlaylist = async (access_token, newPlaylistURL, playlistTracks) => {
     try {

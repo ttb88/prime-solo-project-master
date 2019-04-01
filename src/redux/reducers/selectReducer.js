@@ -6,6 +6,8 @@ const selectedItems = {
     mood_value: '',
     playlist_title: '',
     playlist_description: '',  
+    dateMin: 1920,
+    dateMax: 2019,
 }
 
 
@@ -41,6 +43,12 @@ const selectReducer = (state = selectedItems, action) => {
                 ...state,
                 playlist_title: action.payload.title,
                 playlist_description: action.payload.description,
+            }
+        case 'SET_DATE_RANGE':
+            return {
+                ...state,
+                dateMin: action.payload.dateMin == '' ? 1920 : action.payload.dateMin,
+                dateMax: action.payload.dateMin == '' ? 2019 : action.payload.dateMax,
             }
         default:
             return state;

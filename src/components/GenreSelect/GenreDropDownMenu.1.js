@@ -84,7 +84,7 @@ class DropDownMenu extends React.Component {
                 >
                     
                 <FormControl className={classes.formControl} onSubmit={this.handleSubmit}>
-                    <InputLabel htmlFor="select-multiple-chip">Genre</InputLabel>
+                    <InputLabel htmlFor="select-multiple-chip">Genres</InputLabel>
                     <Select     
                         multiple
                         value={this.state.genre_id}

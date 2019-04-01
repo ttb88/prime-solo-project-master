@@ -11,6 +11,11 @@ class PlayerPage extends Component {
         fade: true,
         drawer: false,
         input: false,
+        dateRange: {
+            dateMin: 1920,
+            dateMax: 2019,
+            selectionID: this.props.currentPlaylist.selection_id,
+        },
     }
 
     componentDidMount() {
@@ -28,6 +33,27 @@ class PlayerPage extends Component {
         this.props.history.push("/playlist-gen-update");
     }
 
+    handleOnChange = property => event => {
+        this.setState ({
+            dateRange: {
+                ...this.state.dateRange,
+                selectionID: this.props.currentPlaylist.selection_id,
+                [property]: event.target.value,
+            }  
+        })
+    }
+
+    handleDateSubmit = () => {
+        this.props.dispatch({type: 'SET_DATE_RANGE', payload: this.state.dateRange});
+        this.setState({
+            dateRange: {
+                dateMin: '',
+                dateMax: '',
+            }
+        })
+        this.handleRefreshTracks();
+    }
+
 
     fadeInToggle = () => {
         if (this.state.fade) {
@@ -43,12 +69,17 @@ class PlayerPage extends Component {
         if (this.state.drawer && !this.state.input) {
             return <div id="open-drawer">
                         <button className="more-options-button" onClick={this.handleRefreshTracks}>refresh playlist</button>
-                        <button onClick={this.handleRenamePlaylist} className="more-options-button" >rename playlist</button>
+                        <button onClick={this.handleRenamePlaylist} className="more-options-button">set date range</button>
                     </div>
         }
         else {
             return <div id="open-drawer">
-                <input className="rename-input" placeholder='rename playlist'></input><i class="far fa-window-close" onClick={()=> this.setState({input: !this.state.input})}></i>
+            <label>Date Range</label>
+                <input className="rename-input" type="number" min="1820" placeholder='min' value={this.state.dateRange.dateMin} onChange={this.handleOnChange('dateMin')}></input>
+                <span>to</span>
+                <input className="rename-input" type="number" max="2019" placeholder='max' value={this.state.dateRange.dateMax} onChange={this.handleOnChange('dateMax')}></input>
+                <button onClick={this.handleDateSubmit} className="more-options-button">submit</button>
+                <button onClick={() => this.setState({ input: !this.state.input })} className="more-options-button">close</button>
                     </div>
         }
     }
@@ -65,6 +96,8 @@ class PlayerPage extends Component {
 
     render() {
         console.log('currentPlaylistInfo', this.props.currentPlaylist);
+        console.log('daterange', this.state.dateRange);
+        
 
         return (
 
