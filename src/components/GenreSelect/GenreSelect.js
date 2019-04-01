@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import DropDownMenu from './GenreDropDownMenu';
+import DropDownMenu from './GenreDropDownMenu.1';
 import NavBar from '../NavBar/NavBar';
 
 

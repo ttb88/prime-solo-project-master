@@ -249,11 +249,15 @@ getPlaylistTracks = async (access_token, genreName, selections, spotifyUserInfo)
                 'Authorization': 'Bearer ' + access_token,
             }
         })
-        let playlistTracks = response.data.tracks.map(track => track.uri);
+
+        //filter out tracks by release date
+        let filteredTracks = response.data.tracks.filter(track => new Date(track.album.release_date).getFullYear() >= selections.minYear && new Date(track.album.release_date).getFullYear() <= selections.maxYear );
+        // let playlistTracks = response.data.tracks.map(track => track.uri);
+        // let playlistTracks = filteredTracks.map(track => track.uri);
         console.log('playlist tracks-before shuffle', playlistTracks);
         
         let shuffled = playlistTracks.sort(() => 0.5 - Math.random());
-        let selected = shuffled.slice(0, 12);
+        let selected = shuffled.slice(0, 12); 
         return selected;
     } catch (error) {
         console.log('error getting playlist tracks from Spotify API', error);

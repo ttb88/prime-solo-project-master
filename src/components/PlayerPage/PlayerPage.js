@@ -47,9 +47,9 @@ class PlayerPage extends Component {
                     </div>
         }
         else {
-            return <div id="open-drawer" onClick={()=> this.setState({input: !this.state.input})}>
-                <input className="rename-input" placeholder='rename playlist'></input>
-            </div>
+            return <div id="open-drawer">
+                <input className="rename-input" placeholder='rename playlist'></input><i class="far fa-window-close" onClick={()=> this.setState({input: !this.state.input})}></i>
+                    </div>
         }
     }
 
@@ -68,7 +68,7 @@ class PlayerPage extends Component {
 
         return (
 
-            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.3), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})` }} id={this.state.fade} className="bckgrnd-container">
+            <div style={{ backgroundImage: `linear-gradient(rgba(212, 212, 212, 0.3), rgba(138, 138, 138, 0.1)), url(images/full/${this.props.currentPlaylist.image_path})`}} id={this.state.fade} className="bckgrnd-container">
 
                 <NavBarPlayerPage />
 

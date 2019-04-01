@@ -4,6 +4,7 @@ import { withStyles} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import '../NavBar/NavBar.css';
+import Input from '@material-ui/core/Input';
 
 
 
@@ -32,13 +33,13 @@ const styles = theme => ({
 
 class DropDownMenu extends Component {
     state = {
-       genre_id: ''
+       genre_id: '',
     };
 
     handleChange = event => {
         console.log(event.target.value);
         this.setState({ 
-            genre_id: event.target.value
+            genre_id: event.target.value,
         });
     };
 
@@ -53,6 +54,7 @@ class DropDownMenu extends Component {
 
     render() {
         const { classes } = this.props;
+        console.log('genre id',this.state.genre_id)
 
         return (
             <ValidatorForm
@@ -64,6 +66,7 @@ class DropDownMenu extends Component {
                 className="drop-down-menu"
                 id="tag"
                 select
+                multiple
                 fullWidth
                 label="Select a genre"
                 // className={classes.textField}

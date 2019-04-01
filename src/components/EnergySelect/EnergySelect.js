@@ -51,7 +51,7 @@ class EnergySelect extends Component {
                         <div className="grid-item-1">
                             <div className="header-text">
                                 <h2>Energy Level</h2>
-                                <p>In the mood for a light walk or maybe it's time to wind down from the day? 
+                                <p>In the mood for a light run or maybe it's time to wind down from the day? 
                         <br />Select within the range what best suits your desired energy level.</p>
                             </div>
                         </div>
