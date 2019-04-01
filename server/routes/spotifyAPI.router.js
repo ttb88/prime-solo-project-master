@@ -192,7 +192,7 @@ getUserInfo = async () => {
         console.log('inside get user info');
         
         
-        console.log('pool client', client);
+        // console.log('pool client', client);
         // await client.query('BEGIN')
         let result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
         // not getting to this point in testing
@@ -228,8 +228,8 @@ getSelectionID = async (selections) => {
     try {
         console.log('in get Selection ID', selections);
 
-        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, energy_value, mood_value, genres, date_min, date_max) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id";`,
-            [selections.image_id, selections.genre_id, selections.spotify_id, selections.energy_value, selections.mood_value, selections.genres, selections.date_min, selections.date_max]);
+        let results = await client.query(`INSERT INTO "selection" (image_id, genre_id, spotify_id, energy_value, mood_value, date_min, date_max) VALUES ($1,$2,$3,$4,$5,$6,$7) RETURNING "id";`,
+            [selections.image_id, selections.genre_id, selections.spotify_id, selections.energy_value, selections.mood_value, selections.date_min, selections.date_max]);
         let selectionID = results.rows[0].id;
         return selectionID
     } catch (error) {
@@ -282,6 +282,7 @@ getPlaylistTracks = async (access_token, genreName, selections) => {
     
         let filteredTracks = await response.data.tracks.filter(track => new Date(track.album.release_date).getFullYear() >= selections.date_min && new Date(track.album.release_date).getFullYear() <= selections.date_max);
          console.log('release dates', filteredTracks);
+
         //  let filteredTracks = response.data.tracks.map(track => new Date(track.album.release_date).getFullYear());
         // console.log('filtered tracks by year', filteredTracks)
         // let playlistTracks = response.data.tracks.map(track => track.uri);

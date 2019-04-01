@@ -17,15 +17,15 @@ const styles = theme => ({
         flexWrap: 'wrap',
     },
     formControl: {
-        minWidth: 300,
-        maxWidth: 1000,
+        minWidth: 120,
+        maxWidth: 300,
     },
     chips: {
         display: 'flex',
         flexWrap: 'wrap',
     },
     chip: {
-        margin: theme.spacing.unit / 6,
+        margin: theme.spacing.unit / 4,
     },
     noLabel: {
         marginTop: theme.spacing.unit * 3,
@@ -37,8 +37,8 @@ const ITEM_PADDING_TOP = 8;
 const MenuProps = {
     PaperProps: {
         style: {
-            maxHeight: ITEM_HEIGHT * 12 + ITEM_PADDING_TOP,
-            width: 100,
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
         },
     },
 };

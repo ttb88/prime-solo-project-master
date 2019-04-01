@@ -74,9 +74,9 @@ class PlayerPage extends Component {
         }
         else {
             return <div id="open-drawer">
-            <label>Date Range</label>
+            <label className="date-labels">Date Range</label>
                 <input className="rename-input" type="number" min="1820" placeholder='min' value={this.state.dateRange.dateMin} onChange={this.handleOnChange('dateMin')}></input>
-                <span>to</span>
+                <span className="date-labels">to</span>
                 <input className="rename-input" type="number" max="2019" placeholder='max' value={this.state.dateRange.dateMax} onChange={this.handleOnChange('dateMax')}></input>
                 <button onClick={this.handleDateSubmit} className="more-options-button">submit</button>
                 <button onClick={() => this.setState({ input: !this.state.input })} className="more-options-button">close</button>
