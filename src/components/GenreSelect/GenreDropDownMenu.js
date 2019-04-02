@@ -1,33 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withStyles} from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import '../NavBar/NavBar.css';
-
-
-
-
-const styles = theme => ({
-    // root: {
-    //     display: 'flex',
-    //     flexWrap: 'wrap',
-    // },
-    // formControl: {
-    //     margin: theme.spacing.unit,
-    //     minWidth: 350,
-    // },
-    // selectEmpty: {
-    //     marginTop: theme.spacing.unit * 2,
-    // },
-    textField: {
-        marginTop: 2,
-        marginBottom: 2,
-    },
-    // menu: {
-    //     width: 200,
-    // },
-});
 
 
 class DropDownMenu extends Component {
@@ -50,10 +25,7 @@ class DropDownMenu extends Component {
         this.props.history.push("/energy");
     }
 
-
     render() {
-        const { classes } = this.props;
-        console.log('genre id',this.state.genre_id)
 
         return (
             <ValidatorForm
@@ -68,14 +40,8 @@ class DropDownMenu extends Component {
                 multiple
                 fullWidth
                 label="Select a genre"
-                // className={classes.textField}
                 value={this.state.genre_id}
                 onChange={this.handleChange}
-                SelectProps={{
-                    MenuProps: {
-                        className: classes.menu,
-                    },
-                }}
                 validators={['required']}
                 errorMessages={['this field is required']}
                 margin="normal"
@@ -97,5 +63,4 @@ const mapReduxStateToProps = (reduxState) => {
     return reduxState;
 }
 
-
-export default withStyles(styles)(connect(mapReduxStateToProps)(DropDownMenu));
+export default (connect(mapReduxStateToProps)(DropDownMenu));

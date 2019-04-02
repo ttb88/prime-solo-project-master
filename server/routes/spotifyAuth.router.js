@@ -47,8 +47,6 @@ router.get('/callback', function (req, res) {
     userInfo(access_token);
     postToken(access_token);
     res.redirect(uri);
-    // const queryText = 'UPDATE "spotify_current" SET "access_token"=$1 WHERE "id"=$2';
-    // pool.query(queryText, [access_token, 1])
     // res.redirect(uri + '?access_token=' + access_token)
   })
 })
@@ -77,8 +75,6 @@ checkDatabase = (user) => {
   pool.query(`SELECT * FROM "spotify_user" WHERE "spotify_id"=$1;`, [user.id])
     .then((result) => {
       // add user if not in database
-      console.log('inside checkdatabase', result.rows);
-      
       if (!result.rows[0]) {
         console.log('adding user to database');
         const queryText = `INSERT INTO "spotify_user" (display_name, spotify_id, href, uri, country) VALUES ($1,$2,$3,$4,$5);`;
@@ -107,7 +103,7 @@ addToCurrentUser = (user) => {
   pool.query(queryText, [user.id, 1]).then(() => {
     console.log('current user added to database');
   }).catch(error => {
-    console.log('there was an error adding access_token to database', error);
+    console.log('there was an error adding current user to database', error);
   })
 
 }

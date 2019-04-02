@@ -1,6 +1,5 @@
 .select-page-header {
     padding-top: 20px; 
-    /* padding-bottom: 1px; */
     font-size: 22px;
 }
 
@@ -8,12 +7,6 @@
     margin-top: 8px;
     font-size: 20px;
 }
-
-/* p {
-    font-size: 20px;
-    color: #000000ee;
-    font-family: 'Raleway';
-} */
 
 p br {
     line-height: 23px;
@@ -86,10 +79,9 @@ p br {
 
 .shuffle-button {
     margin-top: 10px;
-    /* margin-right: 180px; */
     padding: 5px 45px;
     animation-name: 'fadeInButton';
-  animation-duration: 2s;
+    animation-duration: 2s;
 
 }
 

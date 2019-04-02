@@ -73,7 +73,7 @@ class DropDownMenu extends React.Component {
 
     render() {
         const { classes } = this.props;
-     console.log('genre', this.state.genre_id)
+        console.log('genre', this.state.genre_id)
 
         return (
             <div className={classes.root}>
@@ -82,34 +82,34 @@ class DropDownMenu extends React.Component {
                     onSubmit={this.handleSubmit}
                     onError={errors => console.log(errors)}
                 >
-                    
-                <FormControl className={classes.formControl} onSubmit={this.handleSubmit}>
-                    <InputLabel htmlFor="select-multiple-chip">Genres</InputLabel>
-                    <Select     
-                        multiple
-                        value={this.state.genre_id}
-                        onChange={this.handleChange}
+
+                    <FormControl className={classes.formControl} onSubmit={this.handleSubmit}>
+                        <InputLabel htmlFor="select-multiple-chip">Genres</InputLabel>
+                        <Select
+                            multiple
+                            value={this.state.genre_id}
+                            onChange={this.handleChange}
                             validators={['required']}
                             errorMessages={['this field is required']}
-                        input={<Input id="select-multiple-chip" />}
-                        renderValue={selected => (
-                            <div className={classes.chips}>
-                                {selected.map(value => (
-                                    <Chip key={value} label={value} className={classes.chip} />
-                                ))}
-                            </div>
-                        )}
-                        MenuProps={MenuProps}
-                    >
-                        {this.props.genres.map(genre => (
-                            <MenuItem key={genre.id} value={genre.genre_name} style={getStyles(genre.genre_name, this)}>
-                                {genre.genre_name}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                            input={<Input id="select-multiple-chip" />}
+                            renderValue={selected => (
+                                <div className={classes.chips}>
+                                    {selected.map(value => (
+                                        <Chip key={value} label={value} className={classes.chip} />
+                                    ))}
+                                </div>
+                            )}
+                            MenuProps={MenuProps}
+                        >
+                            {this.props.genres.map(genre => (
+                                <MenuItem key={genre.id} value={genre.genre_name} style={getStyles(genre.genre_name, this)}>
+                                    {genre.genre_name}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                     <button type="submit" className="next-button">next</button>
-                </ValidatorForm>  
+                </ValidatorForm>
             </div>
         );
     }
@@ -125,5 +125,3 @@ const mapReduxStateToProps = (reduxState) => {
 
 
 export default withStyles(styles, { withTheme: true })(connect(mapReduxStateToProps)(DropDownMenu))
-
-// export default withStyles(styles)(connect(mapReduxStateToProps)(DropDownMenu));

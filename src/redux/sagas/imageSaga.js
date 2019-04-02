@@ -2,6 +2,7 @@ import axios from 'axios';
 import { takeEvery, put as dispatch } from 'redux-saga/effects';
 
 
+// fetch all images from 'image' table and set within 'genreReducer.js'
 function* imageSaga() {
     yield takeEvery('FETCH_IMAGES', fetchImages);
 }

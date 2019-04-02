@@ -1,8 +1,3 @@
-.select-page-header {
-    padding-top: 20px; 
-    padding-bottom: 1px;
-}
-
 p {
     font-size: 18px;
     color: #000000ee;
@@ -11,6 +6,16 @@ p {
 
 br {
     line-height: 20px;
+}
+
+.centered-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 21px;
+  line-height: 20px;
 }
 
 .playlist-grid-container {
@@ -27,10 +32,8 @@ br {
     width: 100%;
     height: 100%;
     opacity: .5;
-    /* filter: grayscale(45%); */
     object-fit: cover;
     transition: all .7s;
-    /* filter: blur(.9px); */
 }
 
 .playlist-grid-container img:hover {
@@ -46,20 +49,8 @@ br {
   background-color: rgb(49, 49, 49);
 }
 
-.centered-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 21px;
-  line-height: 20px;
-}
-
 .playlist-grid-item .playlist-go-button {
-  /* transform: translate(0%, -100%); */
   width: 100%;
-  /* height: 15%; */
   font-size: 12px;
   font-family: 'Raleway';
   padding: 12px 0;
@@ -74,19 +65,16 @@ br {
 
 
 .shuffle-button {
-    margin-top: 10px;
-    padding: 5px 45px;
-    animation-name: 'fadeInButton';
+  margin-top: 10px;
+  padding: 5px 45px;
+  animation-name: 'fadeInButton';
   animation-duration: 2s;
-
 }
 
 .playlist-reveal {
-    opacity: 0;
-    animation-fill-mode: both;
+  opacity: 0;
+  animation-fill-mode: both;
 }
-
-
 
 @keyframes fadeIn {
   0% {

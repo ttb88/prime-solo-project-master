@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { takeEvery, put as dispatch } from 'redux-saga/effects';
 
-
+// fetch all genres from 'genre' table and set within 'genreReducer.js'
 function* genreSaga() {
     yield takeEvery('FETCH_GENRES', fetchGenres);
 }

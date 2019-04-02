@@ -48,7 +48,6 @@ ul.sub-menu-player {
   transition-delay: 0s, 0s, 0.3s; /* this removes the transition delay so the menu will be visible while the other styles transition */
 }
 
-/* presentational */
 nav { font: 18px/1.4 'Raleway';
       font-weight: 600;   
 }
@@ -63,22 +62,21 @@ nav > ul > li { display: inline-block; border-left: solid 1px #aaa; }
 nav > ul > li:first-child { border-left: none; }
 
 .sub-menu-player {
-  /* background: rgba(0, 0, 0, 0.712); */
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }
 
 .text-logo {
-text-align: left;
+  text-align: left;
 }
 
 .text-logo h2 {
-text-align: left;
-margin-left: 11px;
-color: #000;
-opacity: 0;
-animation-name: 'fadeIn';
-animation-delay: 1.2s;
+  text-align: left;
+  margin-left: 11px;
+  color: #000;
+  opacity: 0;
+  animation-name: 'fadeIn';
+  animation-delay: 1.2s;
   animation-duration: 2s;
   animation-fill-mode: forwards;
 }

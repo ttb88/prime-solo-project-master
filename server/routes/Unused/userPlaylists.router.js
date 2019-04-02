@@ -1,8 +1,8 @@
 const express = require('express');
-const pool = require('../modules/pool');
+const pool = require('../../modules/pool');
 const router = express.Router();
 const axios = require('axios');
-const access_token = require('../modules/access-token');
+const access_token = require('../../modules/access-token');
 
 /**
  * GET route template

@@ -5,10 +5,6 @@ import NavBar from '../NavBar/NavBar';
 
 class PlaylistInfoInput extends Component {
 
-    // componentDidMount() {
-    //     this.props.dispatch({ type: 'FETCH_GENRES' });
-    // }
-
 
     render() {
 

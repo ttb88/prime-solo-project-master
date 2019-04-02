@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import ImageItem from './ImageItem';
-import './ImageSelect.css';
 import NavBar from '../NavBar/NavBar';
+import './ImageSelect.css';
+
 
 
 class ImageSelect extends Component {
@@ -16,27 +17,23 @@ class ImageSelect extends Component {
 
     componentDidMount() {
         this.props.dispatch({ type: 'FETCH_IMAGES' });
-        this.props.dispatch({type: 'FETCH_USER'});
     }
 
-
+    // shuffle through and refresh images from 'image' table on database for display on DOM
     displayImages = () => {
-        console.log('shuffle clicked');
         let images = this.props.images;
         let lastImages = this.prevImages.map(image => image.id);
-        console.log('last 6 images', lastImages );
-        // console.log('this.prevImages are filter', this.prevImages);
+        console.log('last 6 images', lastImages);
         images = images.filter(image => !lastImages.includes(image.id));
         console.log('new 24 images', images);
         let shuffled = images.sort(() => 0.5 - Math.random());
-        // console.log('shuffled', shuffled );
         let selected = shuffled.slice(0, 6);
         this.prevImages = selected;
         console.log('selected 6 images', selected);
-        console.log('selected 6 images this.prev', this.prevImages);
-        
         let number = 1
-        return selected.map(image => <ImageItem history={this.props.history} animation={this.state.animation} image={image} number={number++} key={image.id} />)
+
+        return selected.map(image => 
+        <ImageItem history={this.props.history} animation={this.state.animation} image={image} number={number++} key={image.id} />)
     }
 
     handleClick = () => {
@@ -54,7 +51,6 @@ class ImageSelect extends Component {
         }
     }
 
-
     render() {
 
         return (
@@ -62,17 +58,17 @@ class ImageSelect extends Component {
                 <NavBar />
                 <div className="select-page-header">
                     <h2>Select Image</h2>
-                    <p>Which image are you most drawn to in the present moment... click!
-                        <br />For more options click on shuffle below.</p>
+                        <p>Which image are you most drawn to in the present moment... click!
+                        <br />For more options click on shuffle below.
+                        </p>
                 </div>
                 <div className="images-grid-container">
                     {this.displayImages()}
                 </div>
                 <button onClick={this.handleClick} className="shuffle-button button">shuffle</button>
                 <div>
-                <button onClick={() => this.props.history.push('/mood')} className="back-button button image-back-button">back</button>
+                    <button onClick={() => this.props.history.push('/mood')} className="back-button button image-back-button">back</button>
                 </div>
-              
             </>
         );
     }
@@ -81,6 +77,5 @@ class ImageSelect extends Component {
 const mapReduxStateToProps = (reduxState) => {
     return reduxState;
 }
-
 
 export default (connect(mapReduxStateToProps)(ImageSelect));

@@ -1,4 +1,3 @@
-
 #new-background {
   animation-name: 'fadeIn';
   animation-duration: 2s;
@@ -15,26 +14,7 @@
   }
 }
 
-
-/* li.sub-menu-parent .material-icons {
-    color: #afafaf;
-}
-
-li.sub-menu-parent:hover .material-icons {
-    color: #dddddd;
-}
-
-.sub-menu {
-  background: #757575c7;
-} */
-  
-
 iframe {
-/* margin-top: 20px;
-margin-bottom: 30px;
--moz-border-radius: 30px;
--webkit-border-radius: 30px;
-border-radius: 30px; */
 -moz-box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.39);
 -webkit-box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.541);
 box-shadow: 4px 4px 14px rgba(0, 0, 0, 0.411);
@@ -57,13 +37,8 @@ margin-left: -80px;
   transition: transform 1s;
 }
 
-.icon-rotate{
-  transform: rotate(90deg)
-}
-
 .more-options-button {
   color: #c0c0c0;
-  /* color: #000000; */
   background-color: transparent;
   font-size: 20px;
   transition: color .3s;
@@ -74,8 +49,18 @@ margin-left: -80px;
   background-color: transparent;
 }
 
+.icon-rotate{
+  transform: rotate(90deg)
+}
+
+#open-drawer {
+  border-top: solid .5px #c7c7c760;
+  animation-name: 'openDrawer';
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
 #open-drawer button {
-  /* font-family: Raleway; */
   font-size: 16px;
   color: #c7c7c7c5;
   padding: 0 20px;
@@ -92,14 +77,20 @@ margin-left: -80px;
   color: #000000;
 }
 
-#open-drawer {
-  border-top: solid .5px #c7c7c760;
-  animation-name: 'openDrawer';
-   animation-duration: 1s;
-   animation-fill-mode: both;
+#open-drawer i {
+  color: #c7c7c7b6;
+  font-size:30px;
+  vertical-align: -6px;
+  margin-right: 1px;
+  cursor: pointer;
+  margin-left: 20px;
 }
 
-.rename-input {
+#open-drawer i:first-of-type {
+  margin-right: 20px;
+}
+
+.date-input {
   animation-name: 'slideIn';
   animation-duration: 1s;
   animation-fill-mode: forwards;
@@ -115,21 +106,8 @@ margin-left: -80px;
   height: 30px;
 }
 
-.rename-input input {
+.date-input input {
   font-family: 'Raleway';
-}
-
-#open-drawer i {
-  color: #c7c7c7b6;
-  font-size:30px;
-  vertical-align: -6px;
-  margin-right: 1px;
-  cursor: pointer;
-  margin-left: 20px;
-}
-
-#open-drawer i:first-of-type {
-  margin-right: 20px;
 }
 
 .date-labels {
@@ -138,9 +116,6 @@ margin-left: -80px;
   color: #c0c0c0;
   font-size: 16px;
 }
-
-
-
 
 @keyframes openDrawer {
   0% {
@@ -172,13 +147,11 @@ margin-left: -80px;
   0% {
     opacity: 0;
     width: 0;
-    /* height: 0; */
   }
 
   100% {
      opacity: 100%;
      width: 60px;
-     /* height: 30px; */
   }
 }
 

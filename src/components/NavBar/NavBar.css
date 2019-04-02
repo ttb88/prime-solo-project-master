@@ -47,11 +47,9 @@ ul.sub-menu {
   transition-delay: 0s, 0s, 0.3s; /* this removes the transition delay so the menu will be visible while the other styles transition */
 }
 
-/* presentational */
 nav { font: 18px/1.4 'Raleway'; 
       font-weight: 500;   
 }
-
 
 nav a { color: #cac8c8; display: block; padding: 0.5em 1em; text-decoration: none; }
 nav a:hover { color: #cac8c8b9;; }
@@ -63,7 +61,6 @@ nav > ul > li { display: inline-block; border-left: solid 1px #aaa; }
 nav > ul > li:first-child { border-left: none; }
 
 .sub-menu {
-  /* background: #004e6391; */
   border-top-right-radius: 3px;
   border-bottom-right-radius: 3px;
 }

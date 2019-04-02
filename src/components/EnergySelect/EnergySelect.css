@@ -1,7 +1,6 @@
 .slidecontainer {
   width: 700px;
   margin-top: 50px;
-  
 }
 
 .slider {
@@ -40,7 +39,7 @@
   border-radius: 2px;
 }
 
-.icon{
+.icon {
     display: inline-block;
     color: #004e63;
     font-size: 35px;

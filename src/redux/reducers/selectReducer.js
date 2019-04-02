@@ -47,7 +47,7 @@ const selectReducer = (state = selectedItems, action) => {
         case 'SET_DATE_RANGE':
             return {
                 ...state,
-                date_min: action.payload.dateMin === '' || !action.payload.dateMin ? 1600 : action.payload.dateMin,
+                date_min: action.payload.dateMin === '' || !action.payload.dateMin ? 1500 : action.payload.dateMin,
                 date_max: action.payload.dateMax === '' || !action.payloaddateMax ? 2019 : action.payload.dateMax,
             }
         default:

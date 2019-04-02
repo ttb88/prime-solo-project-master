@@ -1,59 +1,21 @@
-.center-contents {
- display: flex;
-  width: 100vw;
-  height: 100vh;
-  align-items: center;
-  justify-content: center;
+.create-playlist-button {
     animation-name: 'fadeInButton';
-  animation-duration: 2s;
+    animation-duration: 2s;
 }
 
-
-.grid-center-container {
- margin-top: -300px;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto, auto, auto, auto;
-    grid-gap: 6px;
-
+.create-playlist-button .material-icons {
+    margin-right: 4px;
+    vertical-align: -2px;
+    transition: all .5s;
 }
 
-.grid-item-1 {
-    grid-column-start: 1;
-    grid-row-start: 1;
-
-}
-
-.grid-item-2 {
-     grid-column-start: 1;
-    grid-row-start: 2;
-    
-}
-
-.complete-button {
-      animation-name: 'fadeInButton';
-  animation-duration: 2s;
-}
-
-.complete-button .material-icons {
-  margin-right: 4px;
-  vertical-align: -2px;
-  transition: all .5s;
-}
-
-.complete-button:hover .material-icons {
-  transform: rotate(90deg);
+.create-playlist-button:hover .material-icons {
+    transform: rotate(90deg);
 }
 
 .stream-icon {
-  font-size: 75px;
-  /* margin-right: 15px; */
-  vertical-align: 60px;
-  transform: scale(1.2);
-  color: #004e63ee;
-
-
+    font-size: 75px;
+    vertical-align: 60px;
+    transform: scale(1.2);
+    color: #004e63ee;
 }
-
-
-

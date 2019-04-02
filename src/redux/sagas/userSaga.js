@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { put, takeLatest } from 'redux-saga/effects';
 
-// worker Saga: will be fired on "FETCH_USER" actions
+// fetch current user from from 'spotify_user' table
 function* fetchUser() {
   try {
     const response = yield axios.get('api/spotify/user');
