@@ -1,31 +1,3 @@
-CREATE TABLE "user" (
-    "id" SERIAL PRIMARY KEY,
-    "username" VARCHAR (80) UNIQUE NOT NULL,
-    "password" VARCHAR (1000) NOT NULL
-);
-
-CREATE TABLE "spotify_token" (
-    "id" SERIAL PRIMARY KEY,
-    "access_token" VARCHAR (1000)
-    "current_playlist_id" INT REFERENCES "playlist"
-);
-
-
-INSERT INTO "spotify_token" ("id")
-VALUES (1);
-
-
-CREATE TABLE "spotify_user" (
-    "id" SERIAL PRIMARY KEY,
-    "display_name" VARCHAR (120) NOT NULL,
-    "spotify_id" VARCHAR (120) UNIQUE NOT NULL,
-    "email" VARCHAR (120)UNIQUE NOT NULL,
-    "href" VARCHAR (200)UNIQUE NOT NULL,
-    "uri" VARCHAR (200) UNIQUE NOT NULL,
-    "country" VARCHAR (20) NOT NULL
-);
-
-
 CREATE TABLE "image" (
     "id" SERIAL PRIMARY KEY,
     "image_path" VARCHAR (150) NOT NULL
@@ -62,9 +34,6 @@ INSERT INTO "image" ("image_path") VALUES
 ('teddy-kelley-106391-unsplash.jpg'),
 ('vadim-sherbakov-41909-unsplash.jpg'),
 ('andrew-ridley-54228-unsplash.jpg');
-
-
-
 
 CREATE TABLE "genre" (
     "id" SERIAL PRIMARY KEY,
@@ -125,16 +94,28 @@ INSERT INTO "activity" ("activity_name") VALUES
 ('study');
 
 
+
+CREATE TABLE "spotify_user" (
+    "id" SERIAL PRIMARY KEY,
+    "display_name" VARCHAR (120) NOT NULL,
+    "spotify_id" VARCHAR (120) UNIQUE NOT NULL,
+    "href" VARCHAR (200)UNIQUE NOT NULL,
+    "uri" VARCHAR (200) UNIQUE NOT NULL,
+    "country" VARCHAR (20) NOT NULL
+);
+
+
+
 CREATE TABLE "selection" (
     "id" SERIAL PRIMARY KEY,
     "image_id" INT NOT NULL REFERENCES "image",
     "genre_id" INT NOT NULL REFERENCES "genre",
-    "genres" VARCHAR (300);
     "spotify_id" INT NOT NULL REFERENCES "spotify_user",
     "energy_value" FLOAT(4),
     "mood_value" FLOAT(4),
-    "date_min" INT NOT NULL DEFAULT 1920,
-    "date_max" INT NOT NULL DEFAULT 2019
+    "genres" VARCHAR (300),
+    "date_min" INT,
+    "date_max" INT
 );
 
 
@@ -147,5 +128,16 @@ CREATE TABLE "playlist" (
     "href" VARCHAR (200),
     "selection_id" INT NOT NULL REFERENCES "selection",
     "spotify_id" INT NOT NULL REFERENCES "spotify_user",
-    "date_created" VARCHAR (100) NOT NULL
+    "timestamp" INT NOT NULL,
+    "date_created" VARCHAR (150) NOT NULL
 );
+
+CREATE TABLE "spotify_current" (
+    "id" SERIAL PRIMARY KEY,
+    "access_token" VARCHAR (1000),
+    "current_user" VARCHAR (255),
+    "current_playlist_id" INT REFERENCES "playlist"
+);
+
+INSERT INTO "spotify_current" ("id")
+VALUES (1);

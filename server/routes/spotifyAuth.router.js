@@ -18,7 +18,7 @@ router.get('/login', function (req, res) {
     querystring.stringify({
       response_type: 'code',
       client_id: clientID,
-      scope: 'user-top-read playlist-modify-public playlist-modify-private playlist-read-private user-read-private user-read-email user-follow-read',
+      scope: 'user-top-read playlist-modify-public playlist-modify-private playlist-read-private user-read-private user-follow-read',
       show_dialog: true,
       redirect_uri,
     }))
@@ -47,7 +47,7 @@ router.get('/callback', function (req, res) {
     userInfo(access_token);
     postToken(access_token);
     res.redirect(uri);
-    // const queryText = 'UPDATE "spotify_token" SET "access_token"=$1 WHERE "id"=$2';
+    // const queryText = 'UPDATE "spotify_current" SET "access_token"=$1 WHERE "id"=$2';
     // pool.query(queryText, [access_token, 1])
     // res.redirect(uri + '?access_token=' + access_token)
   })
@@ -81,8 +81,8 @@ checkDatabase = (user) => {
       
       if (!result.rows[0]) {
         console.log('adding user to database');
-        const queryText = `INSERT INTO "spotify_user" (display_name, spotify_id, email, href, uri, country) VALUES ($1,$2,$3,$4,$5,$6);`;
-        pool.query(queryText, [user.display_name, user.id, user.email, user.href, user.uri, user.country])
+        const queryText = `INSERT INTO "spotify_user" (display_name, spotify_id, href, uri, country) VALUES ($1,$2,$3,$4,$5);`;
+        pool.query(queryText, [user.display_name, user.id, user.href, user.uri, user.country])
       }
       else {
         console.log('user already in database');
@@ -94,7 +94,7 @@ checkDatabase = (user) => {
 
 // post current access token to database
 postToken = access_token => {
-  const queryText = 'UPDATE "spotify_token" SET "access_token"=$1 WHERE "id"=$2';
+  const queryText = 'UPDATE "spotify_current" SET "access_token"=$1 WHERE "id"=$2';
   pool.query(queryText, [access_token, 1]).then(() => {
     console.log('access token added to database');
   }).catch(error => {
@@ -103,7 +103,7 @@ postToken = access_token => {
 }
 
 addToCurrentUser = (user) => {
-  const queryText = 'UPDATE "spotify_token" SET "current_user"=$1 WHERE "id"=$2';
+  const queryText = 'UPDATE "spotify_current" SET "current_user"=$1 WHERE "id"=$2';
   pool.query(queryText, [user.id, 1]).then(() => {
     console.log('current user added to database');
   }).catch(error => {

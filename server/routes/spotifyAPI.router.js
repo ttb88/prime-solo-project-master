@@ -12,7 +12,7 @@ router.get('/user', async (req, res) => {
         // let spotifyUserInfo = await getUserInfo(token);
         // console.log('spotifyID', spotifyUserInfo);
         
-        const result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
+        const result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_current" WHERE "id"=$1;`, [1])
         let spotifyID = result.rows[0].spotify_id;
         const resultsTwo = await client.query(`SELECT "id" AS "spotify_id" FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyID])
         let spotifyUserID = resultsTwo.rows[0];
@@ -117,7 +117,7 @@ router.get('/current-playlist', async (req, res) => {
             JOIN "genre" ON "genre_id" = "genre"."id"
             JOIN "image" ON "selection"."image_id"="image"."id"
             JOIN "spotify_user" ON "playlist"."spotify_id"="spotify_user"."id"
-            JOIN "spotify_token" ON "current_playlist_id"="playlist"."id";`)
+            JOIN "spotify_current" ON "current_playlist_id"="playlist"."id";`)
         let currentPlaylist = await result.rows;
         console.log('userPlaylists have been created on server');
         await res.send(currentPlaylist);
@@ -133,7 +133,7 @@ router.put('/update-current-playlist', async (req, res) => {
     try {
         let currentPlaylistID = req.body.id;
         console.log('inside update current playlist');
-        client.query(`UPDATE "spotify_token" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [currentPlaylistID, 1]); 
+        client.query(`UPDATE "spotify_current" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [currentPlaylistID, 1]); 
         console.log('current playlist has been created on server');
         res.sendStatus(201);
     } catch (error) {
@@ -194,7 +194,7 @@ getUserInfo = async () => {
         
         // console.log('pool client', client);
         // await client.query('BEGIN')
-        let result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_token" WHERE "id"=$1;`, [1])
+        let result = await client.query(`SELECT "current_user" AS "spotify_id" FROM "spotify_current" WHERE "id"=$1;`, [1])
         // not getting to this point in testing
         let spotifyID = result.rows[0].spotify_id;
         let resultsTwo = await client.query(`SELECT * FROM "spotify_user" WHERE "spotify_id"=$1;`, [spotifyID])
@@ -213,7 +213,7 @@ getUserInfo = async () => {
 getToken = async () => {
     const client = await pool.connect();
     try {
-        const result = await client.query(`SELECT "access_token" FROM "spotify_token"`)
+        const result = await client.query(`SELECT "access_token" FROM "spotify_current"`)
         const access_token = await result.rows[0].access_token;
         return access_token;
     } catch (error) {
@@ -319,10 +319,10 @@ createPlaylist = async (access_token, spotifyUserInfo, selections, selectionID) 
         
         
         const playlistInfo = await response.data;
-        let playlistID = await client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING "id";`,
-            [playlistInfo.name, playlistInfo.description, playlistInfo.id, playlistInfo.snapshot_id, playlistInfo.tracks.href, selectionID, spotifyUserInfo.id, Date.now()]);
+        let playlistID = await client.query(`INSERT INTO "playlist" (title, description, playlist_id, snapshot_id, href, selection_id, spotify_id, timestamp, date_created) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) RETURNING "id";`,
+            [playlistInfo.name, playlistInfo.description, playlistInfo.id, playlistInfo.snapshot_id, playlistInfo.tracks.href, selectionID, spotifyUserInfo.id, Date.now(), new Date()]);
 
-        client.query(`UPDATE "spotify_token" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [playlistID.rows[0].id, 1]);    
+        client.query(`UPDATE "spotify_current" SET "current_playlist_id"=$1 WHERE "id"=$2;`, [playlistID.rows[0].id, 1]);    
         
         return playlistInfo
     } catch (error) {
