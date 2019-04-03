@@ -6,7 +6,7 @@ const selectedItems = {
     mood_value: '',
     playlist_title: '',
     playlist_description: '',  
-    date_min: 1600,
+    date_min: 1500,
     date_max: 2019,
 }
 

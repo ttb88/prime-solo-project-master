@@ -1,4 +1,3 @@
-
 const express = require('express');
 require('dotenv').config();
 
@@ -13,8 +12,6 @@ const spotifyAuthRouter = require('./routes/spotifyAuth.router');
 const spotifyAPIRouter = require('./routes/spotifyAPI.router');
 const imageRouter = require('./routes/image.router');
 const genreRouter = require('./routes/genre.router');
-// const userRouter = require('./routes/user.router');
-// const userPlaylists = require('./routes/userPlaylists.router');
 
 // Body parser middleware
 app.use(bodyParser.json());
@@ -32,8 +29,6 @@ app.use('/spotify-auth', spotifyAuthRouter);
 app.use('/api/spotify', spotifyAPIRouter);
 app.use('/api/image', imageRouter);
 app.use('/api/genre', genreRouter);
-// app.use('/api/playlist', userPlaylists);
-
 
 // Serve static files
 app.use(express.static('build'));

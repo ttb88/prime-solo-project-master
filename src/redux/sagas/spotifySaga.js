@@ -69,14 +69,4 @@ function* refreshCurrentPlaylist(action) {
     }
 }
 
-// function* fetchCurrentRefreshedPlaylist() {
-//     try {
-//         let response = yield axios.get('api/spotify/current-playlist');
-//         yield dispatch({ type: 'SET_CURRENT_PLAYLIST', payload: response.data[0] })
-//     } catch (error) {
-//         console.log('this was an error fetching current refreshed playlist');
-//     }
-// }
-
-
 export default spotifySaga;
