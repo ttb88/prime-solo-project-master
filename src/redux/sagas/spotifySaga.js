@@ -15,7 +15,7 @@ function* spotifySaga() {
 function* fetchUser() {
     try {
         const response = yield axios.get('api/spotify/user');
-        yield put({ type: 'SET_USER', payload: response.data });
+        yield dispatch({ type: 'SET_USER', payload: response.data });
     } catch (error) {
         console.log('User get request failed', error);
     }
