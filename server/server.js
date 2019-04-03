@@ -10,9 +10,9 @@ const passport = require('./strategies/user.strategy');
 
 // Route includes
 const spotifyAuthRouter = require('./routes/spotifyAuth.router');
+const spotifyAPIRouter = require('./routes/spotifyAPI.router');
 const imageRouter = require('./routes/image.router');
 const genreRouter = require('./routes/genre.router');
-const spotifyAPIRouter = require('./routes/spotifyAPI.router');
 // const userRouter = require('./routes/user.router');
 // const userPlaylists = require('./routes/userPlaylists.router');
 

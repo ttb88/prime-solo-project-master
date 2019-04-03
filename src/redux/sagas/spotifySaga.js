@@ -1,14 +1,24 @@
 import axios from 'axios';
-import { takeEvery, put as dispatch } from 'redux-saga/effects';
+import { takeEvery, takeLatest, put as dispatch } from 'redux-saga/effects';
 
 
 function* spotifySaga() {
+    yield takeLatest('FETCH_USER', fetchUser);
     yield takeEvery('GENERATE_PLAYLIST', generatePlaylist);
     yield takeEvery('FETCH_ALL_PLAYLISTS', fetchAllPlaylists);
     yield takeEvery('FETCH_CURRENT_PLAYLIST', fetchCurrentPlaylist);
     yield takeEvery('UPDATE_CURRENT_PLAYLIST', updateCurrentPlaylist);
     yield takeEvery('REFRESH_CURRENT_PLAYLIST', refreshCurrentPlaylist);
-    // yield takeEvery('FETCH_CURRENT_REFRESHED_PLAYLIST', fetchCurrentRefreshedPlaylist);
+}
+
+// fetch current user from from 'spotify_user' table
+function* fetchUser() {
+    try {
+        const response = yield axios.get('api/spotify/user');
+        yield put({ type: 'SET_USER', payload: response.data });
+    } catch (error) {
+        console.log('User get request failed', error);
+    }
 }
 
 // create PUT route to server and create new playlist based on user input

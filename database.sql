@@ -128,7 +128,7 @@ CREATE TABLE "playlist" (
     "href" VARCHAR (200),
     "selection_id" INT NOT NULL REFERENCES "selection",
     "spotify_id" INT NOT NULL REFERENCES "spotify_user",
-    "timestamp" INT NOT NULL,
+    "timestamp" VARCHAR (150) NOT NULL,
     "date_created" VARCHAR (150) NOT NULL
 );
 
