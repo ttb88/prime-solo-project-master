@@ -37,7 +37,7 @@ router.put('/playlist', async (req, res) => {
         let playlistInfo = await createPlaylist(access_token, spotifyUserInfo, selections, selectionID);
         console.log('playlistURL:', playlistInfo);
         await addTracksToPlaylist(access_token, playlistInfo.tracks.href, playlistTracks);
-        await res.send(playlistInfo)
+        res.send(playlistInfo)
     }
     catch (error) {
         console.log('error completing playlist creation', error);

@@ -24,7 +24,7 @@ class PlaylistInfoInput extends Component {
                         </div>
                     </div>
                 </div>
-                <button onClick={() => this.props.history.push('/mood')} className="back-button button">back</button>
+                <button onClick={() => this.props.history.push('/image')} className="back-button button">back</button>
             </>
         );
     }
